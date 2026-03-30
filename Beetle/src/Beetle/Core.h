@@ -9,3 +9,5 @@
 #else
 	#error Beetle only supports Windows!
 #endif // BT_BUILD_DLL
+
+#define BIT(x) (1<<x)

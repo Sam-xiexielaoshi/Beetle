@@ -20,7 +20,7 @@ project "Beetle"
 
 	files
 	{
-		"%{prj.name}/src/**.h",
+		"%{prj.name}/src/**.h", 
 		"%{prj.name}/src/**.cpp",
 	}
 
