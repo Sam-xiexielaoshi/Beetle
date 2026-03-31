@@ -69,8 +69,8 @@ namespace Beetle {
 		Event& m_Event;
 	};
 
-	inline std::ostream& operator<<(std::ostream& os, const Event& e)
+	inline std::string format_as(const Event& e)
 	{
-		return os << e.ToString();
+		return e.ToString();
 	}
 }

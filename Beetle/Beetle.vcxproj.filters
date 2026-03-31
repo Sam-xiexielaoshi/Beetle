@@ -20,6 +20,9 @@
       <Filter>Beetle</Filter>
     </ClInclude>
     <ClInclude Include="src\Beetle\Events\Event.h" />
+    <ClInclude Include="src\Beetle\Events\KeyEvent.h" />
+    <ClInclude Include="src\Beetle\Events\MouseEvent.h" />
+    <ClInclude Include="src\Beetle\Events\ApplicationEvent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Beetle\Application.cpp">
