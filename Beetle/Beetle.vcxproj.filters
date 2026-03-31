@@ -19,6 +19,7 @@
     <ClInclude Include="src\Beetle\Log.h">
       <Filter>Beetle</Filter>
     </ClInclude>
+    <ClInclude Include="src\Beetle\Events\Event.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Beetle\Application.cpp">

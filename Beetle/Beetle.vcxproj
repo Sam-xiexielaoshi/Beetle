@@ -79,7 +79,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>BT_PLATFORM_WINDOWS;BT_BUILD_DLL;BT_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>vendor\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;vendor\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -151,6 +151,7 @@
     <ClInclude Include="src\Beetle\Application.h" />
     <ClInclude Include="src\Beetle\Core.h" />
     <ClInclude Include="src\Beetle\EntryPoint.h" />
+    <ClInclude Include="src\Beetle\Events\Event.h" />
     <ClInclude Include="src\Beetle\Log.h" />
   </ItemGroup>
   <ItemGroup>
