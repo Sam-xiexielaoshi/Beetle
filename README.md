@@ -1,5 +1,7 @@
 # 🐞 Beetle Engine
 
+![Beetle](/Branding/beetle.png?raw=true "Beetle")
+
 A modern **C++ Game Engine** built from scratch while following the philosophy and learning approach of The Cherno's engine series. This project is both an **educational journey** and a **practical implementation** of real-world engine architecture.
 
 Beetle is currently in an **early development stage**, where core systems are being built step-by-step with a strong focus on understanding _why things are designed a certain way_, not just how to implement them.
