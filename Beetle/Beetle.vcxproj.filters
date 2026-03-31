@@ -4,6 +4,9 @@
     <Filter Include="Beetle">
       <UniqueIdentifier>{368730A9-2229-5B7F-0BE4-6ED3F724E2CF}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Beetle\Events">
+      <UniqueIdentifier>{5A3ACBCB-C6FA-4602-8F35-907FFBB48BDE}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Beetle.h" />
@@ -16,13 +19,22 @@
     <ClInclude Include="src\Beetle\EntryPoint.h">
       <Filter>Beetle</Filter>
     </ClInclude>
+    <ClInclude Include="src\Beetle\Events\ApplicationEvent.h">
+      <Filter>Beetle\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Beetle\Events\Event.h">
+      <Filter>Beetle\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Beetle\Events\KeyEvent.h">
+      <Filter>Beetle\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Beetle\Events\MouseEvent.h">
+      <Filter>Beetle\Events</Filter>
+    </ClInclude>
     <ClInclude Include="src\Beetle\Log.h">
       <Filter>Beetle</Filter>
     </ClInclude>
-    <ClInclude Include="src\Beetle\Events\Event.h" />
-    <ClInclude Include="src\Beetle\Events\KeyEvent.h" />
-    <ClInclude Include="src\Beetle\Events\MouseEvent.h" />
-    <ClInclude Include="src\Beetle\Events\ApplicationEvent.h" />
+    <ClInclude Include="src\btpch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Beetle\Application.cpp">
@@ -31,5 +43,6 @@
     <ClCompile Include="src\Beetle\Log.cpp">
       <Filter>Beetle</Filter>
     </ClCompile>
+    <ClCompile Include="src\btpch.cpp" />
   </ItemGroup>
 </Project>

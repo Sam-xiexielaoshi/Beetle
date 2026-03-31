@@ -1,3 +1,4 @@
+#include "btpch.h"
 #include "Application.h"
 
 #include "Beetle/Events/ApplicationEvent.h"
@@ -15,7 +16,7 @@ namespace Beetle {
 	{
 		WindowResizeEvent e(1280, 720);
 		BT_TRACE(e);
-
+		
 		while (true);
 	}
 }
