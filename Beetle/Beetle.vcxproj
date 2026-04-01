@@ -162,11 +162,14 @@
     <ClInclude Include="src\Beetle\Events\KeyEvent.h" />
     <ClInclude Include="src\Beetle\Events\MouseEvent.h" />
     <ClInclude Include="src\Beetle\Log.h" />
+    <ClInclude Include="src\Beetle\Window.h" />
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\btpch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Beetle\Application.cpp" />
     <ClCompile Include="src\Beetle\Log.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\btpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
