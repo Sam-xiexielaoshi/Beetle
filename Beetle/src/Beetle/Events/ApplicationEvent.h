@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Event.h"
-#include <sstream>1
+#include <sstream>
 
 namespace Beetle {
 	

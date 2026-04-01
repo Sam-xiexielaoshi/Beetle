@@ -10,6 +10,12 @@ workspace "Beetle"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+-- Include directoried reative to root folder 
+IncludeDir = {}
+IncludeDir["GLFW"] = "Beetle/vendor/GLFW/include"
+
+include "Beetle/vendor/GLFW"
+
 project "Beetle"
 	location "Beetle"
 	kind "SharedLib"
@@ -30,7 +36,13 @@ project "Beetle"
 	includedirs
 	{
 		"%{prj.name}/src",
-		"%{prj.name}/vendor/spdlog/include"
+		"%{prj.name}/vendor/spdlog/include",
+	"%{IncludeDir.GLFW}"
+	}
+
+	links{
+		"GLFW",
+		"opengl32.lib"
 	}
 
 	filter "system:windows"

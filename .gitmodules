@@ -1,3 +1,6 @@
 [submodule "Beetle/vendor/spdlog"]
 	path = Beetle/vendor/spdlog
 	url = https://github.com/gabime/spdlog.git
+[submodule "Beetle/vendor/GLFW"]
+	path = Beetle/vendor/GLFW
+	url = https://github.com/Sam-xiexielaoshi/glfw
