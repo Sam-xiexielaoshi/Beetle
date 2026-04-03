@@ -3,6 +3,8 @@
 #include "Core.h"
 #include "Events/Event.h"
 #include "Window.h"
+#include "Beetle/Events/ApplicationEvent.h"
+
 
 namespace Beetle {
 	class BEETLE_API Application
@@ -15,6 +17,8 @@ namespace Beetle {
 
 		void OnEvent(Event& e);
 	private:
+		bool OnWindowClose(WindowCloseEvent& e); 
+
 		std::unique_ptr<Window> m_Window;
 		bool m_Running = true;
 	};
