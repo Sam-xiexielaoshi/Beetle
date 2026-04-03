@@ -67,14 +67,17 @@ project "Beetle"
 
 	filter "configurations:Debug"
 		defines "BT_DEBUG"
+		buildoptions "/MDd"
 		symbols "On"
 
 	filter "configurations:Release"
 		defines "BT_Release"
+		buildoptions "/MD"
 		symbols "On"
 
 	filter "configurations:DIST"
 		defines "BT_DIST"
+		buildoptions "/MD"
 		symbols "On"
 
 project "Sandbox"
@@ -116,12 +119,15 @@ project "Sandbox"
 
 	filter "configurations:Debug"
 		defines "BT_DEBUG"
+		buildoptions "/MDd"
 		symbols "On"
 
 	filter "configurations:Release"
 		defines "BT_Release"
+		buildoptions "/MD"
 		symbols "On"
 
 	filter "configurations:Dist"
 		defines "BT_DIST"
+		buildoptions "/MD"
 		symbols "On"

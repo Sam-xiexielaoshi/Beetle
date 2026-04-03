@@ -2,6 +2,7 @@
 //for us by beetle app
 
 #include "Beetle/Application.h"
+#include "Beetle/Layer.h"
 #include "Beetle/Log.h"
 
 //----------Entry Point----------------

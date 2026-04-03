@@ -44,7 +44,7 @@ namespace Beetle {
 		{
 			return GetCategoryFlags() & category;
 		}
-
+		inline bool Handled() const { return m_Handled; }
 	protected:
 		bool m_Handled = false;
 	};
@@ -65,6 +65,7 @@ namespace Beetle {
 				return true;
 			}return false;
 		}
+	
 	private:
 		Event& m_Event;
 	};
