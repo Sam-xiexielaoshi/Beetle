@@ -13,8 +13,10 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 -- Include directoried reative to root folder 
 IncludeDir = {}
 IncludeDir["GLFW"] = "Beetle/vendor/GLFW/include"
+IncludeDir["Glad"] = "Beetle/vendor/Glad/include"
 
 include "Beetle/vendor/GLFW"
+include "Beetle/vendor/Glad"
 
 project "Beetle"
 	location "Beetle"
@@ -37,11 +39,13 @@ project "Beetle"
 	{
 		"%{prj.name}/src",
 		"%{prj.name}/vendor/spdlog/include",
-	"%{IncludeDir.GLFW}"
+		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.Glad}"
 	}
 
 	links{
 		"GLFW",
+		"Glad",
 		"opengl32.lib"
 	}
 
@@ -56,8 +60,7 @@ project "Beetle"
 		{
 			"BT_PLATFORM_WINDOWS",
 			"BT_BUILD_DLL",
-
-
+			"GLFW_INCLUDE_NONE"
 		}
 
 		postbuildcommands

@@ -37,6 +37,12 @@
     <ClInclude Include="src\Beetle\Events\MouseEvent.h">
       <Filter>Beetle\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\Beetle\Layer.h">
+      <Filter>Beetle</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Beetle\LayerStack.h">
+      <Filter>Beetle</Filter>
+    </ClInclude>
     <ClInclude Include="src\Beetle\Log.h">
       <Filter>Beetle</Filter>
     </ClInclude>
@@ -50,6 +56,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Beetle\Application.cpp">
+      <Filter>Beetle</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Beetle\Layer.cpp">
+      <Filter>Beetle</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Beetle\LayerStack.cpp">
       <Filter>Beetle</Filter>
     </ClCompile>
     <ClCompile Include="src\Beetle\Log.cpp">
