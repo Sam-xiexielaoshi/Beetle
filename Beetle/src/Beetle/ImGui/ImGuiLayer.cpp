@@ -1,6 +1,7 @@
 #include "btpch.h"
 #include "ImGuiLayer.h"
-
+#include "imgui.h"
+#include "Platform/OpenGL/ImGuiOpenGLRenderer.h"
 namespace Beetle {
 	ImGuiLayer::ImGuiLayer() : Layer("ImGuiLayer")
 	{
@@ -11,7 +12,11 @@ namespace Beetle {
 
 	void ImGuiLayer::OnAttach()
 	{
+		ImGui::CreateContext();
+		ImGui::StyleColorsDark();
 
+		ImGuiIO& io = ImGui::GetIO();
+		io.BackendFlags = ImGuiBackendFlags_HasMouseCursors | ImGuiBackendFlags_HasSetMousePos;
 	}
 
 	void ImGuiLayer::OnDetach()
