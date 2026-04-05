@@ -4,7 +4,7 @@
 
 namespace Beetle {
 
-	class ImGuiLayer : public Layer
+	class BEETLE_API ImGuiLayer : public Layer
 	{
 	public:
 		ImGuiLayer();
@@ -15,6 +15,6 @@ namespace Beetle {
 		void OnUpdate();
 		void OnEvent(Event& event);
 	private:
-
+		float m_Time{0.0f};
 	};
 }
