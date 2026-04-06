@@ -10,20 +10,22 @@ namespace Beetle {
 	{
 	public: 
 		inline int GetKeyCode() const { return m_KeyCode; }
+		inline int GetModifiers() const { return m_Modifiers; }
 
 		EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput)
 	protected:
-		KeyEvent(int keycode)
-			: m_KeyCode(keycode) {}
+		KeyEvent(int keycode, int modifiers)
+			: m_KeyCode(keycode), m_Modifiers(modifiers) {}
 
 		int m_KeyCode;
+		int m_Modifiers;
 	};
 
 	class BEETLE_API KeyPressedEvent : public KeyEvent
 	{
 	public:
-		KeyPressedEvent(int keycode, int repeatCount)
-			: KeyEvent(keycode), m_RepeatCount(repeatCount) {}
+		KeyPressedEvent(int keycode, int repeatCount, int modifiers)
+			: KeyEvent(keycode, modifiers), m_RepeatCount(repeatCount) {}
 
 		inline int GetRepeatCount() const { return m_RepeatCount; }
 
@@ -42,7 +44,7 @@ namespace Beetle {
 	class BEETLE_API KeyReleasedEvent : public KeyEvent
 	{
 	public:
-		KeyReleasedEvent(int keycode) : KeyEvent(keycode){}
+		KeyReleasedEvent(int keycode, int modifiers) : KeyEvent(keycode, modifiers) {}
 
 		std::string ToString() const override
 		{
@@ -52,5 +54,21 @@ namespace Beetle {
 		}
 
 		EVENT_CLASS_TYPE(KeyReleased)
+	};
+
+	class BEETLE_API KeyTypedEvent : public KeyEvent
+	{
+	public:
+		KeyTypedEvent(int keycode)
+			: KeyEvent(keycode, 0) {}
+
+		std::string ToString() const override
+		{
+			std::stringstream ss;
+			ss << "KeyTypedEvent: " << m_KeyCode;
+			return ss.str();
+		}
+
+		EVENT_CLASS_TYPE(KeyTyped)
 	};
 }

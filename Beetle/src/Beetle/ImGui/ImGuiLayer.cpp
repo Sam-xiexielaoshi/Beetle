@@ -1,38 +1,3 @@
-//#include "btpch.h"
-//#include "ImGuiLayer.h"
-//#include "imgui.h"
-//#include "Platform/OpenGL/ImGuiOpenGLRenderer.h"
-//#include "GLFW/glfw3.h"
-//namespace Beetle {
-//	ImGuiLayer::ImGuiLayer() : Layer("ImGuiLayer")
-//	{
-//	}
-//	ImGuiLayer::~ImGuiLayer()
-//	{
-//	}
-//
-//	void ImGuiLayer::OnAttach()
-//	{
-//		ImGui::CreateContext();
-//		ImGui::StyleColorsDark();
-//
-//		ImGuiIO& io = ImGui::GetIO();
-//		io.BackendFlags = ImGuiBackendFlags_HasMouseCursors | ImGuiBackendFlags_HasSetMousePos;
-//		
-//        
-//	}
-//
-//	void ImGuiLayer::OnDetach()
-//	{
-//	}
-//
-//	void ImGuiLayer::OnUpdate()
-//	{
-//	}
-//	void ImGuiLayer::OnEvent(Event& event)
-//	{
-//	}
-//}
 #include "btpch.h"
 #include "ImGuiLayer.h"
 
@@ -137,7 +102,7 @@ namespace Beetle {
         dispatcher.Dispatch<MouseScrolledEvent>(BEETLE_BIND_EVENT_FN(ImGuiLayer::OnMouseScrolledEvent));
         dispatcher.Dispatch<KeyPressedEvent>(BEETLE_BIND_EVENT_FN(ImGuiLayer::OnKeyPressedEvent));
         dispatcher.Dispatch<KeyReleasedEvent>(BEETLE_BIND_EVENT_FN(ImGuiLayer::OnKeyReleasedEvent));
-        //dispatcher.Dispatch<KeyTypedEvent>(BEETLE_BIND_EVENT_FN(ImGuiLayer::OnKeyTypedEvent));
+        dispatcher.Dispatch<KeyTypedEvent>(BEETLE_BIND_EVENT_FN(ImGuiLayer::OnKeyTypedEvent));
 		dispatcher.Dispatch<WindowResizeEvent>(BEETLE_BIND_EVENT_FN(ImGuiLayer::OnWindowResizeEvent));
         
     }
@@ -177,31 +142,81 @@ namespace Beetle {
 
     bool ImGuiLayer::OnKeyPressedEvent(KeyPressedEvent& event)
     {
-        //ImGuiIO& io = ImGui::GetIO();
-        /*ImGuiKey key = GLFWKeyToImGuiKey(event.GetKeyCode());
-        if (key != ImGuiKey_None)
-            io.AddKeyEvent(key, true);*/
-        return false;
+        ImGuiIO& io = ImGui::GetIO();
+        int mods = event.GetModifiers();
 
+        io.AddKeyEvent(ImGuiMod_Ctrl, (mods & GLFW_MOD_CONTROL) != 0);
+        io.AddKeyEvent(ImGuiMod_Shift, (mods & GLFW_MOD_SHIFT) != 0);
+        io.AddKeyEvent(ImGuiMod_Alt, (mods & GLFW_MOD_ALT) != 0);
+        io.AddKeyEvent(ImGuiMod_Super, (mods & GLFW_MOD_SUPER) != 0);
+
+        ImGuiKey key = GLFWKeyToImGuiKey(event.GetKeyCode());
+        if (key != ImGuiKey_None)
+            io.AddKeyEvent(key, true);
+
+        if (event.GetKeyCode() == GLFW_KEY_LEFT_CONTROL)
+            io.AddKeyEvent(ImGuiKey_LeftCtrl, true);
+        if (event.GetKeyCode() == GLFW_KEY_RIGHT_CONTROL)
+            io.AddKeyEvent(ImGuiKey_RightCtrl, true);
+        if (event.GetKeyCode() == GLFW_KEY_LEFT_SHIFT)
+            io.AddKeyEvent(ImGuiKey_LeftShift, true);
+        if (event.GetKeyCode() == GLFW_KEY_RIGHT_SHIFT)
+            io.AddKeyEvent(ImGuiKey_RightShift, true);
+        if (event.GetKeyCode() == GLFW_KEY_LEFT_ALT)
+            io.AddKeyEvent(ImGuiKey_LeftAlt, true);
+        if (event.GetKeyCode() == GLFW_KEY_RIGHT_ALT)
+            io.AddKeyEvent(ImGuiKey_RightAlt, true);
+        if (event.GetKeyCode() == GLFW_KEY_LEFT_SUPER)
+            io.AddKeyEvent(ImGuiKey_LeftSuper, true);
+        if (event.GetKeyCode() == GLFW_KEY_RIGHT_SUPER)
+            io.AddKeyEvent(ImGuiKey_RightSuper, true);
+
+        return false;
     }
 
     bool ImGuiLayer::OnKeyReleasedEvent(KeyReleasedEvent& event)
     {
-        //ImGuiIO& io = ImGui::GetIO();
-        /*ImGuiKey key = GLFWKeyToImGuiKey(event.GetKeyCode());
+        ImGuiIO& io = ImGui::GetIO();
+        int mods = event.GetModifiers();
+
+        io.AddKeyEvent(ImGuiMod_Ctrl, (mods & GLFW_MOD_CONTROL) != 0);
+        io.AddKeyEvent(ImGuiMod_Shift, (mods & GLFW_MOD_SHIFT) != 0);
+        io.AddKeyEvent(ImGuiMod_Alt, (mods & GLFW_MOD_ALT) != 0);
+        io.AddKeyEvent(ImGuiMod_Super, (mods & GLFW_MOD_SUPER) != 0);
+
+        ImGuiKey key = GLFWKeyToImGuiKey(event.GetKeyCode());
         if (key != ImGuiKey_None)
-            io.AddKeyEvent(key, false);*/
+            io.AddKeyEvent(key, false);
+
+        if (event.GetKeyCode() == GLFW_KEY_LEFT_CONTROL)
+            io.AddKeyEvent(ImGuiKey_LeftCtrl, false);
+        if (event.GetKeyCode() == GLFW_KEY_RIGHT_CONTROL)
+            io.AddKeyEvent(ImGuiKey_RightCtrl, false);
+        if (event.GetKeyCode() == GLFW_KEY_LEFT_SHIFT)
+            io.AddKeyEvent(ImGuiKey_LeftShift, false);
+        if (event.GetKeyCode() == GLFW_KEY_RIGHT_SHIFT)
+            io.AddKeyEvent(ImGuiKey_RightShift, false);
+        if (event.GetKeyCode() == GLFW_KEY_LEFT_ALT)
+            io.AddKeyEvent(ImGuiKey_LeftAlt, false);
+        if (event.GetKeyCode() == GLFW_KEY_RIGHT_ALT)
+            io.AddKeyEvent(ImGuiKey_RightAlt, false);
+        if (event.GetKeyCode() == GLFW_KEY_LEFT_SUPER)
+            io.AddKeyEvent(ImGuiKey_LeftSuper, false);
+        if (event.GetKeyCode() == GLFW_KEY_RIGHT_SUPER)
+            io.AddKeyEvent(ImGuiKey_RightSuper, false);
+
+        return false;
+    }
+
+    bool ImGuiLayer::OnKeyTypedEvent(KeyTypedEvent& event)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+		int keycode = event.GetKeyCode();
+        if (keycode > 0 && keycode < 0x10000)
+            io.AddInputCharacter((unsigned short)keycode);
         return false;
 
     }
-
-    /*bool ImGuiLayer::OnKeyTypedEvent(KeyTypedEvent& event)
-    {
-        ImGuiIO& io = ImGui::GetIO();
-        io.AddInputCharacter((unsigned int)event.GetKeyCode());
-        return false;
-
-    }*/
 
     bool ImGuiLayer::OnWindowResizeEvent(WindowResizeEvent& event)
     {
