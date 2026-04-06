@@ -41,6 +41,9 @@
 #include "GLFW/glfw3.h"
 
 #include "Beetle/Application.h"
+ //temp
+#include <GLFW/glfw3.h>
+#include <glad/glad.h>
 
 namespace Beetle {
 
@@ -127,7 +130,87 @@ namespace Beetle {
 
     void ImGuiLayer::OnEvent(Event& event)
     {
+		EventDispatcher dispatcher(event);
+        dispatcher.Dispatch<MouseButtonPressedEvent>(BEETLE_BIND_EVENT_FN(ImGuiLayer::OnMouseButtonPressedEvent));
+        dispatcher.Dispatch<MouseButtonReleasedEvent>(BEETLE_BIND_EVENT_FN(ImGuiLayer::OnMouseButtonReleasedEvent));
+        dispatcher.Dispatch<MouseMovedEvent>(BEETLE_BIND_EVENT_FN(ImGuiLayer::OnMouseMovedEvent));
+        dispatcher.Dispatch<MouseScrolledEvent>(BEETLE_BIND_EVENT_FN(ImGuiLayer::OnMouseScrolledEvent));
+        dispatcher.Dispatch<KeyPressedEvent>(BEETLE_BIND_EVENT_FN(ImGuiLayer::OnKeyPressedEvent));
+        dispatcher.Dispatch<KeyReleasedEvent>(BEETLE_BIND_EVENT_FN(ImGuiLayer::OnKeyReleasedEvent));
+        //dispatcher.Dispatch<KeyTypedEvent>(BEETLE_BIND_EVENT_FN(ImGuiLayer::OnKeyTypedEvent));
+		dispatcher.Dispatch<WindowResizeEvent>(BEETLE_BIND_EVENT_FN(ImGuiLayer::OnWindowResizeEvent));
         
+    }
+
+    bool ImGuiLayer::OnMouseButtonPressedEvent(MouseButtonPressedEvent& event)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+		io.MouseDown[event.GetMouseButton()] = true;
+
+        return false;
+    }
+
+    bool ImGuiLayer::OnMouseButtonReleasedEvent(MouseButtonReleasedEvent& event)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+        io.MouseDown[event.GetMouseButton()] = false;
+
+        return false;
+    }
+
+    bool ImGuiLayer::OnMouseMovedEvent(MouseMovedEvent& event)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+        io.MousePos=ImVec2(event.GetX(), event.GetY());
+
+        return false;
+    }
+
+    bool ImGuiLayer::OnMouseScrolledEvent(MouseScrolledEvent& event)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+        //io.AddMouseWheelEvent(event.GetXOffset(), event.GetYOffset());
+		io.MouseWheelH += event.GetXOffset();
+		io.MouseWheel += event.GetYOffset();
+		return false;
+    }
+
+    bool ImGuiLayer::OnKeyPressedEvent(KeyPressedEvent& event)
+    {
+        //ImGuiIO& io = ImGui::GetIO();
+        /*ImGuiKey key = GLFWKeyToImGuiKey(event.GetKeyCode());
+        if (key != ImGuiKey_None)
+            io.AddKeyEvent(key, true);*/
+        return false;
+
+    }
+
+    bool ImGuiLayer::OnKeyReleasedEvent(KeyReleasedEvent& event)
+    {
+        //ImGuiIO& io = ImGui::GetIO();
+        /*ImGuiKey key = GLFWKeyToImGuiKey(event.GetKeyCode());
+        if (key != ImGuiKey_None)
+            io.AddKeyEvent(key, false);*/
+        return false;
+
+    }
+
+    /*bool ImGuiLayer::OnKeyTypedEvent(KeyTypedEvent& event)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+        io.AddInputCharacter((unsigned int)event.GetKeyCode());
+        return false;
+
+    }*/
+
+    bool ImGuiLayer::OnWindowResizeEvent(WindowResizeEvent& event)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+        io.DisplaySize = ImVec2((float)event.GetWidth(), (float)event.GetHeight());
+		io.DisplayFramebufferScale = ImVec2(1.0f, 1.0f);
+		glViewport(0, 0, event.GetWidth(), event.GetHeight());
+        return false;
+
     }
 
 }
