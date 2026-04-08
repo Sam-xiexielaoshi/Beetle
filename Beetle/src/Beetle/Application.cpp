@@ -5,6 +5,8 @@
 
 #include <glad/glad.h>
 
+#include "Input.h"
+
 namespace Beetle {
 #define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
 
@@ -56,6 +58,9 @@ namespace Beetle {
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			for (Layer* layer : m_LayerStack) layer->OnUpdate();
+
+			auto [x, y] = Input::GetMousePosition();
+			BT_CORE_TRACE("Mouse Position: ({0}, {1})", x, y);
 
 			m_Window->OnUpdate();
 		}

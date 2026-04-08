@@ -165,11 +165,13 @@ copy /B /Y "..\bin\Dist-windows-x86_64\Beetle\Beetle.dll" "..\bin\Dist-windows-x
     <ClInclude Include="src\Beetle\Events\KeyEvent.h" />
     <ClInclude Include="src\Beetle\Events\MouseEvent.h" />
     <ClInclude Include="src\Beetle\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="src\Beetle\Input.h" />
     <ClInclude Include="src\Beetle\Layer.h" />
     <ClInclude Include="src\Beetle\LayerStack.h" />
     <ClInclude Include="src\Beetle\Log.h" />
     <ClInclude Include="src\Beetle\Window.h" />
     <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.h" />
+    <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\btpch.h" />
   </ItemGroup>
@@ -180,6 +182,7 @@ copy /B /Y "..\bin\Dist-windows-x86_64\Beetle\Beetle.dll" "..\bin\Dist-windows-x
     <ClCompile Include="src\Beetle\LayerStack.cpp" />
     <ClCompile Include="src\Beetle\Log.cpp" />
     <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\btpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
