@@ -10,6 +10,11 @@
 	#error Beetle only supports Windows!
 #endif // BT_BUILD_DLL
 
+#ifdef BT_DEBUG
+#define BT_ENABLE_ASSERTS
+#endif // BT_DEBUG
+
+
 #ifdef BT_ENABLE_ASSERTS
 	#define BT_ASSERT(x, ...) { if(!(x)) { BT_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
 	#define BT_CORE_ASSERT(x, ...) { if(!(x)) { BT_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
