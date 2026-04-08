@@ -1,5 +1,7 @@
 workspace "Beetle"
 	architecture "x64"
+	startproject "Sandbox"
+
 
 	configurations
 	{
@@ -69,7 +71,8 @@ project "Beetle"
 
 		postbuildcommands
 		{
-			("{COPYFILE} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
+			("{MKDIR} ../bin/" .. outputdir .. "/Sandbox"),
+			("{COPYFILE} \"%{cfg.buildtarget.relpath}\" \"../bin/" .. outputdir .. "/Sandbox\"")
 		}
 
 	filter "configurations:Debug"
