@@ -12,13 +12,19 @@ public:
 	{	
 		if (Beetle::Input::IsKeyPressed(BT_KEY_TAB))
 		{
-			BT_TRACE("Tab key is pressed!");
+			BT_TRACE("Tab key is pressed (poll)!");
 		}
 	}
 
 	void OnEvent(Beetle::Event& event) override
 	{
-		//BT_TRACE("{0}", event.ToString());
+		if (event.GetEventType() == Beetle::EventType::KeyPressed)
+		{
+			Beetle::KeyPressedEvent& e = (Beetle::KeyPressedEvent&)event;
+			if(e.GetKeyCode()==BT_KEY_TAB)
+				BT_TRACE("Tab key is pressed (event)!");
+			BT_TRACE("{0}", (char)e.GetKeyCode());
+		}
 	}
 };
 
