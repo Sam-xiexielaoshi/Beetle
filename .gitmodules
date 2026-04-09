@@ -7,3 +7,6 @@
 [submodule "Beetle/vendor/imgui"]
 	path = Beetle/vendor/imgui
 	url = https://github.com/Sam-xiexielaoshi/imgui
+[submodule "Beetle/vendor/glm"]
+	path = Beetle/vendor/glm
+	url = https://github.com/g-truc/glm

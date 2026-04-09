@@ -46,6 +46,12 @@
     <ClInclude Include="src\Beetle\ImGui\ImGuiLayer.h">
       <Filter>Beetle\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="src\Beetle\Input.h">
+      <Filter>Beetle</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Beetle\KeyCodes.h">
+      <Filter>Beetle</Filter>
+    </ClInclude>
     <ClInclude Include="src\Beetle\Layer.h">
       <Filter>Beetle</Filter>
     </ClInclude>
@@ -55,20 +61,22 @@
     <ClInclude Include="src\Beetle\Log.h">
       <Filter>Beetle</Filter>
     </ClInclude>
+    <ClInclude Include="src\Beetle\MouseButtonCodes.h">
+      <Filter>Beetle</Filter>
+    </ClInclude>
     <ClInclude Include="src\Beetle\Window.h">
       <Filter>Beetle</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.h">
       <Filter>Platform\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\Windows\WindowsInput.h">
+      <Filter>Platform\Windows</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
       <Filter>Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\btpch.h" />
-    <ClInclude Include="src\Beetle\Input.h" />
-    <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
-    <ClInclude Include="src\Beetle\KeyCodes.h" />
-    <ClInclude Include="src\Beetle\MouseButtonCodes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Beetle\Application.cpp">
@@ -89,10 +97,12 @@
     <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp">
       <Filter>Platform\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
+      <Filter>Platform\Windows</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\btpch.cpp" />
-    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
   </ItemGroup>
 </Project>
