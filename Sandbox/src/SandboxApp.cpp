@@ -9,13 +9,16 @@ public:
 	}
 
 	void OnUpdate() override
-	{
-		BT_INFO("ExampleLayer::Update");
+	{	
+		if (Beetle::Input::IsKeyPressed(BT_KEY_TAB))
+		{
+			BT_TRACE("Tab key is pressed!");
+		}
 	}
 
 	void OnEvent(Beetle::Event& event) override
 	{
-		BT_TRACE("{0}", event.ToString());
+		//BT_TRACE("{0}", event.ToString());
 	}
 };
 

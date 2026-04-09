@@ -166,9 +166,11 @@ copy /B /Y "..\bin\Dist-windows-x86_64\Beetle\Beetle.dll" "..\bin\Dist-windows-x
     <ClInclude Include="src\Beetle\Events\MouseEvent.h" />
     <ClInclude Include="src\Beetle\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Beetle\Input.h" />
+    <ClInclude Include="src\Beetle\KeyCodes.h" />
     <ClInclude Include="src\Beetle\Layer.h" />
     <ClInclude Include="src\Beetle\LayerStack.h" />
     <ClInclude Include="src\Beetle\Log.h" />
+    <ClInclude Include="src\Beetle\MouseButtonCodes.h" />
     <ClInclude Include="src\Beetle\Window.h" />
     <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
