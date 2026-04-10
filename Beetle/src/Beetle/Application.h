@@ -5,6 +5,7 @@
 #include "Window.h"
 #include "Beetle/Events/ApplicationEvent.h"
 #include "Beetle/LayerStack.h"
+#include "Beetle/ImGui/ImGuiLayer.h"
 
 
 namespace Beetle {
@@ -29,6 +30,7 @@ namespace Beetle {
 		bool OnWindowClose(WindowCloseEvent& e);
 
 		std::unique_ptr<Window> m_Window;
+		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 

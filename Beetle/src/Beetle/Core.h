@@ -10,6 +10,10 @@
 	#error Beetle only supports Windows!
 #endif // BT_BUILD_DLL
 
+#ifndef IMGUI_API
+	#define IMGUI_API BEETLE_API
+#endif
+
 #ifdef BT_DEBUG
 #define BT_ENABLE_ASSERTS
 #endif // BT_DEBUG

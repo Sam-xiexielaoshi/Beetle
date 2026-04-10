@@ -113,6 +113,7 @@ project "Sandbox"
 	{
 		"Beetle/vendor/spdlog/include",
 		"Beetle/src",
+		"Beetle/vendor",
 		"%{IncludeDir.glm}"
 	}
 

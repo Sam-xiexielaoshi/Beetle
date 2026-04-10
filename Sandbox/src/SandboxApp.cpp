@@ -1,4 +1,5 @@
 #include <Beetle.h>
+#include "imgui/imgui.h"
 
 class ExampleLayer : public Beetle::Layer
 {
@@ -14,6 +15,13 @@ public:
 		{
 			BT_TRACE("Tab key is pressed (poll)!");
 		}
+	}
+
+	void OnImGuiRender() override
+	{
+		ImGui::Begin("Test");
+		ImGui::Text("Hello World!");
+		ImGui::End();
 	}
 
 	void OnEvent(Beetle::Event& event) override
@@ -34,7 +42,7 @@ public:
 	Sandbox()
 	{
 		PushLayer(new ExampleLayer());
-		PushOverlay(new Beetle::ImGuiLayer());
+
 	}
 	~Sandbox()
 	{
