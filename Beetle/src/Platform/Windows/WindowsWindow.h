@@ -3,7 +3,9 @@
 
 #include "Beetle/Window.h"
 
+#include "Beetle/Renderer/GraphicsContext.h"
 #include <GLFW/glfw3.h>
+
 
 namespace Beetle {
 
@@ -29,6 +31,7 @@ namespace Beetle {
 		virtual void Shutdown();
 	private:
 		GLFWwindow* m_Window;
+		GraphicsContext* m_Context;
 
 		struct WindowData
 		{

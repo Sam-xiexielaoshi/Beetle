@@ -167,7 +167,9 @@
     <ClInclude Include="src\Beetle\LayerStack.h" />
     <ClInclude Include="src\Beetle\Log.h" />
     <ClInclude Include="src\Beetle\MouseButtonCodes.h" />
+    <ClInclude Include="src\Beetle\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Beetle\Window.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\btpch.h" />
@@ -179,6 +181,7 @@
     <ClCompile Include="src\Beetle\Layer.cpp" />
     <ClCompile Include="src\Beetle\LayerStack.cpp" />
     <ClCompile Include="src\Beetle\Log.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\btpch.cpp">
