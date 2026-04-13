@@ -1,4 +1,6 @@
+
 #include "btpch.h"
+#define _CRT_SECURE_NO_WARNINGS
 
 #include "imgui.cpp"
 #include "imgui_demo.cpp"

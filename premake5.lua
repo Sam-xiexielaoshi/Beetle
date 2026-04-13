@@ -41,6 +41,11 @@ project "Beetle"
 		"%{prj.name}/src/**.cpp",
 	}
 
+	defines
+	{
+		"_CRT_SECURE_NO_WARNINGS"
+	}
+
 	includedirs
 	{
 		"%{prj.name}/src",
