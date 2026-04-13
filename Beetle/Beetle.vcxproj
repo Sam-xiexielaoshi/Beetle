@@ -79,7 +79,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>btpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>BT_PLATFORM_WINDOWS;BT_BUILD_DLL;GLFW_INCLUDE_NONE;BT_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>IMGUI_API=__declspec(dllexport);BT_PLATFORM_WINDOWS;BT_BUILD_DLL;GLFW_INCLUDE_NONE;BT_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -106,7 +106,7 @@ copy /B /Y "..\bin\Debug-windows-x86_64\Beetle\Beetle.dll" "..\bin\Debug-windows
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>btpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>BT_PLATFORM_WINDOWS;BT_BUILD_DLL;GLFW_INCLUDE_NONE;BT_Release;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>IMGUI_API=__declspec(dllexport);BT_PLATFORM_WINDOWS;BT_BUILD_DLL;GLFW_INCLUDE_NONE;BT_Release;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -133,7 +133,7 @@ copy /B /Y "..\bin\Release-windows-x86_64\Beetle\Beetle.dll" "..\bin\Release-win
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>btpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>BT_PLATFORM_WINDOWS;BT_BUILD_DLL;GLFW_INCLUDE_NONE;BT_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>IMGUI_API=__declspec(dllexport);BT_PLATFORM_WINDOWS;BT_BUILD_DLL;GLFW_INCLUDE_NONE;BT_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
