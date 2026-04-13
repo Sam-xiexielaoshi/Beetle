@@ -21,13 +21,13 @@ IncludeDir["glm"] = "Beetle/vendor/glm"
 
 include "Beetle/vendor/GLFW"
 include "Beetle/vendor/Glad"
-include "Beetle/vendor/imgui"
 
 project "Beetle"
 	location "Beetle"
-	kind "SharedLib"
+	kind "StaticLib"
 	language "C++"
-	staticruntime "off"
+	cppdialect "C++17"
+	staticruntime "on"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -54,12 +54,10 @@ project "Beetle"
 	links{
 		"GLFW",
 		"Glad",
-		"ImGui",
 		"opengl32.lib"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
 		systemversion "latest"
 
 		buildoptions { "/utf-8" }
@@ -71,12 +69,6 @@ project "Beetle"
 			"GLFW_INCLUDE_NONE"
 		}
 
-		postbuildcommands
-		{
-			("{MKDIR} ../bin/" .. outputdir .. "/Sandbox"),
-			("{COPYFILE} \"%{cfg.buildtarget.relpath}\" \"../bin/" .. outputdir .. "/Sandbox\"")
-		}
-
 	filter "configurations:Debug"
 		defines "BT_DEBUG"
 		runtime "Debug"
@@ -85,18 +77,19 @@ project "Beetle"
 	filter "configurations:Release"
 		defines "BT_Release"
 		runtime "Release"
-		symbols "On"
+		optimize "On"
 
 	filter "configurations:DIST"
 		defines "BT_DIST"
 		runtime "Release"
-		symbols "On"
+		optimize "On"
 
 project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
-	staticruntime "off"
+	cppdialect "C++17"
+	staticruntime "on"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -123,7 +116,6 @@ project "Sandbox"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
 		systemversion "latest"
 
 		buildoptions { "/utf-8" }
@@ -141,9 +133,9 @@ project "Sandbox"
 	filter "configurations:Release"
 		defines "BT_Release"
 		runtime "Release"
-		symbols "On"
+		optimize "On"
 
 	filter "configurations:Dist"
 		defines "BT_DIST"
 		runtime "Release"
-		symbols "On"
+		optimize "On"

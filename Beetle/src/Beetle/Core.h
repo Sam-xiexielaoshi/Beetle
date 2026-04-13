@@ -1,11 +1,15 @@
 #pragma once
 
 #ifdef BT_PLATFORM_WINDOWS
+#if BT_DYNAMIC_LINK
 	#ifdef BT_BUILD_DLL
 		#define BEETLE_API __declspec(dllexport)
 	#else
 		#define BEETLE_API __declspec(dllimport)
 	#endif
+#else
+	#define BEETLE_API
+#endif
 #else
 	#error Beetle only supports Windows!
 #endif // BT_BUILD_DLL
