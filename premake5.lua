@@ -21,6 +21,7 @@ IncludeDir["glm"] = "Beetle/vendor/glm"
 
 include "Beetle/vendor/GLFW"
 include "Beetle/vendor/Glad"
+include "Beetle/vendor/imgui"
 
 project "Beetle"
 	location "Beetle"
@@ -59,6 +60,7 @@ project "Beetle"
 	links{
 		"GLFW",
 		"Glad",
+		"ImGui",
 		"opengl32.lib"
 	}
 
