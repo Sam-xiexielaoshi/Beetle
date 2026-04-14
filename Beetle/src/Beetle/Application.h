@@ -6,7 +6,7 @@
 #include "Beetle/Events/ApplicationEvent.h"
 #include "Beetle/LayerStack.h"
 #include "Beetle/ImGui/ImGuiLayer.h"
-
+#include "Beetle/Renderer/Shader.h"
 
 namespace Beetle {
 	class BEETLE_API Application
@@ -35,7 +35,7 @@ namespace Beetle {
 		LayerStack m_LayerStack;
 
 		unsigned int m_VertexArray, m_VertexBuffer, m_IndexBuffer;
-
+		std::unique_ptr<Shader> m_Shader;
 	private:
 		static Application* s_Instance;
 	};
