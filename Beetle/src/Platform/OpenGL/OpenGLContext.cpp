@@ -17,12 +17,15 @@ namespace Beetle {
 		glfwMakeContextCurrent(m_WindowHandle);
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		BT_CORE_ASSERT(status, "Failed to initialize Glad~!");
+
+		BT_CORE_INFO("OpenGL vendor Info: {0} ", (const char*)glGetString(GL_VENDOR));
+		BT_CORE_INFO("OpenGL renderer Info: {0} ", (const char*)glGetString(GL_RENDERER));
+		BT_CORE_INFO("OpenGL version Info: {0} ", (const char*)glGetString(GL_VERSION));
 	}
 
 	void OpenGLContext::SwapBuffers()
 	{
-		glBegin(GL_TRIANGLES);
-		glEnd();
+
 		glfwSwapBuffers(m_WindowHandle);
 	}
 }
