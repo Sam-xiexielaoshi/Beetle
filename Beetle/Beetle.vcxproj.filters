@@ -74,6 +74,9 @@
     <ClInclude Include="src\Beetle\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Beetle\Renderer\Shader.h" />
+    <ClInclude Include="src\Beetle\Renderer\Buffer.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
+    <ClInclude Include="src\Beetle\Renderer\Renderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Beetle\Application.cpp">
@@ -103,5 +106,8 @@
     <ClCompile Include="src\btpch.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Beetle\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Beetle\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
+    <ClCompile Include="src\Beetle\Renderer\Renderer.cpp" />
   </ItemGroup>
 </Project>
