@@ -9,6 +9,7 @@
 #include "Beetle/Renderer/Shader.h"
 #include "Beetle/Renderer/Buffer.h"
 #include "Beetle/Renderer/VertexArray.h"
+#include "Beetle/Renderer/OrthographicCamera.h"
 
 namespace Beetle {
 	class BEETLE_API Application
@@ -41,6 +42,8 @@ namespace Beetle {
 
 		std::shared_ptr<Shader> m_BlueShader;
 		std::shared_ptr<VertexArray> m_SquareVA;
+
+		OrthographicCamera m_Camera;
 	private:
 		static Application* s_Instance;
 	};

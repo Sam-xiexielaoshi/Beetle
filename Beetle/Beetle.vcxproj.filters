@@ -82,6 +82,7 @@
     <ClInclude Include="src\Beetle\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Beetle\Renderer\RendererCommand.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
+    <ClInclude Include="src\Beetle\Renderer\OrthographicCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Beetle\Application.cpp">
@@ -119,5 +120,6 @@
     <ClCompile Include="src\Beetle\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Beetle\Renderer\RendererCommand.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
+    <ClCompile Include="src\Beetle\Renderer\OrthographicCamera.cpp" />
   </ItemGroup>
 </Project>
