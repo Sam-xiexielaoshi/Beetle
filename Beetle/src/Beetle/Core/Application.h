@@ -3,8 +3,8 @@
 #include "Core.h"
 
 #include "Window.h"
-#include "Beetle/LayerStack.h"
-#include "Events/Event.h"
+#include "Beetle/Core/LayerStack.h"
+#include "Beetle/Events/Event.h"
 #include "Beetle/Events/ApplicationEvent.h"
 
 #include "Beetle/Core/TimeStamp.h"

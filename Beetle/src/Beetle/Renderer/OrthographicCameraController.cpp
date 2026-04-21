@@ -1,7 +1,7 @@
 #include "btpch.h"
 #include "OrthographicCameraController.h"
-#include "Beetle/Input.h"
-#include "Beetle/KeyCodes.h"
+#include "Beetle/Core/Input.h"
+#include "Beetle/Core/KeyCodes.h"
 
 namespace Beetle {
 	OrthographicCameraController::OrthographicCameraController(float aspectRatio ,bool rotation)

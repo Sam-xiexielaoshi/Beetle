@@ -153,32 +153,32 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Beetle.h" />
-    <ClInclude Include="src\Beetle\Application.h" />
-    <ClInclude Include="src\Beetle\Core.h" />
+    <ClInclude Include="src\Beetle\Core\Application.h" />
+    <ClInclude Include="src\Beetle\Core\Core.h" />
+    <ClInclude Include="src\Beetle\Core\EntryPoint.h" />
+    <ClInclude Include="src\Beetle\Core\Input.h" />
+    <ClInclude Include="src\Beetle\Core\KeyCodes.h" />
+    <ClInclude Include="src\Beetle\Core\Layer.h" />
+    <ClInclude Include="src\Beetle\Core\LayerStack.h" />
+    <ClInclude Include="src\Beetle\Core\Log.h" />
+    <ClInclude Include="src\Beetle\Core\MouseButtonCodes.h" />
     <ClInclude Include="src\Beetle\Core\TimeStamp.h" />
-    <ClInclude Include="src\Beetle\EntryPoint.h" />
+    <ClInclude Include="src\Beetle\Core\Window.h" />
     <ClInclude Include="src\Beetle\Events\ApplicationEvent.h" />
     <ClInclude Include="src\Beetle\Events\Event.h" />
     <ClInclude Include="src\Beetle\Events\KeyEvent.h" />
     <ClInclude Include="src\Beetle\Events\MouseEvent.h" />
     <ClInclude Include="src\Beetle\ImGui\ImGuiLayer.h" />
-    <ClInclude Include="src\Beetle\Input.h" />
-    <ClInclude Include="src\Beetle\KeyCodes.h" />
-    <ClInclude Include="src\Beetle\Layer.h" />
-    <ClInclude Include="src\Beetle\LayerStack.h" />
-    <ClInclude Include="src\Beetle\Log.h" />
-    <ClInclude Include="src\Beetle\MouseButtonCodes.h" />
-    <ClInclude Include="src\Beetle\OrthographicCameraController.h" />
     <ClInclude Include="src\Beetle\Renderer\Buffer.h" />
     <ClInclude Include="src\Beetle\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Beetle\Renderer\OrthographicCamera.h" />
+    <ClInclude Include="src\Beetle\Renderer\OrthographicCameraController.h" />
     <ClInclude Include="src\Beetle\Renderer\Renderer.h" />
     <ClInclude Include="src\Beetle\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Beetle\Renderer\RendererCommand.h" />
     <ClInclude Include="src\Beetle\Renderer\Shader.h" />
     <ClInclude Include="src\Beetle\Renderer\Texture.h" />
     <ClInclude Include="src\Beetle\Renderer\VertexArray.h" />
-    <ClInclude Include="src\Beetle\Window.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
@@ -191,15 +191,15 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Beetle\Application.cpp" />
+    <ClCompile Include="src\Beetle\Core\Application.cpp" />
+    <ClCompile Include="src\Beetle\Core\Layer.cpp" />
+    <ClCompile Include="src\Beetle\Core\LayerStack.cpp" />
+    <ClCompile Include="src\Beetle\Core\Log.cpp" />
     <ClCompile Include="src\Beetle\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Beetle\ImGui\ImGuiLayer.cpp" />
-    <ClCompile Include="src\Beetle\Layer.cpp" />
-    <ClCompile Include="src\Beetle\LayerStack.cpp" />
-    <ClCompile Include="src\Beetle\Log.cpp" />
-    <ClCompile Include="src\Beetle\OrthographicCameraController.cpp" />
     <ClCompile Include="src\Beetle\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Beetle\Renderer\OrthographicCamera.cpp" />
+    <ClCompile Include="src\Beetle\Renderer\OrthographicCameraController.cpp" />
     <ClCompile Include="src\Beetle\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Beetle\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Beetle\Renderer\RendererCommand.cpp" />

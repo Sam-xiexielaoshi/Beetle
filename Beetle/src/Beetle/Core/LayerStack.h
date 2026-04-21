@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Beetle/Core.h"
+#include "Beetle/Core/Core.h"
 #include "Layer.h"
 
 #include <vector>

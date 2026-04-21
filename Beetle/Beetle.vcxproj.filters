@@ -39,17 +39,38 @@
     <ClInclude Include="src\Beetle.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Beetle\Application.h">
-      <Filter>src\Beetle</Filter>
+    <ClInclude Include="src\Beetle\Core\Application.h">
+      <Filter>src\Beetle\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Beetle\Core.h">
-      <Filter>src\Beetle</Filter>
+    <ClInclude Include="src\Beetle\Core\Core.h">
+      <Filter>src\Beetle\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Beetle\Core\EntryPoint.h">
+      <Filter>src\Beetle\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Beetle\Core\Input.h">
+      <Filter>src\Beetle\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Beetle\Core\KeyCodes.h">
+      <Filter>src\Beetle\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Beetle\Core\Layer.h">
+      <Filter>src\Beetle\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Beetle\Core\LayerStack.h">
+      <Filter>src\Beetle\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Beetle\Core\Log.h">
+      <Filter>src\Beetle\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Beetle\Core\MouseButtonCodes.h">
+      <Filter>src\Beetle\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Beetle\Core\TimeStamp.h">
       <Filter>src\Beetle\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Beetle\EntryPoint.h">
-      <Filter>src\Beetle</Filter>
+    <ClInclude Include="src\Beetle\Core\Window.h">
+      <Filter>src\Beetle\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Beetle\Events\ApplicationEvent.h">
       <Filter>src\Beetle\Events</Filter>
@@ -66,24 +87,6 @@
     <ClInclude Include="src\Beetle\ImGui\ImGuiLayer.h">
       <Filter>src\Beetle\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="src\Beetle\Input.h">
-      <Filter>src\Beetle</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Beetle\KeyCodes.h">
-      <Filter>src\Beetle</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Beetle\Layer.h">
-      <Filter>src\Beetle</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Beetle\LayerStack.h">
-      <Filter>src\Beetle</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Beetle\Log.h">
-      <Filter>src\Beetle</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Beetle\MouseButtonCodes.h">
-      <Filter>src\Beetle</Filter>
-    </ClInclude>
     <ClInclude Include="src\Beetle\Renderer\Buffer.h">
       <Filter>src\Beetle\Renderer</Filter>
     </ClInclude>
@@ -91,6 +94,9 @@
       <Filter>src\Beetle\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Beetle\Renderer\OrthographicCamera.h">
+      <Filter>src\Beetle\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Beetle\Renderer\OrthographicCameraController.h">
       <Filter>src\Beetle\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Beetle\Renderer\Renderer.h">
@@ -110,9 +116,6 @@
     </ClInclude>
     <ClInclude Include="src\Beetle\Renderer\VertexArray.h">
       <Filter>src\Beetle\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Beetle\Window.h">
-      <Filter>src\Beetle</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
       <Filter>src\Platform\OpenGL</Filter>
@@ -144,11 +147,19 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Beetle\OrthographicCameraController.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Beetle\Application.cpp">
-      <Filter>src\Beetle</Filter>
+    <ClCompile Include="src\Beetle\Core\Application.cpp">
+      <Filter>src\Beetle\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Beetle\Core\Layer.cpp">
+      <Filter>src\Beetle\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Beetle\Core\LayerStack.cpp">
+      <Filter>src\Beetle\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Beetle\Core\Log.cpp">
+      <Filter>src\Beetle\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Beetle\ImGui\ImGuiBuild.cpp">
       <Filter>src\Beetle\ImGui</Filter>
@@ -156,19 +167,13 @@
     <ClCompile Include="src\Beetle\ImGui\ImGuiLayer.cpp">
       <Filter>src\Beetle\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="src\Beetle\Layer.cpp">
-      <Filter>src\Beetle</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Beetle\LayerStack.cpp">
-      <Filter>src\Beetle</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Beetle\Log.cpp">
-      <Filter>src\Beetle</Filter>
-    </ClCompile>
     <ClCompile Include="src\Beetle\Renderer\Buffer.cpp">
       <Filter>src\Beetle\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Beetle\Renderer\OrthographicCamera.cpp">
+      <Filter>src\Beetle\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Beetle\Renderer\OrthographicCameraController.cpp">
       <Filter>src\Beetle\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Beetle\Renderer\Renderer.cpp">
@@ -219,6 +224,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Beetle\OrthographicCameraController.cpp" />
   </ItemGroup>
 </Project>

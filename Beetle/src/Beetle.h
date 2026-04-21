@@ -1,17 +1,17 @@
 #pragma once
 //for us by beetle app
 
-#include "Beetle/Application.h"
-#include "Beetle/Layer.h"
-#include "Beetle/Log.h"
+#include "Beetle/Core/Application.h"
+#include "Beetle/Core/Layer.h"
+#include "Beetle/Core/Log.h"
 
 #include "Beetle/Core/TimeStamp.h"
 
-#include "Beetle/Input.h"
-#include "Beetle/KeyCodes.h"
-#include "Beetle/MouseButtonCodes.h"
+#include "Beetle/Core/Input.h"
+#include "Beetle/Core/KeyCodes.h"
+#include "Beetle/Core/MouseButtonCodes.h"
 
-#include "Beetle/OrthographicCameraController.h"
+#include "Beetle/Renderer/OrthographicCameraController.h"
 
 #include "Beetle/ImGui/ImGuiLayer.h"
 
@@ -29,6 +29,6 @@
 //----------End rednerer Point----------------
 
 //----------Entry Point----------------
-#include "Beetle/EntryPoint.h"
+#include "Beetle/Core/EntryPoint.h"
 
 //----------End Entry Point----------------

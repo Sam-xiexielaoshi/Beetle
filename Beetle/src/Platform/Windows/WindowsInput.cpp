@@ -1,7 +1,7 @@
 #include "btpch.h"
 #include "WindowsInput.h"
 
-#include "Beetle/Application.h"
+#include "Beetle/Core/Application.h"
 #include <GLFW/glfw3.h>
 
 namespace Beetle {

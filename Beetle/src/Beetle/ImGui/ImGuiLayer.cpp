@@ -9,7 +9,7 @@
 
 #include "GLFW/glfw3.h"
 
-#include "Beetle/Application.h"
+#include "Beetle/Core/Application.h"
  //temp
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>

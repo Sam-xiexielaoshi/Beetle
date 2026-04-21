@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Beetle/Layer.h"
+#include "Beetle/Core/Layer.h"
 
 #include "Beetle/Events/MouseEvent.h"
 #include "Beetle/Events/KeyEvent.h"

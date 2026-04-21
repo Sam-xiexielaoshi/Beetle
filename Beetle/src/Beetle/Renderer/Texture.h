@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "Beetle/Core.h"
+#include "Beetle/Core/Core.h"
 
 namespace Beetle {
 

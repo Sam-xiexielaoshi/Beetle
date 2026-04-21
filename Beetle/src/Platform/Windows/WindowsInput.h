@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Beetle/Input.h"
+#include "Beetle/Core/Input.h"
 
 namespace Beetle {
 	class WindowsInput : public Input

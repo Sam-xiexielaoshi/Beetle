@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "Beetle/Window.h"
+#include "Beetle/Core/Window.h"
 
 #include "Beetle/Renderer/GraphicsContext.h"
 #include <GLFW/glfw3.h>

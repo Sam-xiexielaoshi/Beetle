@@ -1,11 +1,9 @@
 #include "btpch.h"
 #include "Application.h"
 
-#include "Beetle/Log.h"
-
 #include "Beetle/Renderer/Renderer.h" 
 
-#include "Input.h"
+#include "Beetle/Core/Input.h"
 #include <GLFW/glfw3.h>
 
 

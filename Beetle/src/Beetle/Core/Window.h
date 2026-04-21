@@ -2,7 +2,7 @@
 
 #include "btpch.h"
 
-#include "Beetle/Core.h"
+#include "Beetle/Core/Core.h"
 #include "Beetle/Events/Event.h"
 
 namespace Beetle {
