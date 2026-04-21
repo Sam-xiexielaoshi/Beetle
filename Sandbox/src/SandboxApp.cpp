@@ -1,6 +1,10 @@
 #include <Beetle.h>
+#include "Platform/OpenGL/OpenGLShader.h"
 #include "imgui/imgui.h"
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+
 
 
 class ExampleLayer : public Beetle::Layer
@@ -87,9 +91,9 @@ public:
 			}
 		)";
 
-		m_Shader.reset(new Beetle::Shader(vertexSrc, fragmentSrc));
+		m_Shader.reset(Beetle::Shader::Create(vertexSrc, fragmentSrc));
 
-		std::string blueShaderVertexSrc = R"(
+		std::string flatColorShaderVertexSrc = R"(
 			#version 460 core
 				
 			layout(location = 0) in vec3 a_Position;
@@ -107,19 +111,21 @@ public:
 			}
 		)";
 
-		std::string blueShaderFragmentSrc = R"(
+		std::string flatColorShaderFragmentSrc = R"(
 				#version 460 core
 			
 				layout(location = 0) out vec4 color;
+
+				uniform vec3 u_Color;
 
 				in vec3 v_Position;
 			
 				void main()
 				{
-					color = vec4(0.2, 0.3, 0.8, 1.0);
+					color = vec4(u_Color, 1.0);
 				}
 			)";
-		m_BlueShader.reset(new Beetle::Shader(blueShaderVertexSrc, blueShaderFragmentSrc));
+		m_flatColorShader.reset(Beetle::Shader::Create(flatColorShaderVertexSrc, flatColorShaderFragmentSrc));
 	}
 
 	void OnUpdate(Beetle::TimeStamp ts) override
@@ -152,24 +158,36 @@ public:
 		Beetle::Renderer::BeginScene(m_Camera);
 
 		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
-		
-		for (int i = 0; i < 5; i++) 
+
+		//Beetle::MaterialRef material = new Beetle::Material(m_flatColorShader);
+		//Beetle::MaterialInstanceRed mi = new Beetle::MaterialInstance(material);
+		//mi->Set("u_Color", redColor);
+		//squareMesh->SetMaterial(mi);
+
+		std::dynamic_pointer_cast<Beetle::OpenGLShader>(m_flatColorShader)->Bind();
+		std::dynamic_pointer_cast<Beetle::OpenGLShader>(m_flatColorShader)->UploadUniformFloat3("u_Color", m_SquareColor);
+
+
+		for (int i = 0; i < 20; i++) 
 		{
 			for (int j = 0; j < 20; j++)
 			{
 				glm::vec3 pos(i * 0.11f, j * 0.11f, 0.0f);
-				glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos)*scale;
-				Beetle::Renderer::Submit(m_BlueShader, m_SquareVA, transform);
+				glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos)*scale; 
+				Beetle::Renderer::Submit(m_flatColorShader, m_SquareVA, transform);
 			}
 		}
-		//Beetle::Renderer::Submit(m_Shader, m_VertexArray);
+
+		Beetle::Renderer::Submit(m_Shader, m_VertexArray);
 		
 		Beetle::Renderer::EndScene();
 	}
 
 	void OnImGuiRender() override
 	{
-
+		ImGui::Begin("Settings");
+		ImGui::ColorEdit3("Square Color", glm::value_ptr(m_SquareColor));
+		ImGui::End();
 	}
 
 	void OnEvent(Beetle::Event& event) override
@@ -181,7 +199,7 @@ private:
 	std::shared_ptr<Beetle::Shader> m_Shader;
 	std::shared_ptr<Beetle::VertexArray> m_VertexArray;
 
-	std::shared_ptr<Beetle::Shader> m_BlueShader;
+	std::shared_ptr<Beetle::Shader> m_flatColorShader;
 	std::shared_ptr<Beetle::VertexArray> m_SquareVA;
 
 	Beetle::OrthographicCamera m_Camera;
@@ -190,6 +208,8 @@ private:
 
 	float m_CameraRotation = 0.0f;
 	float m_CameraRotationSpeed = 180.0f;
+
+	glm::vec3 m_SquareColor = { 0.2f, 0.3f, 0.8f };
 
 };
 
