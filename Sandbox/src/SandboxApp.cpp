@@ -89,7 +89,7 @@ public:
 			}
 		)";
 
-		m_Shader.reset(Beetle::Shader::Create(vertexSrc, fragmentSrc));
+		m_Shader=Beetle::Shader::Create("VertexPosColor",vertexSrc, fragmentSrc);
 
 		
 		std::string flatColorShaderVertexSrc = R"(
@@ -124,16 +124,16 @@ public:
 					color = vec4(u_Color, 1.0);
 				}
 			)";
-		m_flatColorShader.reset(Beetle::Shader::Create(flatColorShaderVertexSrc, flatColorShaderFragmentSrc));
+		m_flatColorShader=Beetle::Shader::Create("FlatColor",flatColorShaderVertexSrc, flatColorShaderFragmentSrc);
 
-		m_TextureShader.reset(Beetle::Shader::Create("assets/shaders/Texture.glsl"));
+		auto textureShader = m_ShaderLibrary.Load("assets/shaders/Texture.glsl");
 
 		m_Texture=Beetle::Texture2D::Create("assets/textures/manishHania.png");
 		m_BeetleLogo =Beetle::Texture2D::Create("assets/textures/beetle.png");
 		
 
-		std::dynamic_pointer_cast<Beetle::OpenGLShader>(m_TextureShader)->Bind();
-		std::dynamic_pointer_cast<Beetle::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
+		std::dynamic_pointer_cast<Beetle::OpenGLShader>(textureShader)->Bind();
+		std::dynamic_pointer_cast<Beetle::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
 
 	}
 
@@ -182,12 +182,13 @@ public:
 			}
 		}
 
+		auto textureShader = m_ShaderLibrary.Get("Texture");
 
 		m_Texture->Bind();
-		Beetle::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+		Beetle::Renderer::Submit(textureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
 		m_BeetleLogo->Bind();
-		Beetle::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+		Beetle::Renderer::Submit(textureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
 		//triangle fker
 		//Beetle::Renderer::Submit(m_Shader, m_VertexArray);
@@ -208,10 +209,11 @@ public:
 	}
 
 private:
+	Beetle::ShaderLibrary m_ShaderLibrary;
 	Beetle::Ref<Beetle::Shader> m_Shader;
 	Beetle::Ref<Beetle::VertexArray> m_VertexArray;
 
-	Beetle::Ref<Beetle::Shader> m_flatColorShader, m_TextureShader;
+	Beetle::Ref<Beetle::Shader> m_flatColorShader;
 	Beetle::Ref<Beetle::VertexArray> m_SquareVA;
 
 	Beetle::Ref<Beetle::Texture2D> m_Texture, m_BeetleLogo;
