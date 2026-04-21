@@ -17,7 +17,7 @@ public:
 			 0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
 			 0.0f,  0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f
 		};
-
+	
 		Beetle::Ref<Beetle::VertexBuffer> vertexBuffer;
 		vertexBuffer.reset(Beetle::VertexBuffer::Create(vertices, sizeof(vertices)));
 		Beetle::BufferLayout layout = {
