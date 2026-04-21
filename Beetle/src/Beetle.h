@@ -27,8 +27,3 @@
 
 #include "Beetle/Renderer/OrthographicCamera.h"
 //----------End rednerer Point----------------
-
-//----------Entry Point----------------
-#include "Beetle/Core/EntryPoint.h"
-
-//----------End Entry Point----------------

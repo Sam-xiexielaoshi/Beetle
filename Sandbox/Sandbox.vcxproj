@@ -143,12 +143,19 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Sandbox2D.cpp" />
     <ClCompile Include="src\SandboxApp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Beetle\Beetle.vcxproj">
       <Project>{368730A9-2229-5B7F-0BE4-6ED3F724E2CF}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Sandbox2D.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\shaders\FlatColor.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
