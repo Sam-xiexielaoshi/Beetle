@@ -168,6 +168,7 @@
     <ClInclude Include="src\Beetle\LayerStack.h" />
     <ClInclude Include="src\Beetle\Log.h" />
     <ClInclude Include="src\Beetle\MouseButtonCodes.h" />
+    <ClInclude Include="src\Beetle\OrthographicCameraController.h" />
     <ClInclude Include="src\Beetle\Renderer\Buffer.h" />
     <ClInclude Include="src\Beetle\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Beetle\Renderer\OrthographicCamera.h" />
@@ -196,6 +197,7 @@
     <ClCompile Include="src\Beetle\Layer.cpp" />
     <ClCompile Include="src\Beetle\LayerStack.cpp" />
     <ClCompile Include="src\Beetle\Log.cpp" />
+    <ClCompile Include="src\Beetle\OrthographicCameraController.cpp" />
     <ClCompile Include="src\Beetle\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Beetle\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\Beetle\Renderer\Renderer.cpp" />

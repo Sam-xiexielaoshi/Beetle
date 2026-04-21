@@ -11,6 +11,8 @@
 #include "Beetle/KeyCodes.h"
 #include "Beetle/MouseButtonCodes.h"
 
+#include "Beetle/OrthographicCameraController.h"
+
 #include "Beetle/ImGui/ImGuiLayer.h"
 
 //----------renderer Point---------------
