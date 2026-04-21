@@ -21,7 +21,7 @@ public:
 			 0.0f,  0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f
 		};
 
-		std::shared_ptr<Beetle::VertexBuffer> vertexBuffer;
+		Beetle::Ref<Beetle::VertexBuffer> vertexBuffer;
 		vertexBuffer.reset(Beetle::VertexBuffer::Create(vertices, sizeof(vertices)));
 		Beetle::BufferLayout layout = {
 			{Beetle::ShaderDataType::Float3, "a_Position"},
@@ -32,7 +32,7 @@ public:
 		m_VertexArray->AddVertexBuffer(vertexBuffer);
 
 		unsigned int indices[3] = { 0,1,2 };
-		std::shared_ptr<Beetle::IndexBuffer> indexBuffer;
+		Beetle::Ref<Beetle::IndexBuffer> indexBuffer;
 		indexBuffer.reset(Beetle::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
@@ -43,7 +43,7 @@ public:
 			 0.5f,  0.5f, 0.0f,
 			-0.5f,  0.5f, 0.0f
 		};
-		std::shared_ptr<Beetle::VertexBuffer> squareVB;
+		Beetle::Ref<Beetle::VertexBuffer> squareVB;
 		squareVB.reset(Beetle::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
 
 		squareVB->SetLayout({
@@ -52,7 +52,7 @@ public:
 		m_SquareVA->AddVertexBuffer(squareVB);
 
 		unsigned int squareIndices[6] = { 0,1,2,2,3,0 };
-		std::shared_ptr<Beetle::IndexBuffer> squareIB;
+		Beetle::Ref<Beetle::IndexBuffer> squareIB;
 		squareIB.reset(Beetle::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
 		m_SquareVA->SetIndexBuffer(squareIB);
 
@@ -196,11 +196,11 @@ public:
 	}
 
 private:
-	std::shared_ptr<Beetle::Shader> m_Shader;
-	std::shared_ptr<Beetle::VertexArray> m_VertexArray;
+	Beetle::Ref<Beetle::Shader> m_Shader;
+	Beetle::Ref<Beetle::VertexArray> m_VertexArray;
 
-	std::shared_ptr<Beetle::Shader> m_flatColorShader;
-	std::shared_ptr<Beetle::VertexArray> m_SquareVA;
+	Beetle::Ref<Beetle::Shader> m_flatColorShader;
+	Beetle::Ref<Beetle::VertexArray> m_SquareVA;
 
 	Beetle::OrthographicCamera m_Camera;
 	glm::vec3 m_CameraPosition;
