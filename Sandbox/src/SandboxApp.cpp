@@ -5,7 +5,7 @@ class ExampleLayer : public Beetle::Layer
 {
 public:
 	ExampleLayer()
-		: Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f)
+		: Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), m_CameraPosition(0.0f, 0.0f, 0.0f)
 	{
 		m_VertexArray.reset(Beetle::VertexArray::Create());
 
@@ -119,11 +119,29 @@ public:
 
 	void OnUpdate() override
 	{	
+			if (Beetle::Input::IsKeyPressed(BT_KEY_LEFT))
+				m_CameraPosition.x -= m_CameraMoveSpeed;
+
+			else if (Beetle::Input::IsKeyPressed(BT_KEY_RIGHT))
+				m_CameraPosition.x += m_CameraMoveSpeed;
+
+			if (Beetle::Input::IsKeyPressed(BT_KEY_UP))
+				m_CameraPosition.y += m_CameraMoveSpeed;
+
+			else if (Beetle::Input::IsKeyPressed(BT_KEY_DOWN))
+				m_CameraPosition.y -= m_CameraMoveSpeed;
+
+			if (Beetle::Input::IsKeyPressed(BT_KEY_Q))
+				m_CameraRotation -= m_CameraRotationSpeed;
+
+			else if (Beetle::Input::IsKeyPressed(BT_KEY_E))
+				m_CameraRotation += m_CameraRotationSpeed;
+
 		Beetle::RendererCommand::SetClearColor({ 0.2f, 0.2f, 0.2f, 1.0f });
 		Beetle::RendererCommand::Clear();
 
-		m_Camera.SetPosition({ 0.5f, 0.5f, 0.0f });
-		m_Camera.SetRotation(45.0f);
+		m_Camera.SetPosition(m_CameraPosition);
+		m_Camera.SetRotation(m_CameraRotation);
 
 		Beetle::Renderer::BeginScene(m_Camera);
 	
@@ -135,21 +153,14 @@ public:
 
 	void OnImGuiRender() override
 	{
-		ImGui::Begin("Test");
-		ImGui::Text("Hello World!");
-		ImGui::End();
+
 	}
 
 	void OnEvent(Beetle::Event& event) override
 	{
-		if (event.GetEventType() == Beetle::EventType::KeyPressed)
-		{
-			Beetle::KeyPressedEvent& e = (Beetle::KeyPressedEvent&)event;
-			if(e.GetKeyCode()==BT_KEY_TAB)
-				BT_TRACE("Tab key is pressed (event)!");
-			BT_TRACE("{0}", (char)e.GetKeyCode());
-		}
+
 	}
+
 private:
 	std::shared_ptr<Beetle::Shader> m_Shader;
 	std::shared_ptr<Beetle::VertexArray> m_VertexArray;
@@ -158,6 +169,11 @@ private:
 	std::shared_ptr<Beetle::VertexArray> m_SquareVA;
 
 	Beetle::OrthographicCamera m_Camera;
+	glm::vec3 m_CameraPosition;
+	float m_CameraMoveSpeed = 0.05f;
+
+	float m_CameraRotation = 0.0f;
+	float m_CameraRotationSpeed = 2.0f;
 };
 
 class Sandbox : public Beetle::Application
