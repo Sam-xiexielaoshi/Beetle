@@ -4,9 +4,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-
-
-
 class ExampleLayer : public Beetle::Layer
 {
 public:
@@ -37,17 +34,18 @@ public:
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
 		m_SquareVA.reset(Beetle::VertexArray::Create());
-		float squareVertices[3 * 4] = {
-			-0.5f , -0.5f, 0.0f,
-			 0.5f, -0.5f, 0.0f,
-			 0.5f,  0.5f, 0.0f,
-			-0.5f,  0.5f, 0.0f
+		float squareVertices[5 * 4] = {
+			-0.5f , -0.5f, 0.0f, 0.0f, 0.0f, 
+			 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+			 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 		};
 		Beetle::Ref<Beetle::VertexBuffer> squareVB;
 		squareVB.reset(Beetle::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
 
 		squareVB->SetLayout({
 			{Beetle::ShaderDataType::Float3, "a_Position"},
+			{Beetle::ShaderDataType::Float2, "a_TexCoord"}
 			});
 		m_SquareVA->AddVertexBuffer(squareVB);
 
@@ -126,6 +124,46 @@ public:
 				}
 			)";
 		m_flatColorShader.reset(Beetle::Shader::Create(flatColorShaderVertexSrc, flatColorShaderFragmentSrc));
+
+		std::string textureShaderVertexSrc = R"(
+			#version 460 core
+				
+			layout(location = 0) in vec3 a_Position;
+			layout(location = 1) in vec2 a_TexCoord;
+			
+			uniform mat4 u_ViewProjection;
+			uniform mat4 u_Transform;
+
+			out vec2 v_TexCoord;
+
+			void main()
+			{
+				v_TexCoord = a_TexCoord;
+				gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
+			}
+		)";
+
+		std::string textureShaderFragmentSrc = R"(
+				#version 460 core
+			
+				layout(location = 0) out vec4 color;
+
+				in vec2 v_TexCoord;
+
+				uniform sampler2D u_Texture;
+			
+				void main()
+				{
+					color = texture(u_Texture, v_TexCoord);
+				}
+			)";
+		m_TextureShader.reset(Beetle::Shader::Create(textureShaderVertexSrc, textureShaderFragmentSrc));
+
+		m_Texture=Beetle::Texture2D::Create("assets/textures/manishHania.png");
+
+		std::dynamic_pointer_cast<Beetle::OpenGLShader>(m_TextureShader)->Bind();
+		std::dynamic_pointer_cast<Beetle::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
+
 	}
 
 	void OnUpdate(Beetle::TimeStamp ts) override
@@ -159,11 +197,6 @@ public:
 
 		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
-		//Beetle::MaterialRef material = new Beetle::Material(m_flatColorShader);
-		//Beetle::MaterialInstanceRed mi = new Beetle::MaterialInstance(material);
-		//mi->Set("u_Color", redColor);
-		//squareMesh->SetMaterial(mi);
-
 		std::dynamic_pointer_cast<Beetle::OpenGLShader>(m_flatColorShader)->Bind();
 		std::dynamic_pointer_cast<Beetle::OpenGLShader>(m_flatColorShader)->UploadUniformFloat3("u_Color", m_SquareColor);
 
@@ -178,7 +211,12 @@ public:
 			}
 		}
 
-		Beetle::Renderer::Submit(m_Shader, m_VertexArray);
+
+		m_Texture->Bind();
+		Beetle::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+
+		//triangle fker
+		//Beetle::Renderer::Submit(m_Shader, m_VertexArray);
 		
 		Beetle::Renderer::EndScene();
 	}
@@ -199,8 +237,10 @@ private:
 	Beetle::Ref<Beetle::Shader> m_Shader;
 	Beetle::Ref<Beetle::VertexArray> m_VertexArray;
 
-	Beetle::Ref<Beetle::Shader> m_flatColorShader;
+	Beetle::Ref<Beetle::Shader> m_flatColorShader, m_TextureShader;
 	Beetle::Ref<Beetle::VertexArray> m_SquareVA;
+
+	Beetle::Ref<Beetle::Texture2D> m_Texture;
 
 	Beetle::OrthographicCamera m_Camera;
 	glm::vec3 m_CameraPosition;

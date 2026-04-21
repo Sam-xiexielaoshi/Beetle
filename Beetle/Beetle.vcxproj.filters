@@ -1,128 +1,222 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Beetle">
-      <UniqueIdentifier>{368730A9-2229-5B7F-0BE4-6ED3F724E2CF}</UniqueIdentifier>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Beetle\Events">
-      <UniqueIdentifier>{5A3ACBCB-C6FA-4602-8F35-907FFBB48BDE}</UniqueIdentifier>
+    <Filter Include="src\Beetle">
+      <UniqueIdentifier>{6D608F06-5918-D153-C21F-AAAFAEF66B44}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Beetle\ImGui">
-      <UniqueIdentifier>{E00C0B73-CC6F-9A17-75F5-D2CD6137669A}</UniqueIdentifier>
+    <Filter Include="src\Beetle\Core">
+      <UniqueIdentifier>{E5D0E668-515C-542D-5A6D-D721C677B02D}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Platform">
-      <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
+    <Filter Include="src\Beetle\Events">
+      <UniqueIdentifier>{B1AF0043-1DC6-FED8-663D-8AFAD292CF60}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Platform\Windows">
-      <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
+    <Filter Include="src\Beetle\ImGui">
+      <UniqueIdentifier>{57B32B86-43AC-4AD8-6CDE-2F5D58362AE4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Beetle\Renderer">
+      <UniqueIdentifier>{B36EE6FC-1FD0-C30A-A83D-0ABD149EFAC9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform">
+      <UniqueIdentifier>{21CA02E5-0D2D-9289-B6B2-CA3FA2F45D0C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\OpenGL">
+      <UniqueIdentifier>{35A49437-A105-7245-2A73-B8F796D3A804}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\Windows">
+      <UniqueIdentifier>{5B054582-4794-CE4B-F0B2-E246DC20DFF1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor">
+      <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\stb_image">
+      <UniqueIdentifier>{0DA0BA59-F998-D9AB-22CB-BE300E23B9B7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Beetle.h" />
+    <ClInclude Include="src\Beetle.h">
+      <Filter>src</Filter>
+    </ClInclude>
     <ClInclude Include="src\Beetle\Application.h">
-      <Filter>Beetle</Filter>
+      <Filter>src\Beetle</Filter>
     </ClInclude>
     <ClInclude Include="src\Beetle\Core.h">
-      <Filter>Beetle</Filter>
+      <Filter>src\Beetle</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Beetle\Core\TimeStamp.h">
+      <Filter>src\Beetle\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Beetle\EntryPoint.h">
-      <Filter>Beetle</Filter>
+      <Filter>src\Beetle</Filter>
     </ClInclude>
     <ClInclude Include="src\Beetle\Events\ApplicationEvent.h">
-      <Filter>Beetle\Events</Filter>
+      <Filter>src\Beetle\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Beetle\Events\Event.h">
-      <Filter>Beetle\Events</Filter>
+      <Filter>src\Beetle\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Beetle\Events\KeyEvent.h">
-      <Filter>Beetle\Events</Filter>
+      <Filter>src\Beetle\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Beetle\Events\MouseEvent.h">
-      <Filter>Beetle\Events</Filter>
+      <Filter>src\Beetle\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Beetle\ImGui\ImGuiLayer.h">
-      <Filter>Beetle\ImGui</Filter>
+      <Filter>src\Beetle\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="src\Beetle\Input.h">
-      <Filter>Beetle</Filter>
+      <Filter>src\Beetle</Filter>
     </ClInclude>
     <ClInclude Include="src\Beetle\KeyCodes.h">
-      <Filter>Beetle</Filter>
+      <Filter>src\Beetle</Filter>
     </ClInclude>
     <ClInclude Include="src\Beetle\Layer.h">
-      <Filter>Beetle</Filter>
+      <Filter>src\Beetle</Filter>
     </ClInclude>
     <ClInclude Include="src\Beetle\LayerStack.h">
-      <Filter>Beetle</Filter>
+      <Filter>src\Beetle</Filter>
     </ClInclude>
     <ClInclude Include="src\Beetle\Log.h">
-      <Filter>Beetle</Filter>
+      <Filter>src\Beetle</Filter>
     </ClInclude>
     <ClInclude Include="src\Beetle\MouseButtonCodes.h">
-      <Filter>Beetle</Filter>
+      <Filter>src\Beetle</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Beetle\Renderer\Buffer.h">
+      <Filter>src\Beetle\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Beetle\Renderer\GraphicsContext.h">
+      <Filter>src\Beetle\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Beetle\Renderer\OrthographicCamera.h">
+      <Filter>src\Beetle\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Beetle\Renderer\Renderer.h">
+      <Filter>src\Beetle\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Beetle\Renderer\RendererAPI.h">
+      <Filter>src\Beetle\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Beetle\Renderer\RendererCommand.h">
+      <Filter>src\Beetle\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Beetle\Renderer\Shader.h">
+      <Filter>src\Beetle\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Beetle\Renderer\Texture.h">
+      <Filter>src\Beetle\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Beetle\Renderer\VertexArray.h">
+      <Filter>src\Beetle\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Beetle\Window.h">
-      <Filter>Beetle</Filter>
+      <Filter>src\Beetle</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h">
+      <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsInput.h">
-      <Filter>Platform\Windows</Filter>
+      <Filter>src\Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
-      <Filter>Platform\Windows</Filter>
+      <Filter>src\Platform\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="src\btpch.h" />
-    <ClInclude Include="src\Beetle\Renderer\GraphicsContext.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
-    <ClInclude Include="src\Beetle\Renderer\Shader.h" />
-    <ClInclude Include="src\Beetle\Renderer\Buffer.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
-    <ClInclude Include="src\Beetle\Renderer\Renderer.h" />
-    <ClInclude Include="src\Beetle\Renderer\VertexArray.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
-    <ClInclude Include="src\Beetle\Renderer\RendererAPI.h" />
-    <ClInclude Include="src\Beetle\Renderer\RendererCommand.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
-    <ClInclude Include="src\Beetle\Renderer\OrthographicCamera.h" />
-    <ClInclude Include="src\Beetle\Core\TimeStamp.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
+    <ClInclude Include="src\btpch.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\stb_image\stb_image.h">
+      <Filter>vendor\stb_image</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Beetle\Application.cpp">
-      <Filter>Beetle</Filter>
+      <Filter>src\Beetle</Filter>
     </ClCompile>
     <ClCompile Include="src\Beetle\ImGui\ImGuiBuild.cpp">
-      <Filter>Beetle\ImGui</Filter>
+      <Filter>src\Beetle\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\Beetle\ImGui\ImGuiLayer.cpp">
-      <Filter>Beetle\ImGui</Filter>
+      <Filter>src\Beetle\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\Beetle\Layer.cpp">
-      <Filter>Beetle</Filter>
+      <Filter>src\Beetle</Filter>
     </ClCompile>
     <ClCompile Include="src\Beetle\LayerStack.cpp">
-      <Filter>Beetle</Filter>
+      <Filter>src\Beetle</Filter>
     </ClCompile>
     <ClCompile Include="src\Beetle\Log.cpp">
-      <Filter>Beetle</Filter>
+      <Filter>src\Beetle</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Beetle\Renderer\Buffer.cpp">
+      <Filter>src\Beetle\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Beetle\Renderer\OrthographicCamera.cpp">
+      <Filter>src\Beetle\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Beetle\Renderer\Renderer.cpp">
+      <Filter>src\Beetle\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Beetle\Renderer\RendererAPI.cpp">
+      <Filter>src\Beetle\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Beetle\Renderer\RendererCommand.cpp">
+      <Filter>src\Beetle\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Beetle\Renderer\Shader.cpp">
+      <Filter>src\Beetle\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Beetle\Renderer\Texture.cpp">
+      <Filter>src\Beetle\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Beetle\Renderer\VertexArray.cpp">
+      <Filter>src\Beetle\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
-      <Filter>Platform\Windows</Filter>
+      <Filter>src\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
-      <Filter>Platform\Windows</Filter>
+      <Filter>src\Platform\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="src\btpch.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
-    <ClCompile Include="src\Beetle\Renderer\Shader.cpp" />
-    <ClCompile Include="src\Beetle\Renderer\Buffer.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
-    <ClCompile Include="src\Beetle\Renderer\Renderer.cpp" />
-    <ClCompile Include="src\Beetle\Renderer\VertexArray.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
-    <ClCompile Include="src\Beetle\Renderer\RendererAPI.cpp" />
-    <ClCompile Include="src\Beetle\Renderer\RendererCommand.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
-    <ClCompile Include="src\Beetle\Renderer\OrthographicCamera.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
+    <ClCompile Include="src\btpch.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="vendor\stb_image\stb_image.cpp">
+      <Filter>vendor\stb_image</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

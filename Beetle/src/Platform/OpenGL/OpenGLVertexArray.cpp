@@ -10,7 +10,7 @@ namespace Beetle {
 		switch (type)
 		{
 			case Beetle::ShaderDataType::Float: return GL_FLOAT;
-			case Beetle::ShaderDataType::FLoat2: return GL_FLOAT;
+			case Beetle::ShaderDataType::Float2: return GL_FLOAT;
 			case Beetle::ShaderDataType::Float3: return GL_FLOAT;
 			case Beetle::ShaderDataType::Float4: return GL_FLOAT;
 			case Beetle::ShaderDataType::Mat3: return GL_FLOAT;

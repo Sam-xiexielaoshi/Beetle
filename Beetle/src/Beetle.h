@@ -20,6 +20,7 @@
 
 #include "Beetle/Renderer/Buffer.h"
 #include "Beetle/Renderer/Shader.h"
+#include "Beetle/Renderer/Texture.h"
 #include "Beetle/Renderer/VertexArray.h"
 
 #include "Beetle/Renderer/OrthographicCamera.h"

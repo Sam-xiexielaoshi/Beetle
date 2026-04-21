@@ -18,6 +18,7 @@ IncludeDir["GLFW"] = "Beetle/vendor/GLFW/include"
 IncludeDir["Glad"] = "Beetle/vendor/Glad/include"
 IncludeDir["ImGui"] = "Beetle/vendor/imgui"
 IncludeDir["glm"] = "Beetle/vendor/glm"
+IncludeDir["stb_image"] = "Beetle/vendor/stb_image"
 
 include "Beetle/vendor/GLFW"
 include "Beetle/vendor/Glad"
@@ -40,6 +41,8 @@ project "Beetle"
 	{
 		"%{prj.name}/src/**.h", 
 		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/vendor/stb_image/**.h",
+		"%{prj.name}/vendor/stb_image/**.cpp",
 	}
 
 	defines
@@ -54,7 +57,8 @@ project "Beetle"
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.stb_image}"
 	}
 
 	links{
