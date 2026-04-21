@@ -1,15 +1,13 @@
 #pragma once
 
 #include "Core.h"
-#include "Events/Event.h"
+
 #include "Window.h"
-#include "Beetle/Events/ApplicationEvent.h"
 #include "Beetle/LayerStack.h"
+#include "Events/Event.h"
+#include "Beetle/Events/ApplicationEvent.h"
+
 #include "Beetle/ImGui/ImGuiLayer.h"
-#include "Beetle/Renderer/Shader.h"
-#include "Beetle/Renderer/Buffer.h"
-#include "Beetle/Renderer/VertexArray.h"
-#include "Beetle/Renderer/OrthographicCamera.h"
 
 namespace Beetle {
 	class BEETLE_API Application

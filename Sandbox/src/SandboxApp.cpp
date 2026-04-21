@@ -132,10 +132,10 @@ public:
 				m_CameraPosition.y -= m_CameraMoveSpeed;
 
 			if (Beetle::Input::IsKeyPressed(BT_KEY_Q))
-				m_CameraRotation -= m_CameraRotationSpeed;
+				m_CameraRotation += m_CameraRotationSpeed;
 
 			else if (Beetle::Input::IsKeyPressed(BT_KEY_E))
-				m_CameraRotation += m_CameraRotationSpeed;
+				m_CameraRotation -= m_CameraRotationSpeed;
 
 		Beetle::RendererCommand::SetClearColor({ 0.2f, 0.2f, 0.2f, 1.0f });
 		Beetle::RendererCommand::Clear();
