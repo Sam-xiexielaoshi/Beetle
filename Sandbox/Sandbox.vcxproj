@@ -150,9 +150,6 @@
       <Project>{368730A9-2229-5B7F-0BE4-6ED3F724E2CF}</Project>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Image Include="C:\Users\SAM\OneDrive\Pictures\Screenshots 1\Screenshot 2026-01-25 152403.png" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

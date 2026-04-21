@@ -118,7 +118,8 @@ project "Sandbox"
 		"Beetle/vendor/spdlog/include",
 		"Beetle/src",
 		"Beetle/vendor",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.Glad}"
 	}
 
 	links
