@@ -7,6 +7,8 @@
 #include "Events/Event.h"
 #include "Beetle/Events/ApplicationEvent.h"
 
+#include "Beetle/Core/TimeStamp.h"
+
 #include "Beetle/ImGui/ImGuiLayer.h"
 
 namespace Beetle {
@@ -30,10 +32,13 @@ namespace Beetle {
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
 
+	private:
 		std::unique_ptr<Window> m_Window;
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
+		TimeStamp m_TimeStamp;
+		float m_LastFrameTime = 0.0f;
 
 	private:
 		static Application* s_Instance;

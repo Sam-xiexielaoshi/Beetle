@@ -83,6 +83,7 @@
     <ClInclude Include="src\Beetle\Renderer\RendererCommand.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\Beetle\Renderer\OrthographicCamera.h" />
+    <ClInclude Include="src\Beetle\Core\TimeStamp.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Beetle\Application.cpp">

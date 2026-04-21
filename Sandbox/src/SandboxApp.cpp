@@ -117,25 +117,26 @@ public:
 		m_BlueShader.reset(new Beetle::Shader(blueShaderVertexSrc, blueShaderFragmentSrc));
 	}
 
-	void OnUpdate() override
-	{	
-			if (Beetle::Input::IsKeyPressed(BT_KEY_LEFT))
-				m_CameraPosition.x -= m_CameraMoveSpeed;
+	void OnUpdate(Beetle::TimeStamp ts) override
+	{
 
-			else if (Beetle::Input::IsKeyPressed(BT_KEY_RIGHT))
-				m_CameraPosition.x += m_CameraMoveSpeed;
+		if (Beetle::Input::IsKeyPressed(BT_KEY_LEFT))
+			m_CameraPosition.x -= m_CameraMoveSpeed * ts;
 
-			if (Beetle::Input::IsKeyPressed(BT_KEY_UP))
-				m_CameraPosition.y += m_CameraMoveSpeed;
+		else if (Beetle::Input::IsKeyPressed(BT_KEY_RIGHT))
+			m_CameraPosition.x += m_CameraMoveSpeed * ts;
 
-			else if (Beetle::Input::IsKeyPressed(BT_KEY_DOWN))
-				m_CameraPosition.y -= m_CameraMoveSpeed;
+		if (Beetle::Input::IsKeyPressed(BT_KEY_UP))
+			m_CameraPosition.y += m_CameraMoveSpeed * ts;
 
-			if (Beetle::Input::IsKeyPressed(BT_KEY_Q))
-				m_CameraRotation += m_CameraRotationSpeed;
+		else if (Beetle::Input::IsKeyPressed(BT_KEY_DOWN))
+			m_CameraPosition.y -= m_CameraMoveSpeed * ts;
 
-			else if (Beetle::Input::IsKeyPressed(BT_KEY_E))
-				m_CameraRotation -= m_CameraRotationSpeed;
+		if (Beetle::Input::IsKeyPressed(BT_KEY_Q))
+			m_CameraRotation += m_CameraRotationSpeed * ts;
+
+		else if (Beetle::Input::IsKeyPressed(BT_KEY_E))
+			m_CameraRotation -= m_CameraRotationSpeed * ts;
 
 		Beetle::RendererCommand::SetClearColor({ 0.2f, 0.2f, 0.2f, 1.0f });
 		Beetle::RendererCommand::Clear();
@@ -170,10 +171,10 @@ private:
 
 	Beetle::OrthographicCamera m_Camera;
 	glm::vec3 m_CameraPosition;
-	float m_CameraMoveSpeed = 0.05f;
+	float m_CameraMoveSpeed = 5.0f;
 
 	float m_CameraRotation = 0.0f;
-	float m_CameraRotationSpeed = 2.0f;
+	float m_CameraRotationSpeed = 180.0f;
 };
 
 class Sandbox : public Beetle::Application

@@ -6,6 +6,7 @@
 #include "Beetle/Renderer/Renderer.h" 
 
 #include "Input.h"
+#include <GLFW/glfw3.h>
 
 
 namespace Beetle {
@@ -59,7 +60,11 @@ namespace Beetle {
 	{
 		while (m_Running)
 		{
-			for (Layer* layer : m_LayerStack) layer->OnUpdate();
+			float time = (float)glfwGetTime();//platform gettim
+			TimeStamp  timestamp = time - m_LastFrameTime;
+			m_LastFrameTime = time;
+
+			for (Layer* layer : m_LayerStack) layer->OnUpdate(timestamp);
 
 			m_ImGuiLayer->Begin();
 			for (Layer* layer : m_LayerStack) layer->OnImGuiRender();

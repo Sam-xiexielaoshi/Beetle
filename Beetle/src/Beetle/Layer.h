@@ -2,6 +2,7 @@
 
 #include "Beetle/Core.h"
 #include "Beetle/Events/Event.h"
+#include "Beetle/Core/TimeStamp.h"
 
 namespace Beetle {
 
@@ -13,7 +14,7 @@ namespace Beetle {
 
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
-		virtual void OnUpdate() {}
+		virtual void OnUpdate(TimeStamp ts) {}
 		virtual void OnImGuiRender() {}
 		virtual void OnEvent(Event& event) {}
 

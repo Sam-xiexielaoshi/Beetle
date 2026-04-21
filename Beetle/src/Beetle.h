@@ -5,6 +5,8 @@
 #include "Beetle/Layer.h"
 #include "Beetle/Log.h"
 
+#include "Beetle/Core/TimeStamp.h"
+
 #include "Beetle/Input.h"
 #include "Beetle/KeyCodes.h"
 #include "Beetle/MouseButtonCodes.h"
