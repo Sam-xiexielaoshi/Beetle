@@ -18,6 +18,7 @@
 //----------renderer Point---------------
 
 #include "Beetle/Renderer/Renderer.h"
+#include "Beetle/Renderer/Renderer2D.h"
 #include "Beetle/Renderer/RendererCommand.h"
 
 #include "Beetle/Renderer/Buffer.h"
