@@ -5,3 +5,8 @@ bin-int/
 
 #files
 *.user
+
+# profiling output
+Sandbox/BeetleProfile-*.json
+Sandbox/results.json
+results.json

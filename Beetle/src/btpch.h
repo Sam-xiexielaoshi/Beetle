@@ -15,6 +15,8 @@
 
 #include "Beetle/Core/Log.h"
 
+#include "Beetle/Debug/Instrumentor.h"
+
 #ifdef BT_PLATFORM_WINDOWS
 	#include <Windows.h>
 #endif

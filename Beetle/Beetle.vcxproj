@@ -164,6 +164,7 @@
     <ClInclude Include="src\Beetle\Core\MouseButtonCodes.h" />
     <ClInclude Include="src\Beetle\Core\TimeStamp.h" />
     <ClInclude Include="src\Beetle\Core\Window.h" />
+    <ClInclude Include="src\Beetle\Debug\Instrumentor.h" />
     <ClInclude Include="src\Beetle\Events\ApplicationEvent.h" />
     <ClInclude Include="src\Beetle\Events\Event.h" />
     <ClInclude Include="src\Beetle\Events\KeyEvent.h" />

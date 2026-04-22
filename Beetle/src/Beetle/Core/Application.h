@@ -12,7 +12,7 @@
 #include "Beetle/ImGui/ImGuiLayer.h"
 
 namespace Beetle {
-	class BEETLE_API Application
+	class Application
 	{
 	public:
 		Application();

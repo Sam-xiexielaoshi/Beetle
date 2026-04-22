@@ -19,7 +19,7 @@ namespace Beetle {
 	};
 
 	//interface representing a destop system based window
-	class BEETLE_API Window
+	class Window
 	{
 	public:
 		using EventCallbackFn = std::function<void(Event&)>;

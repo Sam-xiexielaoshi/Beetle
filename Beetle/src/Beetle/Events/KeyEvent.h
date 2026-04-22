@@ -6,7 +6,7 @@
 
 namespace Beetle {
 
-	class BEETLE_API KeyEvent : public Event
+	class KeyEvent : public Event
 	{
 	public: 
 		inline int GetKeyCode() const { return m_KeyCode; }
@@ -21,7 +21,7 @@ namespace Beetle {
 		int m_Modifiers;
 	};
 
-	class BEETLE_API KeyPressedEvent : public KeyEvent
+	class  KeyPressedEvent : public KeyEvent
 	{
 	public:
 		KeyPressedEvent(int keycode, int repeatCount, int modifiers)
@@ -41,7 +41,7 @@ namespace Beetle {
 		int m_RepeatCount;
 	};
 
-	class BEETLE_API KeyReleasedEvent : public KeyEvent
+	class  KeyReleasedEvent : public KeyEvent
 	{
 	public:
 		KeyReleasedEvent(int keycode, int modifiers) : KeyEvent(keycode, modifiers) {}
@@ -56,7 +56,7 @@ namespace Beetle {
 		EVENT_CLASS_TYPE(KeyReleased)
 	};
 
-	class BEETLE_API KeyTypedEvent : public KeyEvent
+	class  KeyTypedEvent : public KeyEvent
 	{
 	public:
 		KeyTypedEvent(int keycode)

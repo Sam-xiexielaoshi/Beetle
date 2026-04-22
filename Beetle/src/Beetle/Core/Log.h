@@ -7,7 +7,7 @@
 
 namespace Beetle {
 
-	class BEETLE_API Log
+	class Log
 	{
 	public:
 		static void Init();

@@ -7,7 +7,7 @@
 
 namespace Beetle {
 
-	class BEETLE_API LayerStack
+	class LayerStack
 	{
 	public:
 		LayerStack();
