@@ -17,7 +17,7 @@ ExampleLayer::ExampleLayer()
 	};
 
 	Beetle::Ref<Beetle::VertexBuffer> vertexBuffer;
-	vertexBuffer.reset(Beetle::VertexBuffer::Create(vertices, sizeof(vertices)));
+	vertexBuffer = Beetle::VertexBuffer::Create(vertices, sizeof(vertices));
 	Beetle::BufferLayout layout = {
 		{Beetle::ShaderDataType::Float3, "a_Position"},
 		{Beetle::ShaderDataType::Float4, "a_Color"}
@@ -28,7 +28,7 @@ ExampleLayer::ExampleLayer()
 
 	unsigned int indices[3] = { 0,1,2 };
 	Beetle::Ref<Beetle::IndexBuffer> indexBuffer;
-	indexBuffer.reset(Beetle::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+	indexBuffer = Beetle::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
 	m_VertexArray->SetIndexBuffer(indexBuffer);
 
 	m_SquareVA = (Beetle::VertexArray::Create());
@@ -39,7 +39,7 @@ ExampleLayer::ExampleLayer()
 		-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 	};
 	Beetle::Ref<Beetle::VertexBuffer> squareVB;
-	squareVB.reset(Beetle::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+	squareVB = Beetle::VertexBuffer::Create(squareVertices, sizeof(squareVertices));
 
 	squareVB->SetLayout({
 		{Beetle::ShaderDataType::Float3, "a_Position"},
@@ -49,7 +49,7 @@ ExampleLayer::ExampleLayer()
 
 	unsigned int squareIndices[6] = { 0,1,2,2,3,0 };
 	Beetle::Ref<Beetle::IndexBuffer> squareIB;
-	squareIB.reset(Beetle::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
+	squareIB = Beetle::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
 	m_SquareVA->SetIndexBuffer(squareIB);
 
 	std::string vertexSrc = R"(
