@@ -10,6 +10,7 @@ namespace Beetle {
 
 	void Renderer::Init()
 	{
+		BT_PROFILE_FUNCTION();
 		RendererCommand::Init();
 		Renderer2D::Init();
 	}

@@ -18,20 +18,24 @@ namespace Beetle {
 		BT_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
 	}
 
-	Window* Window::Create(const WindowProps& props)
+	Scope<Window> Window::Create(const WindowProps& props)
 	{
-		return new WindowsWindow(props);
+		BT_PROFILE_FUNCTION();
+		return CreateScope<WindowsWindow>(props);
 	}
 
 	WindowsWindow::WindowsWindow(const WindowProps& props)
 	{
+		BT_PROFILE_FUNCTION();
 		Init(props);
 	}
 
-	WindowsWindow::~WindowsWindow() { Shutdown(); }
+	WindowsWindow::~WindowsWindow() { BT_PROFILE_FUNCTION(); Shutdown(); }
 
 	void WindowsWindow::Init(const WindowProps& props)
 	{
+		BT_PROFILE_FUNCTION();
+
 		m_Data.Title = props.Title;
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
@@ -145,17 +149,20 @@ namespace Beetle {
 
 	void WindowsWindow::Shutdown()
 	{
+		BT_PROFILE_FUNCTION();
 		glfwDestroyWindow(m_Window);
 	}
 
 	void WindowsWindow::OnUpdate()
 	{
+		BT_PROFILE_FUNCTION();
 		glfwPollEvents();
 		m_Context->SwapBuffers();
 	}
 
 	void WindowsWindow::SetVSync(bool enabled)
 	{
+		BT_PROFILE_FUNCTION();
 		if (enabled)
 			glfwSwapInterval(1);
 		else

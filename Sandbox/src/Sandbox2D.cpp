@@ -11,11 +11,13 @@ Sandbox2D::Sandbox2D() :Layer("Sandbox2D"), m_CameraController(1280.0f / 720.0f,
 
 void Sandbox2D::OnAttach()
 {
+	BT_PROFILE_FUNCTION();
 	m_manishHania = Beetle::Texture2D::Create("assets/textures/ManishHania.png");
 }
 
 void Sandbox2D::OnDetach()
 {
+	BT_PROFILE_FUNCTION();
 }
 
 void Sandbox2D::OnUpdate(Beetle::TimeStamp ts)
@@ -26,7 +28,6 @@ void Sandbox2D::OnUpdate(Beetle::TimeStamp ts)
 
 	//update
 	{
-		BT_PROFILE_SCOPE("CameraController::OnUpdate");
 		m_CameraController.OnUpdate(ts);
 	}
 
