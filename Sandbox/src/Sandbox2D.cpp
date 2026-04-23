@@ -4,6 +4,22 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+static const uint32_t s_MapWidth = 24;
+static const char* m_MapTiles = 
+"WWWWWWWWWWWWWWWWWWWWWWWW"
+"WWWWWWWDDDDDDDDWWWWWWWWW"
+"WWWWWDDDDDDDDDDDDDDDWWWW"
+"WWWDDDDDDDDDDDDDDDDDDWWW"
+"WWWWDDDDDDDDWWWWWWDDDWWW"
+"WWWWWWDDDDDDDWWWWCDDDWWW"
+"WWWWWWWWWWDDDDDDDDDDDDDW"
+"WWWDDDDDDDDDDDWWWWWWWWWW"
+"WWDDDDDDDDDDDDDDDDDDDDWW"
+"WWWDDDDDDDDDDDDDDDDDDDDW"
+"WWWWDDDDDDDDDDDDDDDDDDDW"
+"WWWWWDDDDDDDDDDDDDDDDDWW"
+"WWWWWWWDDDDDDDDDDDDDDWWW"
+"WWWWWWWWWDDDDDDDWWWWWWWW";
 Sandbox2D::Sandbox2D() :Layer("Sandbox2D"), m_CameraController(1280.0f / 720.0f, true)
 {
 
@@ -15,9 +31,14 @@ void Sandbox2D::OnAttach()
 	m_CheckerBoard = Beetle::Texture2D::Create("assets/textures/checkerboard.png");
 	m_SpriteSheet = Beetle::Texture2D::Create("assets/game/texture/RPGpack_sheet_2X.png");
 
-	m_TextureStairs = Beetle::SubTexture2D::CreateFromCoords(m_SpriteSheet, { 7, 6 }, { 128.0f, 128.0f });
-	m_TextureBarrel = Beetle::SubTexture2D::CreateFromCoords(m_SpriteSheet, { 8, 2 }, { 128.0f, 128.0f });
+	m_TextureStairs = Beetle::SubTexture2D::CreateFromCoords(m_SpriteSheet, { 0,11 }, { 128.0f, 128.0f });
 	m_TextureTree = Beetle::SubTexture2D::CreateFromCoords(m_SpriteSheet, { 2, 1 }, { 128.0f, 128.0f }, {1,2});
+
+	m_MapWidth = s_MapWidth;
+	m_MapHeight = strlen(m_MapTiles)/s_MapWidth;
+
+	s_TextureMap['D'] = Beetle::SubTexture2D::CreateFromCoords(m_SpriteSheet, {6,11}, {128.0f, 128.0f});
+	s_TextureMap['W'] = Beetle::SubTexture2D::CreateFromCoords(m_SpriteSheet, {11,11}, {128.0f, 128.0f});
 
 	m_Particle.ColorBegin = { 254 / 255.0f, 212 / 255.0f, 123 / 255.0f, 1.0f };
 	m_Particle.ColorEnd = { 254 / 255.0f, 109 / 255.0f, 41 / 255.0f, 1.0f };
@@ -26,6 +47,8 @@ void Sandbox2D::OnAttach()
 	m_Particle.Velocity = { 0.0f, 0.0f };
 	m_Particle.VelocityVariation = { 3.0f, 1.0f };
 	m_Particle.Position = { 0.0f, 0.0f };
+
+	m_CameraController.SetZoomLevel(5.0f);
 }
 
 void Sandbox2D::OnDetach()
@@ -97,19 +120,28 @@ void Sandbox2D::OnUpdate(Beetle::TimeStamp ts)
 		for (int i = 0; i < 5; i++)
 			m_ParticleSystem.Emit(m_Particle);
 	}
-
+	
 	m_ParticleSystem.OnUpdate(ts);
 	m_ParticleSystem.OnRender(m_CameraController.GetCamera());
 
 	Beetle::Renderer2D::BeginScene(m_CameraController.GetCamera());
-	//Beetle::Renderer2D::DrawQuad({ 0.0f, 0.0f, 0.5f }, { 1.0f, 1.0f }, m_SpriteSheet);
-	Beetle::Renderer2D::DrawQuad({ 0.0f, 0.0f, 0.5f }, { 1.0f, 1.0f }, m_TextureStairs);
-	Beetle::Renderer2D::DrawQuad({1.0f, 0.0f, 0.5f }, { 1.0f, 1.0f }, m_TextureBarrel);
-	Beetle::Renderer2D::DrawQuad({-1.0f, 0.0f, 0.5f }, { 1.0f, 2.0f }, m_TextureTree);
+	for(uint32_t y = 0; y < m_MapHeight; y++)
+	{
+		for (uint32_t x = 0; x < m_MapWidth; x++)
+		{
+			char tileType = m_MapTiles[x + y * m_MapWidth];
+			Beetle::Ref<Beetle::SubTexture2D> texture;
+			if (s_TextureMap.find(tileType) != s_TextureMap.end())
+				texture = s_TextureMap[tileType];
+			else
+				texture = m_TextureStairs;
+			Beetle::Renderer2D::DrawQuad({ x - m_MapWidth / 2.0f, m_MapHeight / 2.0f - y, 0.0f }, { 1.0f, 1.0f }, texture);
+		}
+	}
+	//Beetle::Renderer2D::DrawQuad({ 0.0f, 0.0f, 0.5f }, { 1.0f, 1.0f }, m_TextureStairs);
+	//Beetle::Renderer2D::DrawQuad({1.0f, 0.0f, 0.5f }, { 1.0f, 1.0f }, m_TextureBarrel);
+	//Beetle::Renderer2D::DrawQuad({-1.0f, 0.0f, 0.5f }, { 1.0f, 2.0f }, m_TextureTree);
 	Beetle::Renderer2D::EndScene();
-
-
-
 }
 
 void Sandbox2D::OnImGuiRender()
