@@ -214,12 +214,23 @@ namespace Beetle {
 	{
 		BT_PROFILE_FUNCTION();
 
-		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
-			FlushAndReset();
+		
+		constexpr float x = 7, y = 6;
+		constexpr float sheetWidth = 2560.0f, sheetHeight = 1664.0f;
+		constexpr float spriteWidth = 128.0f, spriteHeight = 128.0f;
 
+		constexpr size_t quadVertexCount = 4;
 		constexpr glm::vec4 color = {1.0f, 1.0f, 1.0f, 1.0f};
+		constexpr glm::vec2 textureCoords[] = { 
+			{(x*spriteWidth)/ sheetWidth, (y*spriteHeight)/sheetHeight},
+			{((x + 1)* spriteWidth) / sheetWidth, (y * spriteHeight) / sheetHeight},
+			{((x + 1) * spriteWidth) / sheetWidth, ((y + 1) * spriteHeight) / sheetHeight}, 
+			{(x * spriteWidth) / sheetWidth, ((y + 1) * spriteHeight) / sheetHeight} };
 
 		float textureIndex = 0.0f;
+
+		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
+			FlushAndReset();
 
 		for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
 		{
@@ -242,28 +253,28 @@ namespace Beetle {
 
 		s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[0];
 		s_Data.QuadVertexBufferPtr->Color = color;
-		s_Data.QuadVertexBufferPtr->TexCoord = { 0.0f, 0.0f };
+		s_Data.QuadVertexBufferPtr->TexCoord = textureCoords[0];
 		s_Data.QuadVertexBufferPtr->textureIndex = textureIndex;
 		s_Data.QuadVertexBufferPtr->TilingFactor = tilingfactor;
 		s_Data.QuadVertexBufferPtr++;
 
 		s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[1];
 		s_Data.QuadVertexBufferPtr->Color = color;
-		s_Data.QuadVertexBufferPtr->TexCoord = { 1.0f, 0.0f };
+		s_Data.QuadVertexBufferPtr->TexCoord = textureCoords[1];
 		s_Data.QuadVertexBufferPtr->textureIndex = textureIndex;
 		s_Data.QuadVertexBufferPtr->TilingFactor = tilingfactor;
 		s_Data.QuadVertexBufferPtr++;
 
 		s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[2];
 		s_Data.QuadVertexBufferPtr->Color = color;
-		s_Data.QuadVertexBufferPtr->TexCoord = { 1.0f, 1.0f };
+		s_Data.QuadVertexBufferPtr->TexCoord = textureCoords[2];
 		s_Data.QuadVertexBufferPtr->textureIndex = textureIndex;
 		s_Data.QuadVertexBufferPtr->TilingFactor = tilingfactor;
 		s_Data.QuadVertexBufferPtr++;
 
 		s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[3];
 		s_Data.QuadVertexBufferPtr->Color = color;
-		s_Data.QuadVertexBufferPtr->TexCoord = { 0.0f, 1.0f };
+		s_Data.QuadVertexBufferPtr->TexCoord = textureCoords[3];
 		s_Data.QuadVertexBufferPtr->textureIndex = textureIndex;
 		s_Data.QuadVertexBufferPtr->TilingFactor = tilingfactor;
 		s_Data.QuadVertexBufferPtr++;
