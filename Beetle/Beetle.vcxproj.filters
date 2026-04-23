@@ -149,6 +149,7 @@
     </ClInclude>
     <ClInclude Include="src\Beetle\Renderer\Renderer2D.h" />
     <ClInclude Include="src\Beetle\Debug\Instrumentor.h" />
+    <ClInclude Include="src\Beetle\Renderer\SubTexture2D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Beetle\Core\Application.cpp">
@@ -227,5 +228,6 @@
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
     <ClCompile Include="src\Beetle\Renderer\Renderer2D.cpp" />
+    <ClCompile Include="src\Beetle\Renderer\SubTexture2D.cpp" />
   </ItemGroup>
 </Project>
