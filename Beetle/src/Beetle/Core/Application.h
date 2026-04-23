@@ -15,7 +15,7 @@ namespace Beetle {
 	class Application
 	{
 	public:
-		Application();
+		Application(const std::string& name = "Beetle App");
 		virtual ~Application();
 
 		void Run();

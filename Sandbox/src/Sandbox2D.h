@@ -21,7 +21,6 @@ private:
 	//temp
 	Beetle::Ref<Beetle::VertexArray> m_SquareVA;
 	Beetle::Ref<Beetle::Shader> m_flatColorShader;
-	Beetle::Ref<Beetle::FrameBuffer> m_FrameBuffer;
 
 	Beetle::Ref<Beetle::Texture2D> m_CheckerBoard;
 

@@ -1,0 +1,32 @@
+#pragma once
+#include "Beetle.h"
+
+namespace Beetle
+{
+	class EditorLayer : public Layer
+	{
+	public:
+		EditorLayer();
+		virtual ~EditorLayer() = default;
+		virtual void OnAttach() override;
+		virtual void OnDetach() override;
+
+		void OnUpdate(TimeStamp ts) override;
+		virtual void OnImGuiRender() override;
+		void OnEvent(Event& event) override;
+
+	private:
+		OrthographicCameraController m_CameraController;
+
+		//temp
+		Ref<VertexArray> m_SquareVA;
+		Ref<Shader> m_flatColorShader;
+		Ref<FrameBuffer> m_FrameBuffer;
+
+		Ref<Texture2D> m_CheckerBoard;
+
+
+		glm::vec4 m_SquareColor = { .2f, .3f, .8f, 1.f };
+
+	};
+}

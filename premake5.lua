@@ -20,6 +20,13 @@ IncludeDir["ImGui"] = "Beetle/vendor/imgui"
 IncludeDir["glm"] = "Beetle/vendor/glm"
 IncludeDir["stb_image"] = "Beetle/vendor/stb_image"
 
+group "Dependencies"
+	include "Beetle/vendor/GLFW"
+	include "Beetle/vendor/Glad"
+	include "Beetle/vendor/imgui"
+
+group ""
+
 include "Beetle/vendor/GLFW"
 include "Beetle/vendor/Glad"
 include "Beetle/vendor/imgui"
@@ -97,6 +104,63 @@ project "Beetle"
 
 project "Sandbox"
 	location "Sandbox"
+	kind "ConsoleApp"
+	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
+
+	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+	
+	files
+	{
+		"%{prj.name}/src/**.h",
+		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/vendor/glm/glm/**.hpp",
+		"%{prj.name}/vendor/glm/glm/**.inl",
+	}
+
+	includedirs
+	{
+		"Beetle/vendor/spdlog/include",
+		"Beetle/src",
+		"Beetle/vendor",
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.Glad}"
+	}
+
+	links
+	{
+		"Beetle"
+	}
+
+	filter "system:windows"
+		systemversion "latest"
+
+		buildoptions { "/utf-8" }
+
+		defines
+		{
+			"BT_PLATFORM_WINDOWS",
+		}
+
+	filter "configurations:Debug"
+		defines "BT_DEBUG"
+		runtime "Debug"
+		symbols "On"
+
+	filter "configurations:Release"
+		defines "BT_Release"
+		runtime "Release"
+		optimize "On"
+
+	filter "configurations:Dist"
+		defines "BT_DIST"
+		runtime "Release"
+		optimize "On"
+
+project "Beetle-Editor"
+	location "Beetle-Editor"
 	kind "ConsoleApp"
 	language "C++"
 	cppdialect "C++17"
