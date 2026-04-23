@@ -10,3 +10,6 @@ bin-int/
 Sandbox/BeetleProfile-*.json
 Sandbox/results.json
 results.json
+
+glsl Sandbox/
+Sandbox/assets/game/
