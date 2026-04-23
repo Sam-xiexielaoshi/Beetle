@@ -122,7 +122,12 @@ namespace Beetle {
 	};
 }
 
+#if defined(BT_ENABLE_PROFILING)
 #define BT_PROFILE 1
+#else
+#define BT_PROFILE 0
+#endif
+
 #if BT_PROFILE
 #define BT_PROFILE_BEGIN_SESSION(name, filepath) ::Beetle::Instrumentor::Get().BeginSession(name, filepath)
 #define BT_PROFILE_END_SESSION() ::Beetle::Instrumentor::Get().EndSession()
