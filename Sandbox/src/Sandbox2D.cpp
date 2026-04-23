@@ -14,13 +14,11 @@ void Sandbox2D::OnAttach()
 	BT_PROFILE_FUNCTION();
 	m_CheckerBoard = Beetle::Texture2D::Create("assets/textures/checkerboard.png");
 
-	m_Particle.ColorBegin = { 254 / 255.0f, 212 / 255.0f, 123 / 255.0f, 1.0f };
-	m_Particle.ColorEnd = { 254 / 255.0f, 109 / 255.0f, 41 / 255.0f, 1.0f };
-	m_Particle.SizeBegin = 0.5f, m_Particle.SizeVariation = 0.3f, m_Particle.SizeEnd = 0.0f;
-	m_Particle.LifeTime = 5.0f;
-	m_Particle.Velocity = { 0.0f, 0.0f };
-	m_Particle.VelocityVariation = { 3.0f, 1.0f };
-	m_Particle.Position = { 0.0f, 0.0f };
+	Beetle::FrameBufferSpecification fbSpec;
+	fbSpec.Width = 1280;
+	fbSpec.Height = 720;
+	m_FrameBuffer = Beetle::FrameBuffer::Create(fbSpec);
+	
 }
 
 void Sandbox2D::OnDetach()
@@ -43,6 +41,7 @@ void Sandbox2D::OnUpdate(Beetle::TimeStamp ts)
 	Beetle::Renderer2D::ResetStats();
 	{
 		BT_PROFILE_SCOPE("Renderer Prep");
+		m_FrameBuffer->Bind();
 		Beetle::RendererCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
 		Beetle::RendererCommand::Clear();
 	}
@@ -61,39 +60,21 @@ void Sandbox2D::OnUpdate(Beetle::TimeStamp ts)
 		Beetle::Renderer2D::EndScene();
 
 		Beetle::Renderer2D::BeginScene(m_CameraController.GetCamera());
-		{
-			const float step = 0.5f;
-			const float quadSize = 0.45f;
+		
+		const float step = 0.5f;
+		const float quadSize = 0.45f;
 
-			for(float y = -5.0f; y < 5.0f; y += step)
+		for(float y = -5.0f; y < 5.0f; y += step)
+		{
+			for(float x = -5.0f; x < 5.0f; x += step)
 			{
-				for(float x = -5.0f; x < 5.0f; x += step)
-				{
-					glm::vec4 color = { (x + 5.0f) / 10.0f, 0.4f, (y + 5.0f) / 10.0f, 0.7f };
-					Beetle::Renderer2D::DrawQuad({ x, y }, { quadSize, quadSize }, color);
-				}
+				glm::vec4 color = { (x + 5.0f) / 10.0f, 0.4f, (y + 5.0f) / 10.0f, 0.7f };
+				Beetle::Renderer2D::DrawQuad({ x, y }, { quadSize, quadSize }, color);
 			}
 		}
 		Beetle::Renderer2D::EndScene();
+		m_FrameBuffer->Unbind();
 	}
-	if (Beetle::Input::IsMouseButtonPressed(BT_MOUSE_BUTTON_LEFT))
-	{
-		auto [x, y] = Beetle::Input::GetMousePosition();
-		auto width = Beetle::Application::Get().GetWindow().GetWidth();
-		auto height = Beetle::Application::Get().GetWindow().GetHeight();
-
-		auto bounds = m_CameraController.GetBounds();
-		auto pos = m_CameraController.GetCamera().GetPosition();
-		x = (x / width) * bounds.GetWidth() - bounds.GetWidth() * 0.5f;
-		y = bounds.GetHeight() * 0.5f - (y / height) * bounds.GetHeight();
-		m_Particle.Position = { x + pos.x, y + pos.y };
-		for (int i = 0; i < 5; i++)
-			m_ParticleSystem.Emit(m_Particle);
-	}
-
-	m_ParticleSystem.OnUpdate(ts);
-	m_ParticleSystem.OnRender(m_CameraController.GetCamera());
-
 }
 
 void Sandbox2D::OnImGuiRender()
@@ -164,6 +145,7 @@ void Sandbox2D::OnImGuiRender()
 		ImGui::Begin("Settings");
 
 		auto stats = Beetle::Renderer2D::GetStats();
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::Text("Renderer2D Stats:");
 		ImGui::Text("Draw Calls: %d", stats.DrawCalls);
 		ImGui::Text("Quads: %d", stats.QuadCount);
@@ -171,8 +153,9 @@ void Sandbox2D::OnImGuiRender()
 		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
 		ImGui::ColorEdit4("Square Color", glm::value_ptr(m_SquareColor));
 
-		uint32_t textureID = m_CheckerBoard->GetRendererID();
-		ImGui::Image((void*)textureID, ImVec2{ 256.0f, 256.0f });
+		uint32_t textureID = m_FrameBuffer->GetColorAttachmentRendererID();
+
+		ImGui::Image((void*)textureID, ImVec2{ 1280.0f, 720.0f });
 		ImGui::End();
 
 		ImGui::End();
@@ -182,6 +165,7 @@ void Sandbox2D::OnImGuiRender()
 		ImGui::Begin("Settings");
 
 		auto stats = Beetle::Renderer2D::GetStats();
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::Text("Renderer2D Stats:");
 		ImGui::Text("Draw Calls: %d", stats.DrawCalls);
 		ImGui::Text("Quads: %d", stats.QuadCount);
@@ -191,7 +175,7 @@ void Sandbox2D::OnImGuiRender()
 		ImGui::ColorEdit4("Square Color", glm::value_ptr(m_SquareColor));
 
 		uint32_t textureID = m_CheckerBoard->GetRendererID();
-		ImGui::Image((void*)textureID, ImVec2{ 256.0f, 256.0f });
+		ImGui::Image((void*)textureID, ImVec2{ 1280.0f, 720.0f });
 		ImGui::End();
 	}
 }

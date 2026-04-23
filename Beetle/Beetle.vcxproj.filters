@@ -150,6 +150,8 @@
     <ClInclude Include="src\Beetle\Renderer\Renderer2D.h" />
     <ClInclude Include="src\Beetle\Debug\Instrumentor.h" />
     <ClInclude Include="src\Beetle\Renderer\SubTexture2D.h" />
+    <ClInclude Include="src\Beetle\Renderer\FrameBuffer.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLFrameBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Beetle\Core\Application.cpp">
@@ -229,5 +231,7 @@
     </ClCompile>
     <ClCompile Include="src\Beetle\Renderer\Renderer2D.cpp" />
     <ClCompile Include="src\Beetle\Renderer\SubTexture2D.cpp" />
+    <ClCompile Include="src\Beetle\Renderer\FrameBuffer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLFrameBuffer.cpp" />
   </ItemGroup>
 </Project>

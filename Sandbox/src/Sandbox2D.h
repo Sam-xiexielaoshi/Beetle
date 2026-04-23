@@ -21,17 +21,11 @@ private:
 	//temp
 	Beetle::Ref<Beetle::VertexArray> m_SquareVA;
 	Beetle::Ref<Beetle::Shader> m_flatColorShader;
+	Beetle::Ref<Beetle::FrameBuffer> m_FrameBuffer;
 
 	Beetle::Ref<Beetle::Texture2D> m_CheckerBoard;
-	Beetle::Ref<Beetle::Texture2D> m_SpriteSheet;
-	Beetle::Ref<Beetle::SubTexture2D> m_TextureStairs, m_TextureBarrel, m_TextureTree;
+
 
 	glm::vec4 m_SquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };
 
-	ParticleProps m_Particle;
-	ParticleSystem m_ParticleSystem;
-
-	uint32_t m_MapWidth = 0, m_MapHeight = 0;
-
-	std::unordered_map<char, Beetle::Ref<Beetle::SubTexture2D>> s_TextureMap;
 };
