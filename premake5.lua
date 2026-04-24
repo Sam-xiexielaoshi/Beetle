@@ -19,6 +19,7 @@ IncludeDir["Glad"] = "Beetle/vendor/Glad/include"
 IncludeDir["ImGui"] = "Beetle/vendor/imgui"
 IncludeDir["glm"] = "Beetle/vendor/glm"
 IncludeDir["stb_image"] = "Beetle/vendor/stb_image"
+IncludeDir["entt"] = "Beetle/vendor/entt/include"
 
 group "Dependencies"
 	include "Beetle/vendor/GLFW"
@@ -65,7 +66,8 @@ project "Beetle"
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
-		"%{IncludeDir.stb_image}"
+		"%{IncludeDir.stb_image}",
+		"%{IncludeDir.entt}"
 	}
 
 	links{
@@ -126,7 +128,8 @@ project "Sandbox"
 		"Beetle/src",
 		"Beetle/vendor",
 		"%{IncludeDir.glm}",
-		"%{IncludeDir.Glad}"
+		"%{IncludeDir.Glad}",
+		"%{IncludeDir.entt}"
 	}
 
 	links
@@ -183,7 +186,8 @@ project "Stag"
 		"Beetle/src",
 		"Beetle/vendor",
 		"%{IncludeDir.glm}",
-		"%{IncludeDir.Glad}"
+		"%{IncludeDir.Glad}",
+		"%{IncludeDir.entt}"
 	}
 
 	links

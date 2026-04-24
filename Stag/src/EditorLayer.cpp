@@ -33,6 +33,13 @@ namespace Beetle {
 		{
 			BT_PROFILE_FUNCTION("EditorLayer::OnUpdate");
 		}
+		if (Beetle::FrameBufferSpecification spec = m_FrameBuffer->GetSpecification();
+			m_ViewportSize.x > 0.0f && m_ViewportSize.y > 0.0f && // zero sized framebuffer is invalid
+			(spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y))
+		{
+			m_FrameBuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+			m_CameraController.OnResize(m_ViewportSize.x, m_ViewportSize.y);
+		}
 		if (m_ViewportFocused)
 			m_CameraController.OnUpdate(ts);
 
@@ -163,13 +170,8 @@ namespace Beetle {
 			
 			ImVec2 viewportPanelSize =ImGui::GetContentRegionAvail(); 
 
-			if(m_ViewportSize != *((glm::vec2*)&viewportPanelSize))
-			{
-				m_FrameBuffer->Resize((uint32_t)viewportPanelSize.x, (uint32_t)viewportPanelSize.y);
-				m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
+			m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
 
-				m_CameraController.OnResize(viewportPanelSize.x, viewportPanelSize.y);
-			}
 			uint32_t textureID = m_FrameBuffer->GetColorAttachmentRendererID();
 			ImGui::Image((void*)textureID, ImVec2{ m_ViewportSize.x	, m_ViewportSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 			ImGui::End();

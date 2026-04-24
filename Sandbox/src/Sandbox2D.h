@@ -1,7 +1,6 @@
 #pragma once
 #include "Beetle.h"
 
-#include "ParticleSystem.h"
 
 class Sandbox2D : public Beetle::Layer
 {

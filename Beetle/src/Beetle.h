@@ -15,6 +15,9 @@
 
 #include "Beetle/ImGui/ImGuiLayer.h"
 
+#include "Beetle/Scene/Scene.h"
+#include "Beetle/Scene/Components.h"
+
 //----------renderer Point---------------
 
 #include "Beetle/Renderer/Renderer.h"
