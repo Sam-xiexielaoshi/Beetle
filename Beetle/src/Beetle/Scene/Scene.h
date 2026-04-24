@@ -1,8 +1,10 @@
 #pragma once
-#include "entt.hpp"
+#include <entt.hpp>
 #include "Beetle/Core/TimeStamp.h"
 
 namespace Beetle {
+
+	class Entity;
 
 	class Scene
 	{
@@ -10,12 +12,10 @@ namespace Beetle {
 		Scene();
 		~Scene();
 
-		entt::entity CreateEntity();
-
-		entt::registry& Reg() { return m_Registry; }
-
+		Entity CreateEntity(const std::string& name = std::string());
 		void OnUpdate(TimeStamp ts);
 	private:
 		entt::registry m_Registry;
+		friend class Entity;
 	};
 }
