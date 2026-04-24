@@ -25,6 +25,7 @@ namespace Beetle
 
 		Ref<Texture2D> m_CheckerBoard;
 
+		bool m_ViewportFocused = false, m_ViewportHovered = false;
 		glm::vec2 m_ViewportSize = { 0.f, 0.f };
 
 

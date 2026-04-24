@@ -11,6 +11,8 @@
 
 #include "Beetle/ImGui/ImGuiLayer.h"
 
+int main(int argc, char** argv);
+
 namespace Beetle {
 	class Application
 	{
@@ -18,19 +20,19 @@ namespace Beetle {
 		Application(const std::string& name = "Beetle App");
 		virtual ~Application();
 
-		void Run();
-
 		void OnEvent(Event& e);
 
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* layer);
 
-		inline static Application& Get() { return *s_Instance; }
-
 		inline Window& GetWindow() { return *m_Window; }
 		void Close();
+		ImGuiLayer* GetImGuiLayer() { return m_ImGuiLayer; }
+		static Application& Get() { return *s_Instance; }
+
 
 	private:
+		void Run();
 		bool OnWindowClose(WindowCloseEvent& e);
 		bool OnWindowResize(WindowResizeEvent& e);
 
@@ -40,11 +42,11 @@ namespace Beetle {
 		bool m_Running = true;
 		bool m_Minimized = false;
 		LayerStack m_LayerStack;
-		TimeStamp m_TimeStamp;
 		float m_LastFrameTime = 0.0f;
 
 	private:
 		static Application* s_Instance;
+		friend int ::main(int argc, char** argv);
 	};
 
 	//to be defined in client
