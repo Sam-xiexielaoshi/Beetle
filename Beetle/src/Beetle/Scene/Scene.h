@@ -12,7 +12,7 @@ namespace Beetle {
 
 		entt::entity CreateEntity();
 
-		entt::registry& GetRegistry() { return m_Registry; }
+		entt::registry& Reg() { return m_Registry; }
 
 		void OnUpdate(TimeStamp ts);
 	private:

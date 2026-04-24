@@ -23,6 +23,9 @@ namespace Beetle
 		Ref<Shader> m_flatColorShader;
 		Ref<FrameBuffer> m_FrameBuffer;
 
+		Ref<Scene> m_ActiveScene;
+		entt::entity m_SquareEntity;
+
 		Ref<Texture2D> m_CheckerBoard;
 
 		bool m_ViewportFocused = false, m_ViewportHovered = false;
