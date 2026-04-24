@@ -3,21 +3,21 @@
 #include "EditorLayer.h"
 
 namespace Beetle {
-	class BeetleEditor : public Application
+	class Stag : public Application
 	{
 	public:
-		BeetleEditor() : Application("Beetle Editor")
+		Stag() : Application("Stag")
 		{
 			//PushLayer(new ExampleLayer());
 			PushLayer(new EditorLayer());
 		}
-		~BeetleEditor()
+		~Stag()
 		{
 		}
 	};
 
 	Application* CreateApplication()
 	{
-		return new BeetleEditor();
+		return new Stag();
 	}
 }

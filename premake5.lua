@@ -1,6 +1,6 @@
 workspace "Beetle"
 	architecture "x64"
-	startproject "Sandbox"
+	startproject "Stag"
 
 
 	configurations
@@ -159,8 +159,8 @@ project "Sandbox"
 		runtime "Release"
 		optimize "On"
 
-project "Beetle-Editor"
-	location "Beetle-Editor"
+project "Stag"
+	location "Stag"
 	kind "ConsoleApp"
 	language "C++"
 	cppdialect "C++17"
