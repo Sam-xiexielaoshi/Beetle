@@ -17,6 +17,7 @@
 
 #include "Beetle/Scene/Scene.h"
 #include "Beetle/Scene/Entity.h"
+#include "Beetle/Scene/ScriptableEntity.h"
 #include "Beetle/Scene/Components.h"
 
 //----------renderer Point---------------

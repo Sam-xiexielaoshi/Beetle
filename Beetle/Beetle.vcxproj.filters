@@ -173,6 +173,7 @@
     </ClInclude>
     <ClInclude Include="src\Beetle\Renderer\Camera.h" />
     <ClInclude Include="src\Beetle\Scene\SceneCamera.h" />
+    <ClInclude Include="src\Beetle\Scene\ScriptableEntity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Beetle\Core\Application.cpp">

@@ -61,6 +61,20 @@ namespace Beetle {
 
 	void Scene::OnUpdate(TimeStamp ts)
 	{
+		//script update
+		{
+			m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
+			{
+				if (!nsc.Instance)
+				{
+					nsc.InstantiateFunction();
+					nsc.Instance->m_Entity = Entity{entity, this};
+					nsc.OnCreateFunction(nsc.Instance);
+				}
+				nsc.OnUpdateFunction(nsc.Instance, ts);
+			});
+		}
+
 		//redner 2D
 		Camera* mainCamera = nullptr;
 		glm::mat4* cameraTransform = nullptr;
