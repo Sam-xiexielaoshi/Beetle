@@ -1,5 +1,6 @@
 #pragma once
 #include "Beetle.h"
+#include "Panels/SceneHierarchyPanel.h"
 
 namespace Beetle
 {
@@ -38,5 +39,7 @@ namespace Beetle
 
 		glm::vec4 m_SquareColor = { .2f, .3f, .8f, 1.f };
 
+		//panels
+		SceneHierarchyPanel m_SceneHierarchyPanel;
 	};
 }

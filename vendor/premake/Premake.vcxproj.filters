@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="..">
+      <UniqueIdentifier>{61705900-4DFC-870B-B6AA-880BA255880B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Beetle">
+      <UniqueIdentifier>{21C38F17-8D2D-448E-D66B-F533421522E3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Beetle\vendor">
+      <UniqueIdentifier>{5E6AE6F6-4A63-0549-7395-EACD5FEDE454}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Beetle\vendor\GLFW">
+      <UniqueIdentifier>{5D503858-C9BC-F352-92B0-8BB0FEDB15BB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Beetle\vendor\Glad">
+      <UniqueIdentifier>{05DC3858-7148-F452-3A3C-8CB0A66716BB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Beetle\vendor\imgui">
+      <UniqueIdentifier>{4846BC61-3440-E5B3-1DAD-7BC409464B20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Sandbox">
+      <UniqueIdentifier>{3F7B6B1D-2B33-AD6A-943A-86C68011485B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Stag">
+      <UniqueIdentifier>{7FD28547-EBB1-04E3-F4C9-8FB960286B44}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Beetle\premake5.lua">
+      <Filter>..\Beetle</Filter>
+    </None>
+    <None Include="..\..\Beetle\vendor\GLFW\premake5.lua">
+      <Filter>..\Beetle\vendor\GLFW</Filter>
+    </None>
+    <None Include="..\..\Beetle\vendor\Glad\premake5.lua">
+      <Filter>..\Beetle\vendor\Glad</Filter>
+    </None>
+    <None Include="..\..\Beetle\vendor\imgui\premake5.lua">
+      <Filter>..\Beetle\vendor\imgui</Filter>
+    </None>
+    <None Include="..\..\Sandbox\premake5.lua">
+      <Filter>..\Sandbox</Filter>
+    </None>
+    <None Include="..\..\Stag\premake5.lua">
+      <Filter>..\Stag</Filter>
+    </None>
+    <None Include="..\..\premake5.lua">
+      <Filter>..</Filter>
+    </None>
+    <None Include="premake5.lua" />
+  </ItemGroup>
+</Project>
