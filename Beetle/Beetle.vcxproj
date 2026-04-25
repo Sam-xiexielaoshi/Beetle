@@ -153,8 +153,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Beetle.h" />
-    <ClInclude Include="src\Beetle\Core\PlatformDetection.h" />
-    <ClInclude Include="src\Beetle\Renderer\Camera.h" />
     <ClInclude Include="src\Beetle\Core\Application.h" />
     <ClInclude Include="src\Beetle\Core\Core.h" />
     <ClInclude Include="src\Beetle\Core\EntryPoint.h" />
@@ -164,6 +162,7 @@
     <ClInclude Include="src\Beetle\Core\LayerStack.h" />
     <ClInclude Include="src\Beetle\Core\Log.h" />
     <ClInclude Include="src\Beetle\Core\MouseButtonCodes.h" />
+    <ClInclude Include="src\Beetle\Core\PlatformDetection.h" />
     <ClInclude Include="src\Beetle\Core\TimeStamp.h" />
     <ClInclude Include="src\Beetle\Core\Window.h" />
     <ClInclude Include="src\Beetle\Debug\Instrumentor.h" />
@@ -173,6 +172,7 @@
     <ClInclude Include="src\Beetle\Events\MouseEvent.h" />
     <ClInclude Include="src\Beetle\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Beetle\Renderer\Buffer.h" />
+    <ClInclude Include="src\Beetle\Renderer\Camera.h" />
     <ClInclude Include="src\Beetle\Renderer\FrameBuffer.h" />
     <ClInclude Include="src\Beetle\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Beetle\Renderer\OrthographicCamera.h" />

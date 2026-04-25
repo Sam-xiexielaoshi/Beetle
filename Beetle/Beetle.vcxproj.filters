@@ -72,6 +72,9 @@
     <ClInclude Include="src\Beetle\Core\MouseButtonCodes.h">
       <Filter>src\Beetle\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Beetle\Core\PlatformDetection.h">
+      <Filter>src\Beetle\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Beetle\Core\TimeStamp.h">
       <Filter>src\Beetle\Core</Filter>
     </ClInclude>
@@ -97,6 +100,9 @@
       <Filter>src\Beetle\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="src\Beetle\Renderer\Buffer.h">
+      <Filter>src\Beetle\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Beetle\Renderer\Camera.h">
       <Filter>src\Beetle\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Beetle\Renderer\FrameBuffer.h">
@@ -141,6 +147,12 @@
     <ClInclude Include="src\Beetle\Scene\Scene.h">
       <Filter>src\Beetle\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="src\Beetle\Scene\SceneCamera.h">
+      <Filter>src\Beetle\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Beetle\Scene\ScriptableEntity.h">
+      <Filter>src\Beetle\Scene</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
@@ -171,10 +183,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Beetle\Renderer\Camera.h" />
-    <ClInclude Include="src\Beetle\Scene\SceneCamera.h" />
-    <ClInclude Include="src\Beetle\Scene\ScriptableEntity.h" />
-    <ClInclude Include="src\Beetle\Core\PlatformDetection.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Beetle\Core\Application.cpp">
@@ -199,6 +207,9 @@
       <Filter>src\Beetle\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Beetle\Renderer\FrameBuffer.cpp">
+      <Filter>src\Beetle\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Beetle\Renderer\GraphicsContext.cpp">
       <Filter>src\Beetle\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Beetle\Renderer\OrthographicCamera.cpp">
@@ -234,6 +245,9 @@
     <ClCompile Include="src\Beetle\Scene\Scene.cpp">
       <Filter>src\Beetle\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="src\Beetle\Scene\SceneCamera.cpp">
+      <Filter>src\Beetle\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
@@ -267,7 +281,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Beetle\Scene\SceneCamera.cpp" />
-    <ClCompile Include="src\Beetle\Renderer\GraphicsContext.cpp" />
   </ItemGroup>
 </Project>
