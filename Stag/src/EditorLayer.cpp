@@ -29,6 +29,9 @@ namespace Beetle {
 		auto square = m_ActiveScene->CreateEntity("Sqaure");;
 		square.AddComponent<SpriteRendererComponent>( glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
 
+		auto redSquare = m_ActiveScene->CreateEntity("Red Sqaure");;
+		redSquare.AddComponent<SpriteRendererComponent>( glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f });
+
 		m_SquareEntity = square;
 
 		m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
