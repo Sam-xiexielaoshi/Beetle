@@ -1,8 +1,6 @@
-include "./vendor/premake/premake_customization/solution_items.lua"
-
 workspace "Beetle"
 	architecture "x86_64"
-	startproject "stag"
+	startproject "Stag"
 
 	configurations
 	{
@@ -10,6 +8,8 @@ workspace "Beetle"
 		"Release",
 		"Dist"
 	}
+
+include "./vendor/premake/premake_customization/solution_items.lua"
 
 	solution_items
 	{
@@ -33,7 +33,6 @@ IncludeDir["stb_image"] = "%{wks.location}/Beetle/vendor/stb_image"
 IncludeDir["entt"] = "%{wks.location}/Beetle/vendor/entt/include"
 
 group "Dependencies"
-	include "vendor/premake"
 	include "Beetle/vendor/GLFW"
 	include "Beetle/vendor/Glad"
 	include "Beetle/vendor/imgui"
