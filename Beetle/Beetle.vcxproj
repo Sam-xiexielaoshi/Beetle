@@ -153,6 +153,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Beetle.h" />
+    <ClInclude Include="src\Beetle\Renderer\Camera.h" />
     <ClInclude Include="src\Beetle\Core\Application.h" />
     <ClInclude Include="src\Beetle\Core\Core.h" />
     <ClInclude Include="src\Beetle\Core\EntryPoint.h" />

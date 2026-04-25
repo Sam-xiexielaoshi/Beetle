@@ -1,6 +1,8 @@
 #pragma once
 #include <glm/glm.hpp>
 
+#include "Beetle/Renderer/Camera.h"
+
 namespace Beetle {
 
 	struct TagComponent
@@ -37,4 +39,15 @@ namespace Beetle {
 		}
 	};
 
+	struct CameraComponent
+	{
+		Beetle::Camera Camera;
+		bool Primary = true; // TODO: think about it
+
+		CameraComponent() = default;
+		CameraComponent(const CameraComponent&) = default;
+		CameraComponent(const glm::mat4& projection)
+			: Camera(projection) {
+		}
+	};
 }
