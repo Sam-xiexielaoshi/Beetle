@@ -1,6 +1,5 @@
 #pragma once
 #include "Beetle/Scene/Scene.h"
-#include "Beelte/Core/Log.h"
 #include "Beetle/Core/Core.h"
 #include "Beetle/Scene/Entity.h"
 
@@ -15,6 +14,9 @@ namespace Beetle {
 
 		void OnImGuiRender();
 	private:
+		void DrawEntityNode(Entity entity);
+	private:
 		Ref<Scene>m_Context;
+		Entity m_SelectionContext;
 	};
 }

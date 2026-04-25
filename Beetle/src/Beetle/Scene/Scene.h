@@ -1,5 +1,6 @@
 #pragma once
 #include <entt.hpp>
+#include <string>
 #include "Beetle/Core/TimeStamp.h"
 
 namespace Beetle {
