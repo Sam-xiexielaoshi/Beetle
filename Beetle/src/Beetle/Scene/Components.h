@@ -1,7 +1,8 @@
 #pragma once
 #include <glm/glm.hpp>
 
-#include "Beetle/Renderer/Camera.h"
+#include "SceneCamera.h"
+
 
 namespace Beetle {
 
@@ -41,13 +42,11 @@ namespace Beetle {
 
 	struct CameraComponent
 	{
-		Beetle::Camera Camera;
+		SceneCamera Camera;
 		bool Primary = true; // TODO: think about it
+		bool FixedAspectRatio = false;
 
 		CameraComponent() = default;
 		CameraComponent(const CameraComponent&) = default;
-		CameraComponent(const glm::mat4& projection)
-			: Camera(projection) {
-		}
 	};
 }

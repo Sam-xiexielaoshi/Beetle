@@ -172,6 +172,7 @@
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
     <ClInclude Include="src\Beetle\Renderer\Camera.h" />
+    <ClInclude Include="src\Beetle\Scene\SceneCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Beetle\Core\Application.cpp">
@@ -264,5 +265,6 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
+    <ClCompile Include="src\Beetle\Scene\SceneCamera.cpp" />
   </ItemGroup>
 </Project>
