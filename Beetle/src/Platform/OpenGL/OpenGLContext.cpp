@@ -3,8 +3,6 @@
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 
-
-
 namespace Beetle {
 
 	OpenGLContext::OpenGLContext(GLFWwindow* windowHandle) : m_WindowHandle(windowHandle)
@@ -22,6 +20,8 @@ namespace Beetle {
 		BT_CORE_INFO("OpenGL vendor Info: {0} ", (const char*)glGetString(GL_VENDOR));
 		BT_CORE_INFO("OpenGL renderer Info: {0} ", (const char*)glGetString(GL_RENDERER));
 		BT_CORE_INFO("OpenGL version Info: {0} ", (const char*)glGetString(GL_VERSION));
+
+		BT_CORE_ASSERT(GLVersion.major > 4 || (GLVersion.major == 4 && GLVersion.minor >= 5), "Beetle requires at least OpenGL version 4.5!");
 	}
 
 	void OpenGLContext::SwapBuffers()

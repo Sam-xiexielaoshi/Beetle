@@ -1,33 +1,32 @@
 #pragma once
 
-#include "Event.h"
-
-#include <sstream>
+#include "Beetle/Events/Event.h"
+#include "Beetle/Core/KeyCodes.h"
 
 namespace Beetle {
 
 	class KeyEvent : public Event
 	{
-	public: 
-		inline int GetKeyCode() const { return m_KeyCode; }
-		inline int GetModifiers() const { return m_Modifiers; }
+	public:
+		KeyCode GetKeyCode() const { return m_KeyCode; }
 
 		EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput)
 	protected:
-		KeyEvent(int keycode, int modifiers)
-			: m_KeyCode(keycode), m_Modifiers(modifiers) {}
+		KeyEvent(const KeyCode keycode)
+			: m_KeyCode(keycode) {
+		}
 
-		int m_KeyCode;
-		int m_Modifiers;
+		KeyCode m_KeyCode;
 	};
 
-	class  KeyPressedEvent : public KeyEvent
+	class KeyPressedEvent : public KeyEvent
 	{
 	public:
-		KeyPressedEvent(int keycode, int repeatCount, int modifiers)
-			: KeyEvent(keycode, modifiers), m_RepeatCount(repeatCount) {}
+		KeyPressedEvent(const KeyCode keycode, const uint16_t repeatCount)
+			: KeyEvent(keycode), m_RepeatCount(repeatCount) {
+		}
 
-		inline int GetRepeatCount() const { return m_RepeatCount; }
+		uint16_t GetRepeatCount() const { return m_RepeatCount; }
 
 		std::string ToString() const override
 		{
@@ -38,29 +37,32 @@ namespace Beetle {
 
 		EVENT_CLASS_TYPE(KeyPressed)
 	private:
-		int m_RepeatCount;
+		uint16_t m_RepeatCount;
 	};
 
-	class  KeyReleasedEvent : public KeyEvent
+	class KeyReleasedEvent : public KeyEvent
 	{
 	public:
-		KeyReleasedEvent(int keycode, int modifiers) : KeyEvent(keycode, modifiers) {}
+		KeyReleasedEvent(const KeyCode keycode)
+			: KeyEvent(keycode) {
+		}
 
 		std::string ToString() const override
 		{
 			std::stringstream ss;
-			ss << "KeyReleasedEven: " << m_KeyCode;
+			ss << "KeyReleasedEvent: " << m_KeyCode;
 			return ss.str();
 		}
 
 		EVENT_CLASS_TYPE(KeyReleased)
 	};
 
-	class  KeyTypedEvent : public KeyEvent
+	class KeyTypedEvent : public KeyEvent
 	{
 	public:
-		KeyTypedEvent(int keycode)
-			: KeyEvent(keycode, 0) {}
+		KeyTypedEvent(const KeyCode keycode)
+			: KeyEvent(keycode) {
+		}
 
 		std::string ToString() const override
 		{

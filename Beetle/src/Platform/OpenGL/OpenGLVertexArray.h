@@ -22,5 +22,6 @@ namespace Beetle {
 		uint32_t m_RendererID;
 		std::vector<Ref<VertexBuffer>> m_VertexBuffers;
 		Ref<IndexBuffer> m_IndexBuffers;
+		uint32_t m_VertexBufferIndex = 0;
 	};
 }
