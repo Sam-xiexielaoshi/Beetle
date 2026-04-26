@@ -3,6 +3,11 @@
 #include <imgui/imgui_internal.h>
 #include <glm/gtc/type_ptr.hpp>
 #include "Beetle/Scene/Components.h"
+#include <string.h>
+
+#ifdef _MSVC_LANG
+#define _CRT_SECURE_NO_WARNINGS
+#endif
 
 namespace Beetle {
 
@@ -209,7 +214,7 @@ namespace Beetle {
 
 			char buffer[256];
 			memset(buffer, 0, sizeof(buffer));
-			strcpy_s(buffer, sizeof(buffer), tag.c_str());
+			strncpy_s(buffer, sizeof(buffer), tag.c_str(), _TRUNCATE);
 			if (ImGui::InputText("##Tag", buffer, sizeof(buffer)))
 			{
 				tag = std::string(buffer);
@@ -226,27 +231,26 @@ namespace Beetle {
 		{
 			if (ImGui::MenuItem("Camera"))
 			{
-				m_SelectionContext.AddComponent<CameraComponent>();
+				if (!m_SelectionContext.HasComponent<CameraComponent>())
+					m_SelectionContext.AddComponent<CameraComponent>();
+				else
+					BT_CORE_WARN("This entity already has the Camera Component!");
 				ImGui::CloseCurrentPopup();
 			}
 
 			if (ImGui::MenuItem("Sprite Renderer"))
 			{
-				m_SelectionContext.AddComponent<SpriteRendererComponent>();
+				if (!m_SelectionContext.HasComponent<SpriteRendererComponent>())
+					m_SelectionContext.AddComponent<SpriteRendererComponent>();
+				else
+					BT_CORE_WARN("This entity already has the Sprite Renderer Component!");
 				ImGui::CloseCurrentPopup();
 			}
 
 			ImGui::EndPopup();
 		}
+
 		ImGui::PopItemWidth();
-		DrawComponent<TransformComponent>("Transform", entity, [](auto& component)
-		{
-			DrawVec3Control("Translation", component.Translation);
-			glm::vec3 rotation = glm::degrees(component.Rotation);
-			DrawVec3Control("Rotation", rotation);
-			component.Rotation = glm::radians(rotation);
-			DrawVec3Control("Scale", component.Scale, 1.0f);
-		});
 
 		DrawComponent<CameraComponent>("Camera", entity, [](auto& component)
 		{	
