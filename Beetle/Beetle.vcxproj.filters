@@ -25,6 +25,9 @@
     <Filter Include="src\Beetle\Scene">
       <UniqueIdentifier>{4AABDB86-36A4-FAD8-5FD6-DF5D4B2EDAE4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Beetle\Utils">
+      <UniqueIdentifier>{8D3F0987-7938-28D9-A26A-0D5E8EC207E5}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Platform">
       <UniqueIdentifier>{21CA02E5-0D2D-9289-B6B2-CA3FA2F45D0C}</UniqueIdentifier>
     </Filter>
@@ -36,6 +39,9 @@
     </Filter>
     <Filter Include="vendor">
       <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\ImGuizmo">
+      <UniqueIdentifier>{73BF7F4C-DF4A-ED10-E85B-700554664911}</UniqueIdentifier>
     </Filter>
     <Filter Include="vendor\stb_image">
       <UniqueIdentifier>{0DA0BA59-F998-D9AB-22CB-BE300E23B9B7}</UniqueIdentifier>
@@ -153,8 +159,14 @@
     <ClInclude Include="src\Beetle\Scene\SceneCamera.h">
       <Filter>src\Beetle\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="src\Beetle\Scene\SceneSerializer.h">
+      <Filter>src\Beetle\Scene</Filter>
+    </ClInclude>
     <ClInclude Include="src\Beetle\Scene\ScriptableEntity.h">
       <Filter>src\Beetle\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Beetle\Utils\PlatformUtils.h">
+      <Filter>src\Beetle\Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
       <Filter>src\Platform\OpenGL</Filter>
@@ -183,11 +195,13 @@
     <ClInclude Include="src\btpch.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\ImGuizmo\ImGuizmo.h">
+      <Filter>vendor\ImGuizmo</Filter>
+    </ClInclude>
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Beetle\Scene\SceneSerializer.h" />
-    <ClInclude Include="src\Beetle\Utils\PlatformUtils.h" />
+    <ClInclude Include="src\Beetle\Math\Math.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Beetle\Core\Application.cpp">
@@ -253,6 +267,9 @@
     <ClCompile Include="src\Beetle\Scene\SceneCamera.cpp">
       <Filter>src\Beetle\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="src\Beetle\Scene\SceneSerializer.cpp">
+      <Filter>src\Beetle\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
@@ -277,16 +294,21 @@
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WindowsPlatformUtils.cpp">
+      <Filter>src\Platform\Windows</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\btpch.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="vendor\ImGuizmo\ImGuizmo.cpp">
+      <Filter>vendor\ImGuizmo</Filter>
+    </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Beetle\Scene\SceneSerializer.cpp" />
-    <ClCompile Include="src\Platform\Windows\WindowsPlatformUtils.cpp" />
+    <ClCompile Include="src\Beetle\Math\Math.cpp" />
   </ItemGroup>
 </Project>

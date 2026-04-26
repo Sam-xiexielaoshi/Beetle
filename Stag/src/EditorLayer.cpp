@@ -8,6 +8,8 @@
 
 #include "Beetle/Utils/PlatformUtils.h"
 
+#include "ImGuizmo.h"
+
 namespace Beetle
 {
 
@@ -219,6 +221,27 @@ namespace Beetle
 		}
 		uint32_t textureID = m_FrameBuffer->GetColorAttachmentRendererID();
 		ImGui::Image((void *)textureID, ImVec2{m_ViewportSize.x, m_ViewportSize.y}, ImVec2{0, 1}, ImVec2{1, 0});
+
+		// gizmos
+		Entity selectedEntity = m_SceneHierarchyPanel.GetSelectedEntity();
+		if (selectedEntity)
+		{
+			ImGuizmo::SetOrthographic(true);
+			ImGuizmo::SetDrawlist();
+			float windowWidth = (float)ImGui::GetWindowWidth();
+			float windowHeight = (float)ImGui::GetWindowHeight();
+			ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
+
+			auto cameraEntity = m_ActiveScene->GetPrimaryCameraEntity();
+			const auto &camera = cameraEntity.GetComponent<CameraComponent>();
+			const glm::mat4 cameraProjection = camera.Camera.GetProjection();
+			glm::mat4 cameraView = glm::inverse(cameraEntity.GetComponent<TransformComponent>().GetTransform());
+
+			auto &tc = selectedEntity.GetComponent<TransformComponent>();
+			glm::mat4 transform = tc.GetTransform();
+			ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection), ImGuizmo::TRANSLATE, ImGuizmo::LOCAL, glm::value_ptr(transform));
+		}
+
 		ImGui::End();
 		ImGui::PopStyleVar();
 

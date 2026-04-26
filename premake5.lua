@@ -21,6 +21,7 @@ IncludeDir["glm"] = "Beetle/vendor/glm"
 IncludeDir["stb_image"] = "Beetle/vendor/stb_image"
 IncludeDir["entt"] = "Beetle/vendor/entt/include"
 IncludeDir["yaml_cpp"] = "Beetle/vendor/yaml-cpp/include"
+IncludeDir["ImGuizmo"] = "Beetle/vendor/ImGuizmo"
 
 group "Dependencies"
 	include "Beetle/vendor/GLFW"
@@ -53,6 +54,8 @@ project "Beetle"
 		"%{prj.name}/src/**.cpp",
 		"%{prj.name}/vendor/stb_image/**.h",
 		"%{prj.name}/vendor/stb_image/**.cpp",
+		"%{prj.name}/vendor/ImGuizmo/ImGuizmo.h",
+		"%{prj.name}/vendor/ImGuizmo/ImGuizmo.cpp"
 	}
 
 	defines
@@ -71,7 +74,8 @@ project "Beetle"
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb_image}",
 		"%{IncludeDir.entt}",
-		"%{IncludeDir.yaml_cpp}"
+		"%{IncludeDir.yaml_cpp}",
+		"%{IncludeDir.ImGuizmo}"
 	}
 
 	links{
@@ -81,6 +85,10 @@ project "Beetle"
 		"yaml-cpp",
 		"opengl32.lib"
 	}
+
+	filter "files:Beetle/vendor/ImGuizmo/**.cpp"
+	flags { "NoPCH" }
+	filter {}
 
 	filter "system:windows"
 		systemversion "latest"
@@ -134,7 +142,8 @@ project "Sandbox"
 		"Beetle/vendor",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.Glad}",
-		"%{IncludeDir.entt}"
+		"%{IncludeDir.entt}",
+		"%{IncludeDir.ImGuizmo}"
 	}
 
 	links
@@ -192,7 +201,8 @@ project "Stag"
 		"Beetle/vendor",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.Glad}",
-		"%{IncludeDir.entt}"
+		"%{IncludeDir.entt}",
+		"%{IncludeDir.ImGuizmo}"
 	}
 
 	links

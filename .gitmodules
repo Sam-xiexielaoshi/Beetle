@@ -13,3 +13,6 @@
 [submodule "Beetle/vendor/yaml-cpp"]
 	path = Beetle/vendor/yaml-cpp
 	url = https://github.com/Sam-xiexielaoshi/yaml-cpp
+[submodule "Beetle/vendor/ImGuizmo"]
+	path = Beetle/vendor/ImGuizmo
+	url = https://github.com/Sam-xiexielaoshi/ImGuizmo

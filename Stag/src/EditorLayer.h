@@ -45,6 +45,8 @@ namespace Beetle
 
 		glm::vec4 m_SquareColor = { .2f, .3f, .8f, 1.f };
 
+		//int m_GizmoType = -1;
+
 		//panels
 		SceneHierarchyPanel m_SceneHierarchyPanel;
 	};
