@@ -20,11 +20,13 @@ IncludeDir["ImGui"] = "Beetle/vendor/imgui"
 IncludeDir["glm"] = "Beetle/vendor/glm"
 IncludeDir["stb_image"] = "Beetle/vendor/stb_image"
 IncludeDir["entt"] = "Beetle/vendor/entt/include"
+IncludeDir["yaml_cpp"] = "Beetle/vendor/yaml-cpp/include"
 
 group "Dependencies"
 	include "Beetle/vendor/GLFW"
 	include "Beetle/vendor/Glad"
 	include "Beetle/vendor/imgui"
+	include "Beetle/vendor/yaml-cpp"
 
 group ""
 
@@ -55,7 +57,8 @@ project "Beetle"
 
 	defines
 	{
-		"_CRT_SECURE_NO_WARNINGS"
+		"_CRT_SECURE_NO_WARNINGS",
+		"YAML_CPP_STATIC_DEFINE"
 	}
 
 	includedirs
@@ -67,13 +70,15 @@ project "Beetle"
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb_image}",
-		"%{IncludeDir.entt}"
+		"%{IncludeDir.entt}",
+		"%{IncludeDir.yaml_cpp}"
 	}
 
 	links{
 		"GLFW",
 		"Glad",
 		"ImGui",
+		"yaml-cpp",
 		"opengl32.lib"
 	}
 

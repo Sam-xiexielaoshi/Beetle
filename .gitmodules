@@ -10,3 +10,6 @@
 [submodule "Beetle/vendor/glm"]
 	path = Beetle/vendor/glm
 	url = https://github.com/g-truc/glm
+[submodule "Beetle/vendor/yaml-cpp"]
+	path = Beetle/vendor/yaml-cpp
+	url = https://github.com/Sam-xiexielaoshi/yaml-cpp
