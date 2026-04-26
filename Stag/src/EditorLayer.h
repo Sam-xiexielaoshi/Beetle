@@ -15,6 +15,12 @@ namespace Beetle
 		void OnUpdate(TimeStamp ts) override;
 		virtual void OnImGuiRender() override;
 		void OnEvent(Event& event) override;
+	private:
+		bool OnKeyPressed(KeyPressedEvent& event);
+
+		void NewScene();
+		void OpenScene();
+		void SaveSceneAs();
 
 	private:
 		OrthographicCameraController m_CameraController;

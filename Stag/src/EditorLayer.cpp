@@ -6,10 +6,13 @@
 #include "Beetle/Scene/Components.h"
 #include "Beetle/Scene/SceneSerializer.h"
 
-namespace Beetle {
+#include "Beetle/Utils/PlatformUtils.h"
+
+namespace Beetle
+{
 
 	EditorLayer::EditorLayer()
-		: Layer("EditorLayer"), m_CameraController(1280.0f / 720.0f), m_SquareColor({ 0.2f, 0.3f, 0.8f, 1.0f })
+		: Layer("EditorLayer"), m_CameraController(1280.0f / 720.0f), m_SquareColor({0.2f, 0.3f, 0.8f, 1.0f})
 	{
 	}
 
@@ -75,7 +78,6 @@ namespace Beetle {
 
 #endif
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
-
 	}
 
 	void EditorLayer::OnDetach()
@@ -105,7 +107,7 @@ namespace Beetle {
 		// Render
 		Renderer2D::ResetStats();
 		m_FrameBuffer->Bind();
-		RendererCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
+		RendererCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1});
 		RendererCommand::Clear();
 
 		// Update scene
@@ -129,7 +131,7 @@ namespace Beetle {
 		ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
 		if (opt_fullscreen)
 		{
-			ImGuiViewport* viewport = ImGui::GetMainViewport();
+			ImGuiViewport *viewport = ImGui::GetMainViewport();
 			ImGui::SetNextWindowPos(viewport->Pos);
 			ImGui::SetNextWindowSize(viewport->Size);
 			ImGui::SetNextWindowViewport(viewport->ID);
@@ -144,9 +146,9 @@ namespace Beetle {
 			window_flags |= ImGuiWindowFlags_NoBackground;
 
 		// Important: note that we proceed even if Begin() returns false (aka window is collapsed).
-		// This is because we want to keep our DockSpace() active. If a DockSpace() is inactive, 
+		// This is because we want to keep our DockSpace() active. If a DockSpace() is inactive,
 		// all active windows docked into it will lose their parent and become undocked.
-		// We cannot preserve the docking relationship between an active window and an inactive docking, otherwise 
+		// We cannot preserve the docking relationship between an active window and an inactive docking, otherwise
 		// any change of dockspace/settings would lead to windows being stuck in limbo and never being visible.
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 		ImGui::Begin("DockSpace Demo", &dockspaceOpen, window_flags);
@@ -156,8 +158,8 @@ namespace Beetle {
 			ImGui::PopStyleVar(2);
 
 		// DockSpace
-		ImGuiIO& io = ImGui::GetIO();
-		ImGuiStyle& style = ImGui::GetStyle();
+		ImGuiIO &io = ImGui::GetIO();
+		ImGuiStyle &style = ImGui::GetStyle();
 		float minWinSizeX = style.WindowMinSize.x;
 		style.WindowMinSize.x = 370.0f;
 		if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
@@ -171,26 +173,26 @@ namespace Beetle {
 		{
 			if (ImGui::BeginMenu("File"))
 			{
-				// Disabling fullscreen would allow the window to be moved to the front of other windows, 
+				// Disabling fullscreen would allow the window to be moved to the front of other windows,
 				// which we can't undo at the moment without finer window depth/z control.
-				//ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen_persistant);
-				if (ImGui::MenuItem("Serialize"))
-				{
-					SceneSerializer serializer(m_ActiveScene);
-					serializer.Serialize("assets/scenes/Example.beetle");
-				}
-				if (ImGui::MenuItem("Deserialize"))
-				{
-					SceneSerializer serializer(m_ActiveScene);
-					serializer.Deserialize("assets/scenes/Example.beetle");
-				}
-				if (ImGui::MenuItem("Exit")) Application::Get().Close();
+				// ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen_persistant);
+				if (ImGui::MenuItem("New", "Ctrl+N"))
+					NewScene();
+
+				if (ImGui::MenuItem("Open...", "Ctrl+O"))
+					OpenScene();
+
+				if (ImGui::MenuItem("Save As..", "Ctrl+Shift+S"))
+					SaveSceneAs();
+
+				if (ImGui::MenuItem("Exit"))
+					Application::Get().Close();
 				ImGui::EndMenu();
 			}
 
 			ImGui::EndMenuBar();
 		}
-		
+
 		m_SceneHierarchyPanel.OnImGuiRender();
 
 		ImGui::Begin("Stats");
@@ -203,7 +205,7 @@ namespace Beetle {
 		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
 		ImGui::End();
 
-		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{0, 0});
 		ImGui::Begin("Viewport");
 
 		m_ViewportFocused = ImGui::IsWindowFocused();
@@ -211,21 +213,99 @@ namespace Beetle {
 		Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused || !m_ViewportHovered);
 
 		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-		if (m_ViewportSize != *((glm::vec2*)&viewportPanelSize) && viewportPanelSize.x > 0 && viewportPanelSize.y > 0)
+		if (m_ViewportSize != *((glm::vec2 *)&viewportPanelSize) && viewportPanelSize.x > 0 && viewportPanelSize.y > 0)
 		{
-			m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
+			m_ViewportSize = {viewportPanelSize.x, viewportPanelSize.y};
 		}
 		uint32_t textureID = m_FrameBuffer->GetColorAttachmentRendererID();
-		ImGui::Image((void*)textureID, ImVec2{ m_ViewportSize.x, m_ViewportSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+		ImGui::Image((void *)textureID, ImVec2{m_ViewportSize.x, m_ViewportSize.y}, ImVec2{0, 1}, ImVec2{1, 0});
 		ImGui::End();
 		ImGui::PopStyleVar();
 
 		ImGui::End();
 	}
 
-	void EditorLayer::OnEvent(Event& e)
+	void EditorLayer::OnEvent(Event &e)
 	{
 		m_CameraController.OnEvent(e);
+
+		EventDispatcher dispatcher(e);
+		dispatcher.Dispatch<KeyPressedEvent>(BEETLE_BIND_EVENT_FN(EditorLayer::OnKeyPressed));
+	}
+
+	bool EditorLayer::OnKeyPressed(KeyPressedEvent &event)
+	{
+		if (event.GetRepeatCount() > 0)
+			return false;
+
+		const bool control = Input::IsKeyPressed(Key::LeftControl) || Input::IsKeyPressed(Key::RightControl);
+		const bool shift = Input::IsKeyPressed(Key::LeftShift) || Input::IsKeyPressed(Key::RightShift);
+
+		bool handled = false;
+
+		switch (event.GetKeyCode())
+		{
+		case Key::N:
+		{
+			if (control)
+			{
+				NewScene();
+				handled = true;
+			}
+			break;
+		}
+		case Key::O:
+		{
+			if (control)
+			{
+				OpenScene();
+				handled = true;
+			}
+			break;
+		}
+		case Key::S:
+		{
+			if (control && shift)
+			{
+				SaveSceneAs();
+				handled = true;
+			}
+			break;
+		}
+		}
+
+		return handled;
+	}
+
+	void EditorLayer::NewScene()
+	{
+		m_ActiveScene = CreateRef<Scene>();
+		m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+	}
+
+	void EditorLayer::OpenScene()
+	{
+		std::string filepath = FileDialogs::OpenFile("Beetle Scene (*.beetle)\0*.beetle\0");
+		if (!filepath.empty())
+		{
+			m_ActiveScene = CreateRef<Scene>();
+			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+			m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+
+			SceneSerializer serializer(m_ActiveScene);
+			serializer.Deserialize(filepath);
+		}
+	}
+
+	void EditorLayer::SaveSceneAs()
+	{
+		std::string filepath = FileDialogs::SaveFile("Beetle Scene (*.beetle)\0*.beetle\0");
+		if (!filepath.empty())
+		{
+			SceneSerializer serializer(m_ActiveScene);
+			serializer.Serialize(filepath);
+		}
 	}
 
 }
