@@ -154,6 +154,7 @@
   <ItemGroup>
     <ClInclude Include="src\Beetle.h" />
     <ClInclude Include="src\Beetle\Core\Application.h" />
+    <ClInclude Include="src\Beetle\Core\Assert.h" />
     <ClInclude Include="src\Beetle\Core\Core.h" />
     <ClInclude Include="src\Beetle\Core\EntryPoint.h" />
     <ClInclude Include="src\Beetle\Core\Input.h" />

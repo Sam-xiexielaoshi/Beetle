@@ -1,9 +1,10 @@
 #pragma once
 
-#include <memory>
-#include "Core.h"
-#include "spdlog/spdlog.h"
-#include "spdlog/fmt/ostr.h"
+#pragma warning(push, 0) //disable warnings for external headers
+#include "Beetle/Core/Core.h"
+#include <spdlog/spdlog.h>
+#include <spdlog/fmt/ostr.h>
+#pragma warning(pop)
 
 namespace Beetle {
 
@@ -28,13 +29,13 @@ namespace Beetle {
 #define BT_CORE_INFO(...)  ::Beetle::Log::GetCoreLogger()->info(__VA_ARGS__);
 #define BT_CORE_WARN(...)  ::Beetle::Log::GetCoreLogger()->warn(__VA_ARGS__);
 #define BT_CORE_ERROR(...) ::Beetle::Log::GetCoreLogger()->error(__VA_ARGS__);
-#define BT_CORE_FATAL(...) ::Beetle::Log::GetCoreLogger()->fatal(__VA_ARGS__);
+#define BT_CORE_CRITICAL(...) ::Beetle::Log::GetCoreLogger()->critical(__VA_ARGS__);
 
 //client log macros
 #define BT_TRACE(...)      ::Beetle::Log::GetClientLogger()->trace(__VA_ARGS__);
 #define BT_INFO(...)       ::Beetle::Log::GetClientLogger()->info(__VA_ARGS__);
 #define BT_WARN(...)       ::Beetle::Log::GetClientLogger()->warn(__VA_ARGS__);
 #define BT_ERROR(...)      ::Beetle::Log::GetClientLogger()->error(__VA_ARGS__);
-#define BT_FATAL(...)      ::Beetle::Log::GetClientLogger()->fatal(__VA_ARGS__);
+#define BT_CRITICAL(...)   ::Beetle::Log::GetClientLogger()->critical(__VA_ARGS__);
 
 

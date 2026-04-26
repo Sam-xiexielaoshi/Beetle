@@ -18,16 +18,8 @@
 #else
 #define BT_DEBUGBREAK()
 #endif
-
-
-
-#ifdef BT_ENABLE_ASSERTS
-	#define BT_ASSERT(x, ...) { if(!(x)) { BT_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
-	#define BT_CORE_ASSERT(x, ...) { if(!(x)) { BT_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
-#else
-	#define BT_ASSERT(x, ...)
-#define BT_CORE_ASSERT(x, ...)
-#endif
+#define BT_EXPAND_MACRO(x) x
+#define BT_STRINGIFY_MACRO(x) #x
 
 #define BIT(x) (1<<x)
 
@@ -51,3 +43,6 @@ namespace Beetle {
 		return std::make_shared<T>(std::forward<Args>(args)...);
 	}
 }
+
+#include "Beetle/Core/Log.h"
+#include "Beetle/Core/Assert.h"

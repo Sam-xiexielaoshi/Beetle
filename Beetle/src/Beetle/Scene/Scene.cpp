@@ -31,7 +31,7 @@ namespace Beetle {
 		{
 			m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
 			{
-				if (!nsc.Instance)
+				if (nsc.Instance==nullptr)
 				{
 					nsc.Instance = nsc.InstantiateScript();
 					nsc.Instance->m_Entity = Entity{entity, this};
@@ -45,22 +45,21 @@ namespace Beetle {
 		Camera* mainCamera = nullptr;
 		glm::mat4* cameraTransform = nullptr;
 		{
+			bool foundPrimary = false;
 			auto view = m_Registry.view<TransformComponent, CameraComponent>();
-			for (auto entity : view)
-			{
-				auto [transform, camera] = view.get<TransformComponent, CameraComponent>(entity);
-
-				if (camera.Primary)
+			view.each([&](auto entity, TransformComponent& transform, CameraComponent& camera)
 				{
-					mainCamera = &camera.Camera;
-					cameraTransform = &transform.Transform;
-					break;
-				}
-			}
+					if (!foundPrimary && camera.Primary)
+					{
+						mainCamera = &camera.Camera;
+						cameraTransform = &transform.Transform;
+						foundPrimary = true;
+					}
+				});
 		}
 		if (mainCamera)
 		{
-			Renderer2D::BeginScene(mainCamera->GetProjection(), *cameraTransform);
+			Renderer2D::BeginScene(*mainCamera, *cameraTransform);
 
 			auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
 			for (auto entity : group)
