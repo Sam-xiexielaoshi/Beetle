@@ -43,30 +43,29 @@ namespace Beetle {
 
 		//redner 2D
 		Camera* mainCamera = nullptr;
-		glm::mat4* cameraTransform = nullptr;
-		{
-			bool foundPrimary = false;
-			auto view = m_Registry.view<TransformComponent, CameraComponent>();
-			view.each([&](auto entity, TransformComponent& transform, CameraComponent& camera)
+		glm::mat4 cameraTransform = glm::mat4(1.0f);
+
+		bool foundPrimary = false;
+		auto view = m_Registry.view<TransformComponent, CameraComponent>();
+		view.each([&](auto entity, TransformComponent& transform, CameraComponent& camera)
+			{
+				if (!foundPrimary && camera.Primary)
 				{
-					if (!foundPrimary && camera.Primary)
-					{
-						mainCamera = &camera.Camera;
-						cameraTransform = &transform.Transform;
-						foundPrimary = true;
-					}
-				});
-		}
+					mainCamera = &camera.Camera;
+					cameraTransform = transform.GetTransform();
+					foundPrimary = true;
+				}
+			});
+
 		if (mainCamera)
 		{
-			Renderer2D::BeginScene(*mainCamera, *cameraTransform);
+			Renderer2D::BeginScene(*mainCamera, cameraTransform);
 
 			auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
 			for (auto entity : group)
 			{
-				auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
-
-				Renderer2D::DrawQuad(transform, sprite.Color);
+				auto& [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+				Renderer2D::DrawQuad(transform.GetTransform(), sprite.Color);
 			}
 
 			Renderer2D::EndScene();
