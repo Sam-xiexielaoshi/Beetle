@@ -30,7 +30,7 @@ namespace Beetle {
 		m_Registry.destroy(entity);
 	}
 
-	void Scene::OnUpdate(TimeStamp ts)
+	void Scene::OnUpdateRuntime(TimeStamp ts)
 	{
 		//script update
 		{
@@ -75,6 +75,21 @@ namespace Beetle {
 
 			Renderer2D::EndScene();
 		}
+
+	}
+
+	void Scene::OnUpdateEditor(TimeStamp ts, EditorCamera& camera)
+	{
+		Renderer2D::BeginScene(camera);
+		auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
+		for (auto entity : group)
+		{
+			auto [tranform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+
+			Renderer2D::DrawQuad(tranform.GetTransform(), sprite.Color);
+		}
+
+		Renderer2D::EndScene();
 
 	}
 

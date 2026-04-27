@@ -1,6 +1,8 @@
 #pragma once
 #include "Beetle.h"
 #include "Panels/SceneHierarchyPanel.h"
+#include "Beetle/Renderer/EditorCamera.h"
+
 
 namespace Beetle
 {
@@ -37,6 +39,8 @@ namespace Beetle
 
 		bool m_PrimaryCamera = true;
 
+		EditorCamera m_EditorCamera;
+
 		Ref<Texture2D> m_CheckerBoard;
 
 		bool m_ViewportFocused = false, m_ViewportHovered = false;
@@ -45,7 +49,7 @@ namespace Beetle
 
 		glm::vec4 m_SquareColor = { .2f, .3f, .8f, 1.f };
 
-		//int m_GizmoType = -1;
+		int m_GizmoType = -1;
 
 		//panels
 		SceneHierarchyPanel m_SceneHierarchyPanel;

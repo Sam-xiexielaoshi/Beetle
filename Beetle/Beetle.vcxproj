@@ -175,6 +175,7 @@
     <ClInclude Include="src\Beetle\Math\Math.h" />
     <ClInclude Include="src\Beetle\Renderer\Buffer.h" />
     <ClInclude Include="src\Beetle\Renderer\Camera.h" />
+    <ClInclude Include="src\Beetle\Renderer\EditorCamera.h" />
     <ClInclude Include="src\Beetle\Renderer\FrameBuffer.h" />
     <ClInclude Include="src\Beetle\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Beetle\Renderer\OrthographicCamera.h" />
@@ -214,6 +215,7 @@
     <ClCompile Include="src\Beetle\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Beetle\Math\Math.cpp" />
     <ClCompile Include="src\Beetle\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Beetle\Renderer\EditorCamera.cpp" />
     <ClCompile Include="src\Beetle\Renderer\FrameBuffer.cpp" />
     <ClCompile Include="src\Beetle\Renderer\GraphicsContext.cpp" />
     <ClCompile Include="src\Beetle\Renderer\OrthographicCamera.cpp" />

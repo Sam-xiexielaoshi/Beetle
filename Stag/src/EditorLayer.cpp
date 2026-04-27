@@ -10,6 +10,8 @@
 
 #include "ImGuizmo.h"
 
+#include "Beetle/Math/Math.h"
+
 namespace Beetle
 {
 
@@ -113,7 +115,7 @@ namespace Beetle
 		RendererCommand::Clear();
 
 		// Update scene
-		m_ActiveScene->OnUpdate(ts);
+		m_ActiveScene->OnUpdateRuntime(ts);
 
 		m_FrameBuffer->Unbind();
 	}
@@ -212,7 +214,7 @@ namespace Beetle
 
 		m_ViewportFocused = ImGui::IsWindowFocused();
 		m_ViewportHovered = ImGui::IsWindowHovered();
-		Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused || !m_ViewportHovered);
+		Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused && !m_ViewportHovered);
 
 		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 		if (m_ViewportSize != *((glm::vec2 *)&viewportPanelSize) && viewportPanelSize.x > 0 && viewportPanelSize.y > 0)
@@ -224,7 +226,12 @@ namespace Beetle
 
 		// gizmos
 		Entity selectedEntity = m_SceneHierarchyPanel.GetSelectedEntity();
-		if (selectedEntity)
+		auto cameraEntity = m_ActiveScene->GetPrimaryCameraEntity();
+		if (selectedEntity && m_GizmoType != -1 &&
+			selectedEntity.HasComponent<TransformComponent>() &&
+			cameraEntity &&
+			cameraEntity.HasComponent<CameraComponent>() &&
+			cameraEntity.HasComponent<TransformComponent>())
 		{
 			ImGuizmo::SetOrthographic(true);
 			ImGuizmo::SetDrawlist();
@@ -232,14 +239,40 @@ namespace Beetle
 			float windowHeight = (float)ImGui::GetWindowHeight();
 			ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
 
-			auto cameraEntity = m_ActiveScene->GetPrimaryCameraEntity();
 			const auto &camera = cameraEntity.GetComponent<CameraComponent>();
 			const glm::mat4 cameraProjection = camera.Camera.GetProjection();
 			glm::mat4 cameraView = glm::inverse(cameraEntity.GetComponent<TransformComponent>().GetTransform());
 
 			auto &tc = selectedEntity.GetComponent<TransformComponent>();
 			glm::mat4 transform = tc.GetTransform();
-			ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection), ImGuizmo::TRANSLATE, ImGuizmo::LOCAL, glm::value_ptr(transform));
+
+			bool snap = Input::IsKeyPressed(Key::LeftControl);
+			float snapValue = 0.5f;
+			if(m_GizmoType == ImGuizmo::OPERATION::ROTATE)
+				snapValue = 45.0f;
+
+			float snapValues[3] = { snapValue, snapValue, snapValue };
+
+			ImGuizmo::Manipulate(glm::value_ptr(cameraView), 
+				glm::value_ptr(cameraProjection), 
+				(ImGuizmo::OPERATION)m_GizmoType, 
+				ImGuizmo::LOCAL, 
+				glm::value_ptr(transform),
+				nullptr,
+				snap ? snapValues : nullptr);
+		
+			if (ImGuizmo::IsUsing())
+			{
+				glm::vec3 translation, rotation, scale;
+				if (Math::DecomposeTransform(transform, translation, rotation, scale))
+				{
+					glm::vec3 deltaRotation = rotation - tc.Rotation;
+					tc.Translation = translation;
+					tc.Rotation += deltaRotation;
+					tc.Scale = scale;
+				}
+			}
+
 		}
 
 		ImGui::End();
@@ -261,40 +294,72 @@ namespace Beetle
 		if (event.GetRepeatCount() > 0)
 			return false;
 
+		const auto keyCode = event.GetKeyCode();
+		const bool isGizmoHotkey = keyCode == Key::Q || keyCode == Key::W || keyCode == Key::E || keyCode == Key::R;
+		if (isGizmoHotkey && !m_ViewportHovered)
+			return false;
+
+		// Changing gizmo operation while dragging can leave ImGuizmo in an invalid state.
+		if (ImGuizmo::IsUsing())
+		{
+			switch (keyCode)
+			{
+				case Key::Q:
+				case Key::W:
+				case Key::E:
+				case Key::R:
+					return true;
+			}
+		}
+
 		const bool control = Input::IsKeyPressed(Key::LeftControl) || Input::IsKeyPressed(Key::RightControl);
 		const bool shift = Input::IsKeyPressed(Key::LeftShift) || Input::IsKeyPressed(Key::RightShift);
 
 		bool handled = false;
 
-		switch (event.GetKeyCode())
+		switch (keyCode)
 		{
-		case Key::N:
-		{
-			if (control)
+			case Key::N:
 			{
-				NewScene();
-				handled = true;
+				if (control)
+				{
+					NewScene();
+					handled = true;
+				}
+				break;
 			}
-			break;
-		}
-		case Key::O:
-		{
-			if (control)
+			case Key::O:
 			{
-				OpenScene();
-				handled = true;
+				if (control)
+				{
+					OpenScene();
+					handled = true;
+				}
+				break;
 			}
-			break;
-		}
-		case Key::S:
-		{
-			if (control && shift)
+			case Key::S:
 			{
-				SaveSceneAs();
-				handled = true;
+				if (control && shift)
+				{
+					SaveSceneAs();
+					handled = true;
+				}
+				break;
 			}
-			break;
-		}
+
+			//Gismo
+			case Key::Q:
+				m_GizmoType = -1;
+				break;
+			case Key::W:
+				m_GizmoType = ImGuizmo::OPERATION::TRANSLATE;
+				break;
+			case Key::E:
+				m_GizmoType = ImGuizmo::OPERATION::ROTATE;
+				break;
+			case Key::R:
+				m_GizmoType = ImGuizmo::OPERATION::SCALE;
+				break;
 		}
 
 		return handled;

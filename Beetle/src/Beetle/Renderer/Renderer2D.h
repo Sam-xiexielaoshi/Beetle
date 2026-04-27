@@ -4,6 +4,7 @@
 
 #include "Beetle/Renderer/Texture.h"
 #include "Beetle/Renderer/Camera.h"
+#include "Beetle/Renderer/EditorCamera.h"
 
 namespace Beetle {
 	class Renderer2D
@@ -13,6 +14,7 @@ namespace Beetle {
 		static void Shutdown();
 
 		static void BeginScene(const Camera& camera, const glm::mat4& tranform);
+		static void BeginScene(const EditorCamera& camera);
 		static void BeginScene(const OrthographicCamera& camera);
 		static void EndScene();
 		static void Flush();
