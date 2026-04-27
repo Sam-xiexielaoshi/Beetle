@@ -122,6 +122,8 @@ namespace Beetle
 		RendererCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1});
 		RendererCommand::Clear();
 
+		m_FrameBuffer->ClearAttachment(1, -1);
+
 		// Update scene
 		m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
 
