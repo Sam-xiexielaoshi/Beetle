@@ -32,6 +32,8 @@ namespace Beetle
 		Ref<Shader> m_flatColorShader;
 		Ref<FrameBuffer> m_FrameBuffer;
 
+		Entity m_HoveredEntity;
+
 		Ref<Scene> m_ActiveScene;
 		Entity m_SquareEntity;
 		Entity m_CameraEntity;

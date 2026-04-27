@@ -138,7 +138,7 @@ namespace Beetle
 		if(mouseX>=0 && mouseY >= 0 && mouseX < viewportSize.x && mouseY < viewportSize.y)
 		{
 			int pixelData = m_FrameBuffer->ReadPixel(1, mouseX, mouseY);
-			BT_CORE_WARN("Pixel data = {0}", pixelData);
+			m_HoveredEntity = pixelData == -1 ? Entity() : Entity((entt::entity)pixelData, m_ActiveScene.get());
 		}
 
 		m_FrameBuffer->Unbind();
@@ -225,6 +225,11 @@ namespace Beetle
 		m_SceneHierarchyPanel.OnImGuiRender();
 
 		ImGui::Begin("Stats");
+
+		std::string name = "None";
+		if (m_HoveredEntity)
+			name = m_HoveredEntity.GetComponent<TagComponent>().Tag;
+		ImGui::Text("Hovered : %s", name.c_str());
 
 		auto stats = Renderer2D::GetStats();
 		ImGui::Text("Renderer2D Stats:");
