@@ -3,7 +3,7 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "Beetle/Scene/Components.h"
+
 #include "Beetle/Scene/SceneSerializer.h"
 
 #include "Beetle/Utils/PlatformUtils.h"
@@ -32,24 +32,27 @@ namespace Beetle
 		m_FrameBuffer = FrameBuffer::Create(fbSpec);
 
 		m_ActiveScene = CreateRef<Scene>();
-#if 0
-		//entity
-		auto square = m_ActiveScene->CreateEntity("Green Sqaure");;
-		square.AddComponent<SpriteRendererComponent>( glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
 
-		auto redSquare = m_ActiveScene->CreateEntity("Red Sqaure");;
-		redSquare.AddComponent<SpriteRendererComponent>( glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f });
+		m_EditorCamera = EditorCamera(30.0f, 1.778f, 0.1f, 1000.0f);
+
+#if 0
+		// Entity
+		auto square = m_ActiveScene->CreateEntity("Green Square");
+		square.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
+
+		auto redSquare = m_ActiveScene->CreateEntity("Red Square");
+		redSquare.AddComponent<SpriteRendererComponent>(glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f });
 
 		m_SquareEntity = square;
 
-		m_CameraEntity = m_ActiveScene->CreateEntity("Camera B");
+		m_CameraEntity = m_ActiveScene->CreateEntity("Camera A");
 		m_CameraEntity.AddComponent<CameraComponent>();
 
-		m_SecondCamera = m_ActiveScene->CreateEntity("Camera A");
+		m_SecondCamera = m_ActiveScene->CreateEntity("Camera B");
 		auto& cc = m_SecondCamera.AddComponent<CameraComponent>();
 		cc.Primary = false;
 
-		class CameraController :public ScriptableEntity
+		class CameraController : public ScriptableEntity
 		{
 		public:
 			virtual void OnCreate() override
@@ -57,30 +60,32 @@ namespace Beetle
 				auto& translation = GetComponent<TransformComponent>().Translation;
 				translation.x = rand() % 10 - 5.0f;
 			}
+
 			virtual void OnDestroy() override
 			{
-
 			}
-			virtual void OnUpdate(TimeStamp ts) override
+
+			virtual void OnUpdate(Timestep ts) override
 			{
 				auto& translation = GetComponent<TransformComponent>().Translation;
+
 				float speed = 5.0f;
 
 				if (Input::IsKeyPressed(Key::A))
-					translation.x += speed * ts;
-				if (Input::IsKeyPressed(Key::D))
 					translation.x -= speed * ts;
+				if (Input::IsKeyPressed(Key::D))
+					translation.x += speed * ts;
 				if (Input::IsKeyPressed(Key::W))
-					translation.y -= speed * ts;
-				if (Input::IsKeyPressed(Key::S))
 					translation.y += speed * ts;
-
+				if (Input::IsKeyPressed(Key::S))
+					translation.y -= speed * ts;
 			}
 		};
+
 		m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 		m_SecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
-
 #endif
+
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}
 
@@ -95,18 +100,20 @@ namespace Beetle
 
 		// Resize
 		if (FrameBufferSpecification spec = m_FrameBuffer->GetSpecification();
-			m_ViewportSize.x > 0.0f && m_ViewportSize.y > 0.0f && // zero sized FrameBuffer is invalid
+			m_ViewportSize.x > 0.0f && m_ViewportSize.y > 0.0f && // zero sized framebuffer is invalid
 			(spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y))
 		{
 			m_FrameBuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 			m_CameraController.OnResize(m_ViewportSize.x, m_ViewportSize.y);
-
+			m_EditorCamera.SetViewportSize(m_ViewportSize.x, m_ViewportSize.y);
 			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 		}
 
 		// Update
 		if (m_ViewportFocused)
 			m_CameraController.OnUpdate(ts);
+
+		m_EditorCamera.OnUpdate(ts);
 
 		// Render
 		Renderer2D::ResetStats();
@@ -115,7 +122,7 @@ namespace Beetle
 		RendererCommand::Clear();
 
 		// Update scene
-		m_ActiveScene->OnUpdateRuntime(ts);
+		m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
 
 		m_FrameBuffer->Unbind();
 	}
@@ -171,6 +178,7 @@ namespace Beetle
 			ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
 			ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
 		}
+
 		style.WindowMinSize.x = minWinSizeX;
 
 		if (ImGui::BeginMenuBar())
@@ -179,14 +187,14 @@ namespace Beetle
 			{
 				// Disabling fullscreen would allow the window to be moved to the front of other windows,
 				// which we can't undo at the moment without finer window depth/z control.
-				// ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen_persistant);
+				// ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen_persistant);1
 				if (ImGui::MenuItem("New", "Ctrl+N"))
 					NewScene();
 
 				if (ImGui::MenuItem("Open...", "Ctrl+O"))
 					OpenScene();
 
-				if (ImGui::MenuItem("Save As..", "Ctrl+Shift+S"))
+				if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S"))
 					SaveSceneAs();
 
 				if (ImGui::MenuItem("Exit"))
@@ -207,6 +215,7 @@ namespace Beetle
 		ImGui::Text("Quads: %d", stats.QuadCount);
 		ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
 		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
+
 		ImGui::End();
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{0, 0});
@@ -217,62 +226,61 @@ namespace Beetle
 		Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused && !m_ViewportHovered);
 
 		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-		if (m_ViewportSize != *((glm::vec2 *)&viewportPanelSize) && viewportPanelSize.x > 0 && viewportPanelSize.y > 0)
-		{
-			m_ViewportSize = {viewportPanelSize.x, viewportPanelSize.y};
-		}
-		uint32_t textureID = m_FrameBuffer->GetColorAttachmentRendererID();
-		ImGui::Image((void *)textureID, ImVec2{m_ViewportSize.x, m_ViewportSize.y}, ImVec2{0, 1}, ImVec2{1, 0});
+		m_ViewportSize = {viewportPanelSize.x, viewportPanelSize.y};
 
-		// gizmos
+		uint64_t textureID = m_FrameBuffer->GetColorAttachmentRendererID();
+		ImGui::Image(reinterpret_cast<void *>(textureID), ImVec2{m_ViewportSize.x, m_ViewportSize.y}, ImVec2{0, 1}, ImVec2{1, 0});
+
+		// Gizmos
 		Entity selectedEntity = m_SceneHierarchyPanel.GetSelectedEntity();
-		auto cameraEntity = m_ActiveScene->GetPrimaryCameraEntity();
-		if (selectedEntity && m_GizmoType != -1 &&
-			selectedEntity.HasComponent<TransformComponent>() &&
-			cameraEntity &&
-			cameraEntity.HasComponent<CameraComponent>() &&
-			cameraEntity.HasComponent<TransformComponent>())
+		if (selectedEntity && m_GizmoType != -1)
 		{
-			ImGuizmo::SetOrthographic(true);
+			ImGuizmo::SetOrthographic(false);
 			ImGuizmo::SetDrawlist();
+
 			float windowWidth = (float)ImGui::GetWindowWidth();
 			float windowHeight = (float)ImGui::GetWindowHeight();
 			ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
 
-			const auto &camera = cameraEntity.GetComponent<CameraComponent>();
-			const glm::mat4 cameraProjection = camera.Camera.GetProjection();
-			glm::mat4 cameraView = glm::inverse(cameraEntity.GetComponent<TransformComponent>().GetTransform());
+			// Camera
 
+			// Runtime camera from entity
+			// auto cameraEntity = m_ActiveScene->GetPrimaryCameraEntity();
+			// const auto& camera = cameraEntity.GetComponent<CameraComponent>().Camera;
+			// const glm::mat4& cameraProjection = camera.GetProjection();
+			// glm::mat4 cameraView = glm::inverse(cameraEntity.GetComponent<TransformComponent>().GetTransform());
+
+			// Editor camera
+			const glm::mat4 &cameraProjection = m_EditorCamera.GetProjection();
+			glm::mat4 cameraView = m_EditorCamera.GetViewMatrix();
+
+			// Entity transform
 			auto &tc = selectedEntity.GetComponent<TransformComponent>();
 			glm::mat4 transform = tc.GetTransform();
 
+			// Snapping
 			bool snap = Input::IsKeyPressed(Key::LeftControl);
-			float snapValue = 0.5f;
-			if(m_GizmoType == ImGuizmo::OPERATION::ROTATE)
+			float snapValue = 0.5f; // Snap to 0.5m for translation/scale
+			// Snap to 45 degrees for rotation
+			if (m_GizmoType == ImGuizmo::OPERATION::ROTATE)
 				snapValue = 45.0f;
 
-			float snapValues[3] = { snapValue, snapValue, snapValue };
+			float snapValues[3] = {snapValue, snapValue, snapValue};
 
-			ImGuizmo::Manipulate(glm::value_ptr(cameraView), 
-				glm::value_ptr(cameraProjection), 
-				(ImGuizmo::OPERATION)m_GizmoType, 
-				ImGuizmo::LOCAL, 
-				glm::value_ptr(transform),
-				nullptr,
-				snap ? snapValues : nullptr);
-		
+			ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection),
+								 (ImGuizmo::OPERATION)m_GizmoType, ImGuizmo::LOCAL, glm::value_ptr(transform),
+								 nullptr, snap ? snapValues : nullptr);
+
 			if (ImGuizmo::IsUsing())
 			{
 				glm::vec3 translation, rotation, scale;
-				if (Math::DecomposeTransform(transform, translation, rotation, scale))
-				{
-					glm::vec3 deltaRotation = rotation - tc.Rotation;
-					tc.Translation = translation;
-					tc.Rotation += deltaRotation;
-					tc.Scale = scale;
-				}
-			}
+				Math::DecomposeTransform(transform, translation, rotation, scale);
 
+				glm::vec3 deltaRotation = rotation - tc.Rotation;
+				tc.Translation = translation;
+				tc.Rotation += deltaRotation;
+				tc.Scale = scale;
+			}
 		}
 
 		ImGui::End();
@@ -284,85 +292,58 @@ namespace Beetle
 	void EditorLayer::OnEvent(Event &e)
 	{
 		m_CameraController.OnEvent(e);
+		m_EditorCamera.OnEvent(e);
 
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<KeyPressedEvent>(BEETLE_BIND_EVENT_FN(EditorLayer::OnKeyPressed));
 	}
 
-	bool EditorLayer::OnKeyPressed(KeyPressedEvent &event)
+	bool EditorLayer::OnKeyPressed(KeyPressedEvent &e)
 	{
-		if (event.GetRepeatCount() > 0)
+		// Shortcuts
+		if (e.GetRepeatCount() > 0)
 			return false;
 
-		const auto keyCode = event.GetKeyCode();
-		const bool isGizmoHotkey = keyCode == Key::Q || keyCode == Key::W || keyCode == Key::E || keyCode == Key::R;
-		if (isGizmoHotkey && !m_ViewportHovered)
-			return false;
-
-		// Changing gizmo operation while dragging can leave ImGuizmo in an invalid state.
-		if (ImGuizmo::IsUsing())
+		bool control = Input::IsKeyPressed(Key::LeftControl) || Input::IsKeyPressed(Key::RightControl);
+		bool shift = Input::IsKeyPressed(Key::LeftShift) || Input::IsKeyPressed(Key::RightShift);
+		switch (e.GetKeyCode())
 		{
-			switch (keyCode)
-			{
-				case Key::Q:
-				case Key::W:
-				case Key::E:
-				case Key::R:
-					return true;
-			}
+		case Key::N:
+		{
+			if (control)
+				NewScene();
+
+			break;
+		}
+		case Key::O:
+		{
+			if (control)
+				OpenScene();
+
+			break;
+		}
+		case Key::S:
+		{
+			if (control && shift)
+				SaveSceneAs();
+
+			break;
 		}
 
-		const bool control = Input::IsKeyPressed(Key::LeftControl) || Input::IsKeyPressed(Key::RightControl);
-		const bool shift = Input::IsKeyPressed(Key::LeftShift) || Input::IsKeyPressed(Key::RightShift);
-
-		bool handled = false;
-
-		switch (keyCode)
-		{
-			case Key::N:
-			{
-				if (control)
-				{
-					NewScene();
-					handled = true;
-				}
-				break;
-			}
-			case Key::O:
-			{
-				if (control)
-				{
-					OpenScene();
-					handled = true;
-				}
-				break;
-			}
-			case Key::S:
-			{
-				if (control && shift)
-				{
-					SaveSceneAs();
-					handled = true;
-				}
-				break;
-			}
-
-			//Gismo
-			case Key::Q:
-				m_GizmoType = -1;
-				break;
-			case Key::W:
-				m_GizmoType = ImGuizmo::OPERATION::TRANSLATE;
-				break;
-			case Key::E:
-				m_GizmoType = ImGuizmo::OPERATION::ROTATE;
-				break;
-			case Key::R:
-				m_GizmoType = ImGuizmo::OPERATION::SCALE;
-				break;
+		// Gizmos
+		case Key::Q:
+			m_GizmoType = -1;
+			break;
+		case Key::W:
+			m_GizmoType = ImGuizmo::OPERATION::TRANSLATE;
+			break;
+		case Key::E:
+			m_GizmoType = ImGuizmo::OPERATION::ROTATE;
+			break;
+		case Key::R:
+			m_GizmoType = ImGuizmo::OPERATION::SCALE;
+			break;
 		}
-
-		return handled;
 	}
 
 	void EditorLayer::NewScene()
@@ -374,7 +355,7 @@ namespace Beetle
 
 	void EditorLayer::OpenScene()
 	{
-		std::optional<std::string> filepath = FileDialogs::OpenFile("Beetle Scene (*.beetle)\0*.beetle\0");
+		std::optional<std::string> filepath = FileDialogs::OpenFile("Beetle Scene (*.Beetle)\0*.Beetle\0");
 		if (filepath)
 		{
 			m_ActiveScene = CreateRef<Scene>();
@@ -388,7 +369,7 @@ namespace Beetle
 
 	void EditorLayer::SaveSceneAs()
 	{
-		std::optional<std::string> filepath = FileDialogs::SaveFile("Beetle Scene (*.beetle)\0*.beetle\0");
+		std::optional<std::string> filepath = FileDialogs::SaveFile("Beetle Scene (*.Beetle)\0*.Beetle\0");
 		if (filepath)
 		{
 			SceneSerializer serializer(m_ActiveScene);

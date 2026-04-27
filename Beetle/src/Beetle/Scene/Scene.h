@@ -4,7 +4,8 @@
 #include "Beetle/Core/TimeStamp.h"
 #include "Beetle/Renderer/EditorCamera.h"
 
-namespace Beetle {
+namespace Beetle
+{
 
 	class Entity;
 
@@ -14,17 +15,17 @@ namespace Beetle {
 		Scene();
 		~Scene();
 
-		Entity CreateEntity(const std::string& name = std::string());
+		Entity CreateEntity(const std::string &name = std::string());
 		void DestroyEntity(Entity entity);
 		void OnUpdateRuntime(TimeStamp ts);
-		void OnUpdateEditor(TimeStamp ts, EditorCamera& camera);
+		void OnUpdateEditor(TimeStamp ts, EditorCamera &camera);
 		void OnViewportResize(uint32_t width, uint32_t height);
 		Entity GetPrimaryCameraEntity();
-	private:
-		template<typename T>
-		void OnComponentAdded(Entity entity, T& component);
 
-		
+	private:
+		template <typename T>
+		void OnComponentAdded(Entity entity, T &component);
+
 	private:
 		entt::registry m_Registry;
 		uint32_t m_ViewportWidth = 0, m_ViewportHeight = 0;

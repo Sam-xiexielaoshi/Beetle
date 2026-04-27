@@ -1,13 +1,14 @@
 #include "btpch.h"
 #include "Scene.h"
 
-#include "Beetle/Scene/Components.h"
+#include "Components.h"
 #include "Beetle/Renderer/Renderer2D.h"
-#include "Entity.h"
-
 #include <glm/glm.hpp>
 
+#include "Entity.h"
+
 namespace Beetle {
+
 	Scene::Scene()
 	{
 	}
@@ -16,9 +17,9 @@ namespace Beetle {
 	{
 	}
 
-	Entity Scene::CreateEntity(const std::string& name)   
+	Entity Scene::CreateEntity(const std::string& name)
 	{
-		Entity entity =  { m_Registry.create(), this };
+		Entity entity = { m_Registry.create(), this };
 		entity.AddComponent<TransformComponent>();
 		auto& tag = entity.AddComponent<TagComponent>();
 		tag.Tag = name.empty() ? "Entity" : name;
@@ -32,21 +33,22 @@ namespace Beetle {
 
 	void Scene::OnUpdateRuntime(TimeStamp ts)
 	{
-		//script update
+		// Update scripts
 		{
 			m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
-			{
-				if (nsc.Instance==nullptr)
 				{
-					nsc.Instance = nsc.InstantiateScript();
-					nsc.Instance->m_Entity = Entity{entity, this};
-					nsc.Instance->OnCreate();
-				}
-				nsc.Instance->OnUpdate(ts);
-			});
+					// TODO: Move to Scene::OnScenePlay
+					if (!nsc.Instance)
+					{
+						nsc.Instance = nsc.InstantiateScript();
+						nsc.Instance->m_Entity = Entity{ entity, this };
+						nsc.Instance->OnCreate();
+					}
+
+					nsc.Instance->OnUpdate(ts);
+				});
 		}
 
-		//redner 2D
 		Camera* mainCamera = nullptr;
 		glm::mat4 cameraTransform = glm::mat4(1.0f);
 
@@ -81,16 +83,16 @@ namespace Beetle {
 	void Scene::OnUpdateEditor(TimeStamp ts, EditorCamera& camera)
 	{
 		Renderer2D::BeginScene(camera);
+
 		auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
 		for (auto entity : group)
 		{
-			auto [tranform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+			auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
 
-			Renderer2D::DrawQuad(tranform.GetTransform(), sprite.Color);
+			Renderer2D::DrawQuad(transform.GetTransform(), sprite.Color);
 		}
 
 		Renderer2D::EndScene();
-
 	}
 
 	void Scene::OnViewportResize(uint32_t width, uint32_t height)
@@ -98,22 +100,21 @@ namespace Beetle {
 		m_ViewportWidth = width;
 		m_ViewportHeight = height;
 
-		//resize camera
+		// Resize our non-FixedAspectRatio cameras
 		auto view = m_Registry.view<CameraComponent>();
 		for (auto entity : view)
 		{
 			auto& cameraComponent = view.get<CameraComponent>(entity);
-			if (!cameraComponent.FixedAspectRatio) 
-			{
+			if (!cameraComponent.FixedAspectRatio)
 				cameraComponent.Camera.SetViewportSize(width, height);
-			}
 		}
+
 	}
 
 	Entity Scene::GetPrimaryCameraEntity()
 	{
 		auto view = m_Registry.view<CameraComponent>();
-		for(auto entity : view)
+		for (auto entity : view)
 		{
 			const auto& camera = view.get<CameraComponent>(entity);
 			if (camera.Primary)
@@ -123,7 +124,7 @@ namespace Beetle {
 	}
 
 	template<typename T>
-	void Scene::OnComponentAdded(Entity entity, T& component) 
+	void Scene::OnComponentAdded(Entity entity, T& component)
 	{
 		static_assert(false);
 	}
@@ -153,4 +154,6 @@ namespace Beetle {
 	void Scene::OnComponentAdded<NativeScriptComponent>(Entity entity, NativeScriptComponent& component)
 	{
 	}
+
+
 }
