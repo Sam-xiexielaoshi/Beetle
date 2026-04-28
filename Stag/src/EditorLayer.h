@@ -1,6 +1,7 @@
 #pragma once
 #include "Beetle.h"
 #include "Panels/SceneHierarchyPanel.h"
+#include "Panels/ContentBrowserPanel.h"
 #include "Beetle/Renderer/EditorCamera.h"
 
 
@@ -23,6 +24,7 @@ namespace Beetle
 
 		void NewScene();
 		void OpenScene();
+		void OpenScene(const std::filesystem::path& path);
 		void SaveSceneAs();
 
 	private:
@@ -57,5 +59,6 @@ namespace Beetle
 
 		//panels
 		SceneHierarchyPanel m_SceneHierarchyPanel;
+		ContentBrowserPanel m_ContentBrowserPanel;
 	};
 }

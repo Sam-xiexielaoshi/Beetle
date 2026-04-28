@@ -1,0 +1,90 @@
+#include "btpch.h"
+#include "ContentBrowserPanel.h"
+
+#include <imgui/imgui.h>
+
+namespace Beetle {
+
+    extern const std::filesystem::path g_AssetPath = "assets";
+
+    ContentBrowserPanel::ContentBrowserPanel()
+        : m_CurrentDirectory(g_AssetPath)
+    {
+        m_DirectoryIcon = Texture2D::Create("Resources/Icons/ContentBrowser/DirectoryIcon.png");
+        m_FileIcon = Texture2D::Create("Resources/Icons/ContentBrowser/FileIcon.png");
+    }
+
+    void ContentBrowserPanel::OnImGuiRender()
+    {
+        ImGui::Begin("Content Browser");
+
+        // Back button
+        if (m_CurrentDirectory != std::filesystem::path(g_AssetPath))
+        {
+            if (ImGui::Button("<-"))
+                m_CurrentDirectory = m_CurrentDirectory.parent_path();
+        }
+
+        static float padding = 16.0f;
+        static float thumbnailSize = 64.0f;
+        float cellSize = thumbnailSize + padding;
+
+        float panelWidth = ImGui::GetContentRegionAvail().x;
+        int columnCount = (int)(panelWidth / cellSize);
+        if (columnCount < 1)
+            columnCount = 1;
+
+        ImGui::Columns(columnCount, 0, false);
+
+        for (const auto& dirEntry : std::filesystem::directory_iterator(m_CurrentDirectory))
+        {
+            const auto& path = dirEntry.path();
+
+			auto relativePath = std::filesystem::relative(path, g_AssetPath);
+			std::string filenameString = relativePath.filename().string();
+
+            ImGui::PushID(filenameString.c_str());
+
+            Ref<Texture2D> icon = dirEntry.is_directory() ? m_DirectoryIcon : m_FileIcon;
+			ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+
+            // FIXED: new ImageButton signature (requires ID first)
+            ImGui::ImageButton(
+                "##thumbnail",
+                (ImTextureID)icon->GetRendererID(),
+                ImVec2(thumbnailSize, thumbnailSize),
+                ImVec2(0, 1),
+                ImVec2(1, 0)
+            );
+
+            if (ImGui::BeginDragDropSource())
+            {
+				const wchar_t* itemPath = relativePath.c_str();
+                ImGui::SetDragDropPayload("CONTENT_BROWSER_ITEM", itemPath, (wcslen(itemPath)+1) * sizeof(wchar_t));
+                ImGui::EndDragDropSource();
+            }
+
+			ImGui::PopStyleColor();
+
+            // Double-click to enter directory
+            if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+            {
+                if (dirEntry.is_directory())
+                    m_CurrentDirectory /= path.filename();
+            }
+
+            ImGui::TextWrapped(filenameString.c_str());
+
+            ImGui::NextColumn();
+            ImGui::PopID();
+        }
+
+        ImGui::Columns(1);
+
+        ImGui::SliderFloat("Thumbnail Size", &thumbnailSize, 16.0f, 128.0f);
+        ImGui::SliderFloat("Padding", &padding, 0.0f, 32.0f);
+
+        ImGui::End();
+    }
+
+}
