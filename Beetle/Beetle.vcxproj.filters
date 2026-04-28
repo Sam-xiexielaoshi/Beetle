@@ -19,6 +19,9 @@
     <Filter Include="src\Beetle\ImGui">
       <UniqueIdentifier>{57B32B86-43AC-4AD8-6CDE-2F5D58362AE4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Beetle\Math">
+      <UniqueIdentifier>{6611EC68-D29C-592D-DBAD-DC2147B8B52D}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Beetle\Renderer">
       <UniqueIdentifier>{B36EE6FC-1FD0-C30A-A83D-0ABD149EFAC9}</UniqueIdentifier>
     </Filter>
@@ -108,10 +111,16 @@
     <ClInclude Include="src\Beetle\ImGui\ImGuiLayer.h">
       <Filter>src\Beetle\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="src\Beetle\Math\Math.h">
+      <Filter>src\Beetle\Math</Filter>
+    </ClInclude>
     <ClInclude Include="src\Beetle\Renderer\Buffer.h">
       <Filter>src\Beetle\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Beetle\Renderer\Camera.h">
+      <Filter>src\Beetle\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Beetle\Renderer\EditorCamera.h">
       <Filter>src\Beetle\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Beetle\Renderer\FrameBuffer.h">
@@ -201,8 +210,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Beetle\Math\Math.h" />
-    <ClInclude Include="src\Beetle\Renderer\EditorCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Beetle\Core\Application.cpp">
@@ -223,7 +230,13 @@
     <ClCompile Include="src\Beetle\ImGui\ImGuiLayer.cpp">
       <Filter>src\Beetle\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="src\Beetle\Math\Math.cpp">
+      <Filter>src\Beetle\Math</Filter>
+    </ClCompile>
     <ClCompile Include="src\Beetle\Renderer\Buffer.cpp">
+      <Filter>src\Beetle\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Beetle\Renderer\EditorCamera.cpp">
       <Filter>src\Beetle\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Beetle\Renderer\FrameBuffer.cpp">
@@ -310,7 +323,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Beetle\Math\Math.cpp" />
-    <ClCompile Include="src\Beetle\Renderer\EditorCamera.cpp" />
   </ItemGroup>
 </Project>
