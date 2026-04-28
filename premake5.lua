@@ -1,5 +1,5 @@
 workspace "Beetle"
-	architecture "x64"
+	architecture "x86_64"
 	startproject "Stag"
 
 
@@ -22,6 +22,7 @@ IncludeDir["stb_image"] = "Beetle/vendor/stb_image"
 IncludeDir["entt"] = "Beetle/vendor/entt/include"
 IncludeDir["yaml_cpp"] = "Beetle/vendor/yaml-cpp/include"
 IncludeDir["ImGuizmo"] = "Beetle/vendor/ImGuizmo"
+IncludeDir["VulkanSDK"] = "Beetle/vendor/VulkanSDK"
 
 group "Dependencies"
 	include "Beetle/vendor/GLFW"
@@ -251,3 +252,31 @@ project "Stag"
 		defines "BT_DIST"
 		runtime "Release"
 		optimize "On"
+
+local vulkan_sdk = os.getenv("VULKAN_SDK")
+if vulkan_sdk then
+    IncludeDir["VulkanSDK"] = vulkan_sdk .. "/Include"
+
+    Library = Library or {}
+
+    Library.ShaderC_Debug              = vulkan_sdk .. "/Lib/shaderc_sharedd.lib"
+    Library.ShaderC_Release            = vulkan_sdk .. "/Lib/shaderc_shared.lib"
+
+    Library.SPIRV_Cross_Debug          = vulkan_sdk .. "/Lib/spirv-cross-cored.lib"
+    Library.SPIRV_Cross_Release        = vulkan_sdk .. "/Lib/spirv-cross-core.lib"
+    Library.SPIRV_Cross_GLSL_Debug     = vulkan_sdk .. "/Lib/spirv-cross-glsld.lib"
+    Library.SPIRV_Cross_GLSL_Release   = vulkan_sdk .. "/Lib/spirv-cross-glsl.lib"
+else
+    print("Warning: VULKAN_SDK not set — Vulkan include/libs will not be configured.")
+end
+
+if os.getenv("VULKAN_SDK") then
+    local vkbin = os.getenv("VULKAN_SDK") .. "/Bin"
+    filter { "system:windows" }
+        postbuildcommands {
+            ('{COPY} "%s\\shaderc_sharedd.dll" "%{cfg.targetdir}"'):format(os.getenv("VULKAN_SDK")),
+            ('{COPY} "%s\\shaderc_shared.dll" "%{cfg.targetdir}"'):format(os.getenv("VULKAN_SDK")),
+            ('{COPY} "%s\\vulkan-1.dll" "%{cfg.targetdir}"'):format(os.getenv("VULKAN_SDK"))
+        }
+    filter {}
+end

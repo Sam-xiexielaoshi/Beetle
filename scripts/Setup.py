@@ -15,6 +15,6 @@ VulkanRequirements.Validate()
 
 if platform.system() == "Windows":
     print("\nRunning premake...")
-    subprocess.call([os.path.abspath("./scripts/Win-GenProjects.bat"), "nopause"])
+    subprocess.call([os.path.abspath("./scripts/Win-GenProjects.bat"), "nopause"], cwd=os.path.abspath("./scripts"))
 
 print("\nSetup completed!")

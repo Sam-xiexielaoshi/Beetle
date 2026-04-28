@@ -90,6 +90,9 @@
     <ClInclude Include="src\Beetle\Core\TimeStamp.h">
       <Filter>src\Beetle\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Beetle\Core\Timer.h">
+      <Filter>src\Beetle\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Beetle\Core\Window.h">
       <Filter>src\Beetle\Core</Filter>
     </ClInclude>
@@ -153,6 +156,9 @@
     <ClInclude Include="src\Beetle\Renderer\Texture.h">
       <Filter>src\Beetle\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Beetle\Renderer\UniformBuffer.h">
+      <Filter>src\Beetle\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Beetle\Renderer\VertexArray.h">
       <Filter>src\Beetle\Renderer</Filter>
     </ClInclude>
@@ -193,6 +199,9 @@
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLUniformBuffer.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h">
@@ -269,6 +278,9 @@
     <ClCompile Include="src\Beetle\Renderer\Texture.cpp">
       <Filter>src\Beetle\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Beetle\Renderer\UniformBuffer.cpp">
+      <Filter>src\Beetle\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Beetle\Renderer\VertexArray.cpp">
       <Filter>src\Beetle\Renderer</Filter>
     </ClCompile>
@@ -300,6 +312,9 @@
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLUniformBuffer.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp">

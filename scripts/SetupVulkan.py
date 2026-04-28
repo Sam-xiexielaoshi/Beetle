@@ -101,7 +101,7 @@ class VulkanConfiguration:
     
     @classmethod
     def CopyVulkanFolders(cls, installDir, destDir):
-        folders_to_copy = ["Bin", "Bin32", "Lib", "Lib32"]
+        folders_to_copy = ["Bin", "Lib"]
         for folder in folders_to_copy:
             src_path = os.path.join(installDir, folder)
             dest_path = os.path.join(destDir, folder)
