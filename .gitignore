@@ -13,3 +13,7 @@ results.json
 
 glsl Sandbox/
 Sandbox/assets/game/
+
+Beetle/vendor/VulkanSDK
+Stag/assets/cache
+scripts/__pycache__
