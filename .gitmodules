@@ -16,3 +16,6 @@
 [submodule "Beetle/vendor/ImGuizmo"]
 	path = Beetle/vendor/ImGuizmo
 	url = https://github.com/Sam-xiexielaoshi/ImGuizmo
+[submodule "Beetle/vendor/Box2D"]
+	path = Beetle/vendor/Box2D
+	url = https://github.com/Sam-xiexielaoshi/box2d
