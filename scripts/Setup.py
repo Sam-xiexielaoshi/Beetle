@@ -13,6 +13,9 @@ os.chdir('./../') # Change from "Scripts" directory to root
 
 VulkanRequirements.Validate()
 
+print("\nUpdating submodules...")
+subprocess.call(["git", "submodule", "update", "--init", "--recursive"])
+
 if platform.system() == "Windows":
     print("\nRunning premake...")
     subprocess.call([os.path.abspath("./scripts/Win-GenProjects.bat"), "nopause"], cwd=os.path.abspath("./scripts"))
