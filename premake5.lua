@@ -15,6 +15,7 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 -- Include directoried reative to root folder 
 IncludeDir = {}
 IncludeDir["GLFW"] = "Beetle/vendor/GLFW/include"
+IncludeDir["Box2D"] = "Beetle/vendor/Box2D/include"
 IncludeDir["Glad"] = "Beetle/vendor/Glad/include"
 IncludeDir["ImGui"] = "Beetle/vendor/imgui"
 IncludeDir["glm"] = "Beetle/vendor/glm"
@@ -25,6 +26,7 @@ IncludeDir["ImGuizmo"] = "Beetle/vendor/ImGuizmo"
 IncludeDir["VulkanSDK"] = "Beetle/vendor/VulkanSDK"
 
 group "Dependencies"
+	include "Beetle/vendor/Box2D"
 	include "Beetle/vendor/GLFW"
 	include "Beetle/vendor/Glad"
 	include "Beetle/vendor/imgui"
@@ -69,6 +71,7 @@ project "Beetle"
 	{
 		"%{prj.name}/src",
 		"%{prj.name}/vendor/spdlog/include",
+		"%{IncludeDir.Box2D}",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
@@ -81,6 +84,7 @@ project "Beetle"
 	}
 
 	links{
+		"Box2D",
 		"GLFW",
 		"Glad",
 		"ImGui",
@@ -270,13 +274,18 @@ else
     print("Warning: VULKAN_SDK not set — Vulkan include/libs will not be configured.")
 end
 
-if os.getenv("VULKAN_SDK") then
-    local vkbin = os.getenv("VULKAN_SDK") .. "/Bin"
-    filter { "system:windows" }
-        postbuildcommands {
-            ('{COPY} "%s\\shaderc_sharedd.dll" "%{cfg.targetdir}"'):format(os.getenv("VULKAN_SDK")),
-            ('{COPY} "%s\\shaderc_shared.dll" "%{cfg.targetdir}"'):format(os.getenv("VULKAN_SDK")),
-            ('{COPY} "%s\\vulkan-1.dll" "%{cfg.targetdir}"'):format(os.getenv("VULKAN_SDK"))
+if vulkan_sdk then
+    local vkbin = vulkan_sdk .. "/Bin"
+
+    filter "system:windows"
+		prebuildcommands
+		{
+			"{MKDIR} %{cfg.targetdir}"
+		}
+        postbuildcommands
+        {
+            '{COPY} "' .. vkbin .. '/shaderc_sharedd.dll" "%{cfg.targetdir}"',
+            '{COPY} "' .. vkbin .. '/shaderc_shared.dll" "%{cfg.targetdir}"',
         }
     filter {}
 end

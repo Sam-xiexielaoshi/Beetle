@@ -1,6 +1,5 @@
 #include "btpch.h"
 #include "SceneSerializer.h"
-#include "Beetle/Core/Core.h"
 
 #include "Entity.h"
 #include "Components.h"
@@ -9,13 +8,35 @@
 
 #include <yaml-cpp/yaml.h>
 
-namespace YAML
-{
+namespace YAML {
 
-	template <>
+	template<>
+	struct convert<glm::vec2>
+	{
+		static Node encode(const glm::vec2& rhs)
+		{
+			Node node;
+			node.push_back(rhs.x);
+			node.push_back(rhs.y);
+			node.SetStyle(EmitterStyle::Flow);
+			return node;
+		}
+
+		static bool decode(const Node& node, glm::vec2& rhs)
+		{
+			if (!node.IsSequence() || node.size() != 2)
+				return false;
+
+			rhs.x = node[0].as<float>();
+			rhs.y = node[1].as<float>();
+			return true;
+		}
+	};
+
+	template<>
 	struct convert<glm::vec3>
 	{
-		static Node encode(const glm::vec3 &rhs)
+		static Node encode(const glm::vec3& rhs)
 		{
 			Node node;
 			node.push_back(rhs.x);
@@ -25,7 +46,7 @@ namespace YAML
 			return node;
 		}
 
-		static bool decode(const Node &node, glm::vec3 &rhs)
+		static bool decode(const Node& node, glm::vec3& rhs)
 		{
 			if (!node.IsSequence() || node.size() != 3)
 				return false;
@@ -37,10 +58,10 @@ namespace YAML
 		}
 	};
 
-	template <>
+	template<>
 	struct convert<glm::vec4>
 	{
-		static Node encode(const glm::vec4 &rhs)
+		static Node encode(const glm::vec4& rhs)
 		{
 			Node node;
 			node.push_back(rhs.x);
@@ -51,7 +72,7 @@ namespace YAML
 			return node;
 		}
 
-		static bool decode(const Node &node, glm::vec4 &rhs)
+		static bool decode(const Node& node, glm::vec4& rhs)
 		{
 			if (!node.IsSequence() || node.size() != 4)
 				return false;
@@ -65,39 +86,68 @@ namespace YAML
 	};
 
 }
-namespace Beetle
-{
+namespace Beetle {
 
-	YAML::Emitter &operator<<(YAML::Emitter &out, const glm::vec3 &v)
+	YAML::Emitter& operator<<(YAML::Emitter& out, const glm::vec2& v)
+	{
+		out << YAML::Flow;
+		out << YAML::BeginSeq << v.x << v.y << YAML::EndSeq;
+		return out;
+	}
+
+	YAML::Emitter& operator<<(YAML::Emitter& out, const glm::vec3& v)
 	{
 		out << YAML::Flow;
 		out << YAML::BeginSeq << v.x << v.y << v.z << YAML::EndSeq;
 		return out;
 	}
 
-	YAML::Emitter &operator<<(YAML::Emitter &out, const glm::vec4 &v)
+	YAML::Emitter& operator<<(YAML::Emitter& out, const glm::vec4& v)
 	{
 		out << YAML::Flow;
 		out << YAML::BeginSeq << v.x << v.y << v.z << v.w << YAML::EndSeq;
 		return out;
 	}
 
-	SceneSerializer::SceneSerializer(const Ref<Scene> &scene)
+	static std::string RigidBody2DBodyTypeToString(Rigidbody2DComponent::BodyType bodyType)
+	{
+		switch (bodyType)
+		{
+		case Rigidbody2DComponent::BodyType::Static:    return "Static";
+		case Rigidbody2DComponent::BodyType::Dynamic:   return "Dynamic";
+		case Rigidbody2DComponent::BodyType::Kinematic: return "Kinematic";
+		}
+
+		BT_CORE_ASSERT(false, "Unknown body type");
+		return {};
+	}
+
+	static Rigidbody2DComponent::BodyType RigidBody2DBodyTypeFromString(const std::string& bodyTypeString)
+	{
+		if (bodyTypeString == "Static")    return Rigidbody2DComponent::BodyType::Static;
+		if (bodyTypeString == "Dynamic")   return Rigidbody2DComponent::BodyType::Dynamic;
+		if (bodyTypeString == "Kinematic") return Rigidbody2DComponent::BodyType::Kinematic;
+
+		BT_CORE_ASSERT(false, "Unknown body type");
+		return Rigidbody2DComponent::BodyType::Static;
+	}
+
+	SceneSerializer::SceneSerializer(const Ref<Scene>& scene)
 		: m_Scene(scene)
 	{
 	}
 
-	static void SerializeEntity(YAML::Emitter &out, Entity entity)
+	static void SerializeEntity(YAML::Emitter& out, Entity entity)
 	{
 		out << YAML::BeginMap; // Entity
-		out << YAML::Key << "Entity" << YAML::Value << static_cast<uint32_t>(entity);
+		out << YAML::Key << "Entity" << YAML::Value << "12837192831273"; // TODO: Entity ID goes here
 
 		if (entity.HasComponent<TagComponent>())
 		{
 			out << YAML::Key << "TagComponent";
 			out << YAML::BeginMap; // TagComponent
 
-			auto &tag = entity.GetComponent<TagComponent>().Tag;
+			auto& tag = entity.GetComponent<TagComponent>().Tag;
 			out << YAML::Key << "Tag" << YAML::Value << tag;
 
 			out << YAML::EndMap; // TagComponent
@@ -108,7 +158,7 @@ namespace Beetle
 			out << YAML::Key << "TransformComponent";
 			out << YAML::BeginMap; // TransformComponent
 
-			auto &tc = entity.GetComponent<TransformComponent>();
+			auto& tc = entity.GetComponent<TransformComponent>();
 			out << YAML::Key << "Translation" << YAML::Value << tc.Translation;
 			out << YAML::Key << "Rotation" << YAML::Value << tc.Rotation;
 			out << YAML::Key << "Scale" << YAML::Value << tc.Scale;
@@ -121,8 +171,8 @@ namespace Beetle
 			out << YAML::Key << "CameraComponent";
 			out << YAML::BeginMap; // CameraComponent
 
-			auto &cameraComponent = entity.GetComponent<CameraComponent>();
-			auto &camera = cameraComponent.Camera;
+			auto& cameraComponent = entity.GetComponent<CameraComponent>();
+			auto& camera = cameraComponent.Camera;
 
 			out << YAML::Key << "Camera" << YAML::Value;
 			out << YAML::BeginMap; // Camera
@@ -146,16 +196,44 @@ namespace Beetle
 			out << YAML::Key << "SpriteRendererComponent";
 			out << YAML::BeginMap; // SpriteRendererComponent
 
-			auto &spriteRendererComponent = entity.GetComponent<SpriteRendererComponent>();
+			auto& spriteRendererComponent = entity.GetComponent<SpriteRendererComponent>();
 			out << YAML::Key << "Color" << YAML::Value << spriteRendererComponent.Color;
 
 			out << YAML::EndMap; // SpriteRendererComponent
 		}
 
+		if (entity.HasComponent<Rigidbody2DComponent>())
+		{
+			out << YAML::Key << "Rigidbody2DComponent";
+			out << YAML::BeginMap; // Rigidbody2DComponent
+
+			auto& rb2dComponent = entity.GetComponent<Rigidbody2DComponent>();
+			out << YAML::Key << "BodyType" << YAML::Value << RigidBody2DBodyTypeToString(rb2dComponent.Type);
+			out << YAML::Key << "FixedRotation" << YAML::Value << rb2dComponent.FixedRotation;
+
+			out << YAML::EndMap; // Rigidbody2DComponent
+		}
+
+		if (entity.HasComponent<BoxCollider2DComponent>())
+		{
+			out << YAML::Key << "BoxCollider2DComponent";
+			out << YAML::BeginMap; // BoxCollider2DComponent
+
+			auto& bc2dComponent = entity.GetComponent<BoxCollider2DComponent>();
+			out << YAML::Key << "Offset" << YAML::Value << bc2dComponent.Offset;
+			out << YAML::Key << "Size" << YAML::Value << bc2dComponent.Size;
+			out << YAML::Key << "Density" << YAML::Value << bc2dComponent.Density;
+			out << YAML::Key << "Friction" << YAML::Value << bc2dComponent.Friction;
+			out << YAML::Key << "Restitution" << YAML::Value << bc2dComponent.Restitution;
+			out << YAML::Key << "RestitutionThreshold" << YAML::Value << bc2dComponent.RestitutionThreshold;
+
+			out << YAML::EndMap; // BoxCollider2DComponent
+		}
+
 		out << YAML::EndMap; // Entity
 	}
 
-	void SceneSerializer::Serialize(const std::string &filepath)
+	void SceneSerializer::Serialize(const std::string& filepath)
 	{
 		YAML::Emitter out;
 		out << YAML::BeginMap;
@@ -163,7 +241,7 @@ namespace Beetle
 		out << YAML::Key << "Entities" << YAML::Value << YAML::BeginSeq;
 		for (auto entId : m_Scene->m_Registry.view<TransformComponent>())
 		{
-			Entity entity = {entId, m_Scene.get()};
+			Entity entity = { entId, m_Scene.get() };
 			if (!entity)
 				continue;
 
@@ -176,15 +254,14 @@ namespace Beetle
 		fout << out.c_str();
 	}
 
-	void SceneSerializer::SerializeRuntime(const std::string &filepath)
+	void SceneSerializer::SerializeRuntime(const std::string& filepath)
 	{
 		// Not implemented
 		BT_CORE_ASSERT(false);
 	}
 
-	bool SceneSerializer::Deserialize(const std::string &filepath)
+	bool SceneSerializer::Deserialize(const std::string& filepath)
 	{
-		//YAML::Node data = YAML::LoadFile(filepath);
 		YAML::Node data;
 		try
 		{
@@ -206,14 +283,14 @@ namespace Beetle
 		{
 			for (auto entity : entities)
 			{
-				uint64_t entityID = entity["Entity"].as<uint64_t>();
+				uint64_t uuid = entity["Entity"].as<uint64_t>(); // TODO
 
-				std::string name = "Entity";
+				std::string name;
 				auto tagComponent = entity["TagComponent"];
 				if (tagComponent)
 					name = tagComponent["Tag"].as<std::string>();
 
-				BT_CORE_TRACE("Deserialized entity with ID = {0}, name = {1}", entityID, name);
+				BT_CORE_TRACE("Deserialized entity with ID = {0}, name = {1}", uuid, name);
 
 				Entity deserializedEntity = m_Scene->CreateEntity(name);
 
@@ -221,7 +298,7 @@ namespace Beetle
 				if (transformComponent)
 				{
 					// Entities always have transforms
-					auto &tc = deserializedEntity.GetComponent<TransformComponent>();
+					auto& tc = deserializedEntity.GetComponent<TransformComponent>();
 					tc.Translation = transformComponent["Translation"].as<glm::vec3>();
 					tc.Rotation = transformComponent["Rotation"].as<glm::vec3>();
 					tc.Scale = transformComponent["Scale"].as<glm::vec3>();
@@ -230,9 +307,9 @@ namespace Beetle
 				auto cameraComponent = entity["CameraComponent"];
 				if (cameraComponent)
 				{
-					auto &cc = deserializedEntity.AddComponent<CameraComponent>();
+					auto& cc = deserializedEntity.AddComponent<CameraComponent>();
 
-					auto &cameraProps = cameraComponent["Camera"];
+					auto& cameraProps = cameraComponent["Camera"];
 					cc.Camera.SetProjectionType((SceneCamera::ProjectionType)cameraProps["ProjectionType"].as<int>());
 
 					cc.Camera.SetPerspectiveVerticalFOV(cameraProps["PerspectiveFOV"].as<float>());
@@ -250,8 +327,28 @@ namespace Beetle
 				auto spriteRendererComponent = entity["SpriteRendererComponent"];
 				if (spriteRendererComponent)
 				{
-					auto &src = deserializedEntity.AddComponent<SpriteRendererComponent>();
+					auto& src = deserializedEntity.AddComponent<SpriteRendererComponent>();
 					src.Color = spriteRendererComponent["Color"].as<glm::vec4>();
+				}
+
+				auto rigidbody2DComponent = entity["Rigidbody2DComponent"];
+				if (rigidbody2DComponent)
+				{
+					auto& rb2d = deserializedEntity.AddComponent<Rigidbody2DComponent>();
+					rb2d.Type = RigidBody2DBodyTypeFromString(rigidbody2DComponent["BodyType"].as<std::string>());
+					rb2d.FixedRotation = rigidbody2DComponent["FixedRotation"].as<bool>();
+				}
+
+				auto boxCollider2DComponent = entity["BoxCollider2DComponent"];
+				if (boxCollider2DComponent)
+				{
+					auto& bc2d = deserializedEntity.AddComponent<BoxCollider2DComponent>();
+					bc2d.Offset = boxCollider2DComponent["Offset"].as<glm::vec2>();
+					bc2d.Size = boxCollider2DComponent["Size"].as<glm::vec2>();
+					bc2d.Density = boxCollider2DComponent["Density"].as<float>();
+					bc2d.Friction = boxCollider2DComponent["Friction"].as<float>();
+					bc2d.Restitution = boxCollider2DComponent["Restitution"].as<float>();
+					bc2d.RestitutionThreshold = boxCollider2DComponent["RestitutionThreshold"].as<float>();
 				}
 			}
 		}
@@ -259,7 +356,7 @@ namespace Beetle
 		return true;
 	}
 
-	bool SceneSerializer::DeserializeRuntime(const std::string &filepath)
+	bool SceneSerializer::DeserializeRuntime(const std::string& filepath)
 	{
 		// Not implemented
 		BT_CORE_ASSERT(false);

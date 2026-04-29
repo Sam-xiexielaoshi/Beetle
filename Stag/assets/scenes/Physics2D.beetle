@@ -1,15 +1,15 @@
 Scene: Untitled
 Entities:
-  - Entity: 0
+  - Entity: 1
     TagComponent:
       Tag: Camera
     TransformComponent:
-      Translation: [0, 0, 0]
+      Translation: [0, 0, 2.3836908]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     CameraComponent:
       Camera:
-        ProjectionType: 1
+        ProjectionType: 0
         PerspectiveFOV: 0.7853982
         PerspectiveNear: 0.01
         PerspectiveFar: 1000
@@ -18,12 +18,12 @@ Entities:
         OrthographicFar: 1
       Primary: true
       FixedAspectRatio: false
-  - Entity: 1
+  - Entity: 0
     TagComponent:
-      Tag: puirpel Square
+      Tag: Sprtie
     TransformComponent:
-      Translation: [0.16903919, -0.3, 0]
-      Rotation: [-1.284519, -0.01360868, 0.046198096]
-      Scale: [0.9999999, 11.583383, 10.580335]
+      Translation: [0, 0, -0.060105577]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
     SpriteRendererComponent:
       Color: [1, 1, 1, 1]
