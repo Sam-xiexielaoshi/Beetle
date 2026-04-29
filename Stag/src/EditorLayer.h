@@ -26,6 +26,11 @@ namespace Beetle
 		void OpenScene();
 		void OpenScene(const std::filesystem::path& path);
 		void SaveSceneAs();
+		
+		void OnScreenPlay();
+		void OnScreenStop();
+
+		void UI_Toolbar();
 
 	private:
 		OrthographicCameraController m_CameraController;
@@ -57,8 +62,19 @@ namespace Beetle
 
 		int m_GizmoType = -1;
 
+		//Scene State
+		enum class SceneState
+		{
+			Edit = 0,
+			Play = 1,
+			Stop = 2
+		};
+		SceneState m_SceneState = SceneState::Edit;
+
 		//panels
 		SceneHierarchyPanel m_SceneHierarchyPanel;
 		ContentBrowserPanel m_ContentBrowserPanel;
+
+		Ref<Texture2D> m_IconPlay, m_IconStop;
 	};
 }
