@@ -2,6 +2,7 @@
 #include <entt.hpp>
 #include <string>
 #include "Beetle/Core/TimeStamp.h"
+#include "Beetle/Core/UUID.h"
 #include "Beetle/Renderer/EditorCamera.h"
 
 class b2World;
@@ -18,6 +19,7 @@ namespace Beetle
 		~Scene();
 
 		Entity CreateEntity(const std::string& name = std::string());
+		Entity CreateEntityWithUUID(UUID uuid, const std::string& name = std::string());
 		void DestroyEntity(Entity entity);
 
 		void OnRuntimeStart();

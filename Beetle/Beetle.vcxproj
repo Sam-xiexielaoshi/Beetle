@@ -166,6 +166,7 @@
     <ClInclude Include="src\Beetle\Core\PlatformDetection.h" />
     <ClInclude Include="src\Beetle\Core\TimeStamp.h" />
     <ClInclude Include="src\Beetle\Core\Timer.h" />
+    <ClInclude Include="src\Beetle\Core\UUID.h" />
     <ClInclude Include="src\Beetle\Core\Window.h" />
     <ClInclude Include="src\Beetle\Debug\Instrumentor.h" />
     <ClInclude Include="src\Beetle\Events\ApplicationEvent.h" />
@@ -214,6 +215,7 @@
     <ClCompile Include="src\Beetle\Core\Layer.cpp" />
     <ClCompile Include="src\Beetle\Core\LayerStack.cpp" />
     <ClCompile Include="src\Beetle\Core\Log.cpp" />
+    <ClCompile Include="src\Beetle\Core\UUID.cpp" />
     <ClCompile Include="src\Beetle\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Beetle\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Beetle\Math\Math.cpp" />

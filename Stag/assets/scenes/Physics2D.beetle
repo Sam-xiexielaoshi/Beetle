@@ -1,10 +1,10 @@
 Scene: Untitled
 Entities:
-  - Entity: 1
+  - Entity: 4793924497264767156
     TagComponent:
       Tag: Camera
     TransformComponent:
-      Translation: [0, 0, 2.3836908]
+      Translation: [0, 0, 4.997113]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     CameraComponent:
@@ -18,12 +18,41 @@ Entities:
         OrthographicFar: 1
       Primary: true
       FixedAspectRatio: false
-  - Entity: 0
+  - Entity: 5134011587522944740
     TagComponent:
-      Tag: Sprtie
+      Tag: Floor
     TransformComponent:
-      Translation: [0, 0, -0.060105577]
+      Translation: [0, -1.4128001, 0]
       Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
+      Scale: [6.741967, 0.46067804, 1]
+    SpriteRendererComponent:
+      Color: [0.9498069, 0.4553014, 0.06600974, 1]
+    Rigidbody2DComponent:
+      BodyType: Static
+      FixedRotation: false
+    BoxCollider2DComponent:
+      Offset: [0, 0]
+      Size: [0.5, 0.5]
+      Density: 1
+      Friction: 0.5
+      Restitution: 0
+      RestitutionThreshold: 0.5
+  - Entity: 15045535320033348975
+    TagComponent:
+      Tag: Sprite
+    TransformComponent:
+      Translation: [0.1376417, 0.7701279, 0.02251478]
+      Rotation: [0, 0, 3.1381037]
+      Scale: [0.3611447, 0.37554625, 0.84813577]
     SpriteRendererComponent:
       Color: [1, 1, 1, 1]
+    Rigidbody2DComponent:
+      BodyType: Dynamic
+      FixedRotation: false
+    BoxCollider2DComponent:
+      Offset: [0, 0]
+      Size: [0.5, 0.5]
+      Density: 0.88
+      Friction: 0.1
+      Restitution: 0.82
+      RestitutionThreshold: 0.5

@@ -1,16 +1,25 @@
 #pragma once
+#include "SceneCamera.h"
+#include "Beetle/Core/UUID.h"
+#include "Beetle/Renderer/Texture.h"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/quaternion.hpp>
 
-#include "SceneCamera.h"
-#include "Beetle/Scene/ScriptableEntity.h"
-#include "Beetle/Renderer/Texture.h"
+
 
 
 namespace Beetle {
+
+	struct IDComponent
+	{
+		UUID ID;
+		IDComponent() = default;
+		IDComponent(const IDComponent&) = default;
+	};
 
 	struct TagComponent
 	{
@@ -64,6 +73,7 @@ namespace Beetle {
 		CameraComponent(const CameraComponent&) = default;
 	};
 
+	class ScriptableEntity;
 	struct NativeScriptComponent
 	{
 		ScriptableEntity* Instance = nullptr;

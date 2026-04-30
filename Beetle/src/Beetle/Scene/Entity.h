@@ -1,7 +1,9 @@
 #pragma once
 
 
+#include "Beetle/Core/UUID.h"
 #include "Scene.h"
+#include "Components.h"
 #include <entt.hpp>
 
 namespace Beetle
@@ -43,6 +45,8 @@ namespace Beetle
 		operator bool() const { return m_EntityHandle != entt::null; }
 		operator entt::entity() const { return m_EntityHandle; }
 		operator uint32_t() const { return (uint32_t)m_EntityHandle; }
+
+		UUID GetUUID() { return GetComponent<IDComponent>().ID; }
 
         bool operator==(const Entity& other) const
         {
