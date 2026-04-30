@@ -18,10 +18,12 @@ namespace Beetle
 		Scene();
 		~Scene();
 
+		static Ref<Scene> Copy(Ref<Scene> other);
+
 		Entity CreateEntity(const std::string& name = std::string());
 		Entity CreateEntityWithUUID(UUID uuid, const std::string& name = std::string());
 		void DestroyEntity(Entity entity);
-
+		void DuplicateEntity(Entity entity);
 		void OnRuntimeStart();
 		void OnRuntimeStop();
 

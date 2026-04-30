@@ -25,11 +25,14 @@ namespace Beetle
 		void NewScene();
 		void OpenScene();
 		void OpenScene(const std::filesystem::path& path);
+		void SaveScene();
 		void SaveSceneAs();
 		
+		void SerializeScene(Ref<Scene> scene, const std::filesystem::path& path);
 		void OnScreenPlay();
 		void OnScreenStop();
 
+		void OnDuplicateEntity();
 		void UI_Toolbar();
 
 	private:
@@ -43,6 +46,8 @@ namespace Beetle
 		Entity m_HoveredEntity;
 
 		Ref<Scene> m_ActiveScene;
+		Ref<Scene> m_EditorScene;
+		std::filesystem::path m_EditorScenePath;
 		Entity m_SquareEntity;
 		Entity m_CameraEntity;
 		Entity m_SecondCamera;
