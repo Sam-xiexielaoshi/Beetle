@@ -22,6 +22,8 @@ namespace Beetle
 		bool OnKeyPressed(KeyPressedEvent& event);
 		bool OnMouseButtonPressed(MouseButtonPressedEvent& event);
 
+		void OnOverlayRender();
+
 		void NewScene();
 		void OpenScene();
 		void OpenScene(const std::filesystem::path& path);
@@ -66,6 +68,8 @@ namespace Beetle
 		glm::vec4 m_SquareColor = { .2f, .3f, .8f, 1.f };
 
 		int m_GizmoType = -1;
+
+		bool m_ShowPhysicsColliders = false;
 
 		//Scene State
 		enum class SceneState

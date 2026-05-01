@@ -4,15 +4,15 @@ Entities:
     TagComponent:
       Tag: Circle
     TransformComponent:
-      Translation: [1.6247555, -1.0323062, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
+      Translation: [3.469052, 1.8126023, -6.1035156e-05]
+      Rotation: [0, 0, -2.9187849]
+      Scale: [0.99999994, 0.99999994, 1]
     CircleRendererComponent:
       Color: [0.93436295, 0.36234576, 0.057721246, 1]
       Thickness: 0.1
       Fade: 0.005
     Rigidbody2DComponent:
-      BodyType: Static
+      BodyType: Dynamic
       FixedRotation: false
     CircleCollider2DComponent:
       Offset: [0, 0]
@@ -25,7 +25,7 @@ Entities:
     TagComponent:
       Tag: Camera
     TransformComponent:
-      Translation: [0, 0, 4.997113]
+      Translation: [0, 0, 8.09004]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     CameraComponent:
@@ -62,9 +62,9 @@ Entities:
     TagComponent:
       Tag: Sprite
     TransformComponent:
-      Translation: [0.04957062, 0.2715039, 0.02251478]
-      Rotation: [0, 0, -0.23508453]
-      Scale: [0.3611597, 0.37557206, 0.84813577]
+      Translation: [-0.8905647, 1.7818865, 0.02251478]
+      Rotation: [0, 0, -2.210225]
+      Scale: [0.3611583, 0.37556937, 0.84813577]
     SpriteRendererComponent:
       Color: [1, 1, 1, 1]
     Rigidbody2DComponent:
