@@ -31,8 +31,10 @@ namespace Beetle
 		void SaveSceneAs();
 		
 		void SerializeScene(Ref<Scene> scene, const std::filesystem::path& path);
-		void OnScreenPlay();
-		void OnScreenStop();
+
+		void OnScenePlay();
+		void OnSceneSimulate();
+		void OnSceneStop();
 
 		void OnDuplicateEntity();
 		void UI_Toolbar();
@@ -76,7 +78,7 @@ namespace Beetle
 		{
 			Edit = 0,
 			Play = 1,
-			Stop = 2
+			Simulate = 2
 		};
 		SceneState m_SceneState = SceneState::Edit;
 
@@ -84,6 +86,6 @@ namespace Beetle
 		SceneHierarchyPanel m_SceneHierarchyPanel;
 		ContentBrowserPanel m_ContentBrowserPanel;
 
-		Ref<Texture2D> m_IconPlay, m_IconStop;
+		Ref<Texture2D> m_IconPlay, m_IconSimulate, m_IconStop;
 	};
 }

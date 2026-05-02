@@ -24,10 +24,14 @@ namespace Beetle
 		Entity CreateEntityWithUUID(UUID uuid, const std::string& name = std::string());
 		void DestroyEntity(Entity entity);
 		void DuplicateEntity(Entity entity);
+
 		void OnRuntimeStart();
 		void OnRuntimeStop();
+		void OnSimulationStart();
+		void OnSimulationStop();
 
 		void OnUpdateRuntime(TimeStamp ts);
+		void OnUpdateSimulation(TimeStamp ts, EditorCamera& camera);
 		void OnUpdateEditor(TimeStamp ts, EditorCamera& camera);
 		void OnViewportResize(uint32_t width, uint32_t height);
 
@@ -42,6 +46,11 @@ namespace Beetle
 	private:
 		template<typename T>
 		void OnComponentAdded(Entity entity, T& component);
+
+		void OnPhysics2DStart();
+		void OnPhysics2DStop();
+
+		void RenderScene(EditorCamera& camera);
 	private:
 		entt::registry m_Registry;
 		uint32_t m_ViewportWidth = 0, m_ViewportHeight = 0;

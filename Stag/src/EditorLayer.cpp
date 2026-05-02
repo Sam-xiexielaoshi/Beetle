@@ -27,6 +27,7 @@ namespace Beetle
 
 		m_CheckerBoard = Texture2D::Create("assets/textures/Checkerboard.png");
 		m_IconPlay = Texture2D::Create("Resources/Icons/PlayButton.png");
+		m_IconSimulate = Texture2D::Create("Resources/Icons/SimulateButton.png");
 		m_IconStop = Texture2D::Create("Resources/Icons/StopButton.png");
 
 		FrameBufferSpecification fbSpec;
@@ -35,7 +36,8 @@ namespace Beetle
 		fbSpec.Height = 720;
 		m_FrameBuffer = FrameBuffer::Create(fbSpec);
 
-		m_ActiveScene = CreateRef<Scene>();
+		m_EditorScene = CreateRef<Scene>();
+		m_ActiveScene = m_EditorScene;
 
 		auto commandLineArgs = Application::Get().GetCommandLineArgs();
 		if (commandLineArgs.Count > 1)
@@ -136,6 +138,13 @@ namespace Beetle
 
 				m_EditorCamera.OnUpdate(ts);
 				m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
+				break;
+			}
+			case SceneState::Simulate:
+			{
+				m_EditorCamera.OnUpdate(ts);
+
+				m_ActiveScene->OnUpdateSimulation(ts, m_EditorCamera);
 				break;
 			}
 			case SceneState::Play:
@@ -376,17 +385,46 @@ namespace Beetle
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(buttonActive.x, buttonActive.y, buttonActive.z, 0.5f));
 
 		ImGui::Begin("##Toolbar", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
-		
+
+		bool toolbarEnabled = (bool)m_ActiveScene;
+
+		ImVec4 tintColor = ImVec4(1, 1, 1, 1);
+		if (!toolbarEnabled)
+			tintColor.w = 0.5f;
+
 		float size = ImGui::GetWindowHeight() - 4.0f;
 		Ref<Texture2D> icon = m_SceneState == SceneState::Edit ? m_IconPlay : m_IconStop;
-		ImGui::SetCursorPosX((ImGui::GetWindowContentRegionMax().x * 0.5f) - (size * 0.5f));
-		ImTextureID iconID = reinterpret_cast<ImTextureID>(reinterpret_cast<void*>(icon->GetRendererID()));
-		if (ImGui::ImageButton("##ToolbarPlayStop", iconID, ImVec2(size, size), ImVec2(0, 0), ImVec2(1, 1), ImVec4(0, 0, 0, 0)))
+
 		{
-			if (m_SceneState == SceneState::Edit)
-				OnScreenPlay();
-			else if (m_SceneState == SceneState::Play)
-				OnScreenStop();
+			Ref<Texture2D> icon = (m_SceneState == SceneState::Edit || m_SceneState == SceneState::Simulate) ? m_IconPlay : m_IconStop;
+			ImGui::SetCursorPosX((ImGui::GetWindowContentRegionMax().x * 0.5f) - (size * 0.5f));
+			if (ImGui::ImageButton(
+				"##PlayButton",
+				(ImTextureID)(uint64_t)icon->GetRendererID(),
+				ImVec2(size, size)
+			))
+			{
+				if (m_SceneState == SceneState::Edit || m_SceneState == SceneState::Simulate)
+					OnScenePlay();
+				else if (m_SceneState == SceneState::Play)
+					OnSceneStop();
+			}
+		}
+
+		ImGui::SameLine();
+		{
+			Ref<Texture2D> icon = (m_SceneState == SceneState::Edit || m_SceneState == SceneState::Play) ? m_IconSimulate : m_IconStop;
+			if (ImGui::ImageButton(
+				"##SimulateButton",
+				(ImTextureID)(uint64_t)icon->GetRendererID(),
+				ImVec2(size, size)
+			))
+			{
+				if (m_SceneState == SceneState::Edit || m_SceneState == SceneState::Play)
+					OnSceneSimulate();
+				else if (m_SceneState == SceneState::Simulate)
+					OnSceneStop();
+			}
 		}
 		ImGui::PopStyleVar(3);
 		ImGui::PopStyleColor(3);
@@ -495,6 +533,8 @@ namespace Beetle
 		if (m_SceneState == SceneState::Play)
 		{
 			Entity camera = m_ActiveScene->GetPrimaryCameraEntity();
+			if(!camera)
+				return;
 			Renderer2D::BeginScene(camera.GetComponent<CameraComponent>().Camera, camera.GetComponent<TransformComponent>().GetTransform());
 		}
 		else
@@ -563,7 +603,7 @@ namespace Beetle
 	{
 		if (m_SceneState != SceneState::Edit)
 		{
-			OnScreenStop();
+			OnSceneStop();
 		}
 
 		if (path.extension().string() != ".beetle")
@@ -609,8 +649,11 @@ namespace Beetle
 		serializer.Serialize(path.string());
 	}
 
-	void EditorLayer::OnScreenPlay()
+	void EditorLayer::OnScenePlay()
 	{
+		if(m_SceneState == SceneState::Simulate)
+			OnSceneStop();
+
 		m_SceneState = SceneState::Play;
 
 		m_ActiveScene = Scene::Copy(m_EditorScene);
@@ -618,11 +661,32 @@ namespace Beetle
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}
 
-	void EditorLayer::OnScreenStop()
+	void EditorLayer::OnSceneSimulate()
 	{
-		m_SceneState = SceneState::Edit;
-		m_ActiveScene->OnRuntimeStop();
+		if (m_SceneState == SceneState::Play)
+			OnSceneStop();
+
+		m_SceneState = SceneState::Simulate;
+
+		m_ActiveScene = Scene::Copy(m_EditorScene);
+		m_ActiveScene->OnSimulationStart();
+
+		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+	}
+
+	void EditorLayer::OnSceneStop()
+	{
+		BT_CORE_ASSERT(m_SceneState == SceneState::Play || m_SceneState == SceneState::Simulate, "Scene is not running!");
+
+		if (m_SceneState == SceneState::Play)
+			m_ActiveScene->OnRuntimeStop();
+		else if (m_SceneState == SceneState::Simulate)
+			m_ActiveScene->OnSimulationStop();
 		m_ActiveScene = m_EditorScene;
+
+		m_SceneState = SceneState::Edit;
+		m_ActiveScene = m_EditorScene;
+
 
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}
