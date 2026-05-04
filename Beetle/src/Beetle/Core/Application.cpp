@@ -7,7 +7,7 @@
 
 #include "Beetle/Core/Input.h"
 
-#include <GLFW/glfw3.h>
+#include "Beetle/Utils/PlatformUtils.h"
 
 namespace Beetle {
 	Application* Application::s_Instance = nullptr;
@@ -80,7 +80,7 @@ namespace Beetle {
 		{
 			BT_PROFILE_SCOPE("RunLoop");
 
-			float time = (float)glfwGetTime();
+			float time = Time::GetTime();
 			TimeStamp timestep = time - m_LastFrameTime;
 			m_LastFrameTime = time;
 

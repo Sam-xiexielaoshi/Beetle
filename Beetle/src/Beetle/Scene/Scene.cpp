@@ -291,13 +291,6 @@ namespace Beetle {
 		CopyComponentIfExists(AllComponents{}, newEntity, entity);
 	}
 
-	template<typename T>
-	void Scene::OnComponentAdded(Entity entity, T& component)
-	{
-		//static_assert(false);
-	}
-
-	
 	void Scene::OnPhysics2DStart()
 	{
 		m_PhysicsWorld = new b2World({ 0.0f, -9.8f });
@@ -386,6 +379,12 @@ namespace Beetle {
 		Renderer2D::EndScene();
 	}
 
+	template<typename T>
+	void Scene::OnComponentAdded(Entity entity, T& component)
+	{
+		static_Assert(sizeof(T) == 0);
+	}
+
 	template<>
 	void Scene::OnComponentAdded<IDComponent>(Entity entity, IDComponent& component)
 	{
@@ -403,8 +402,6 @@ namespace Beetle {
 			component.Camera.SetViewportSize(m_ViewportWidth, m_ViewportHeight);
 	}
 
-	
-	
 	template<>
 	void Scene::OnComponentAdded<SpriteRendererComponent>(Entity entity, SpriteRendererComponent& component)
 	{
