@@ -6,7 +6,8 @@
 class Sandbox : public Beetle::Application
 {
 public:
-	Sandbox(Beetle::ApplicationCommandLineArgs args)
+	Sandbox(const Beetle::ApplicationSpecification& specification)
+		: Beetle::Application(specification)
 	{
 		//PushLayer(new ExampleLayer());
 		PushLayer(new Sandbox2D());
@@ -19,5 +20,10 @@ public:
 
 Beetle::Application*  Beetle::CreateApplication(Beetle::ApplicationCommandLineArgs args)
 {
-	return new Sandbox(args);
+	ApplicationSpecification spec;
+	spec.Name = "Sandbox";
+	spec.WorkingDirectory = "../Stag";
+	spec.CommandLineArgs = args;
+
+	return new Sandbox(spec);
 }

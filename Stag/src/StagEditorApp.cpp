@@ -6,7 +6,7 @@ namespace Beetle {
 	class Stag : public Application
 	{
 	public:
-		Stag(ApplicationCommandLineArgs args) : Application("Stag", args)
+		Stag(const ApplicationSpecification& spec) : Application(spec)
 		{
 			//PushLayer(new ExampleLayer());
 			PushLayer(new EditorLayer());
@@ -18,6 +18,10 @@ namespace Beetle {
 
 	Application* CreateApplication(ApplicationCommandLineArgs args)
 	{
-		return new Stag(args);
+		ApplicationSpecification spec;
+		spec.Name = "Stag";
+		spec.CommandLineArgs = args;
+
+		return new Stag(spec);
 	}
 }
