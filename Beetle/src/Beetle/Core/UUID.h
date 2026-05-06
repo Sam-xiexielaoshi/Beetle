@@ -1,5 +1,4 @@
 #pragma once
-#include <xhash>
 
 namespace Beetle {
 
@@ -18,12 +17,13 @@ namespace Beetle {
 }
 
 namespace std {
+	template<typename T> struct hash;
 	template<>
 	struct hash<Beetle::UUID>
 	{
 		std::size_t operator()(const Beetle::UUID& uuid) const
 		{
-			return std::hash<uint64_t>()((uint64_t)uuid);
+			return (uint64_t)uuid;
 		}
 	};
 }

@@ -11,9 +11,6 @@ namespace Beetle {
 			//PushLayer(new ExampleLayer());
 			PushLayer(new EditorLayer());
 		}
-		~Stag()
-		{
-		}
 	};
 
 	Application* CreateApplication(ApplicationCommandLineArgs args)

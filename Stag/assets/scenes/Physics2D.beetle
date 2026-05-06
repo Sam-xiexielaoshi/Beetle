@@ -4,9 +4,9 @@ Entities:
     TagComponent:
       Tag: Circle
     TransformComponent:
-      Translation: [3.469052, 1.8126023, -6.1035156e-05]
-      Rotation: [0, 0, -2.9187849]
-      Scale: [0.99999994, 0.99999994, 1]
+      Translation: [-0.67947114, 2.0004296, -0.00012207031]
+      Rotation: [0, 0, 0.87308645]
+      Scale: [0.99999976, 0.99999976, 1]
     CircleRendererComponent:
       Color: [0.93436295, 0.36234576, 0.057721246, 1]
       Thickness: 0.1
@@ -39,15 +39,16 @@ Entities:
         OrthographicFar: 1
       Primary: true
       FixedAspectRatio: false
-  - Entity: 5134011587522944740
+  - Entity: 16672940118998907085
     TagComponent:
       Tag: Floor
     TransformComponent:
-      Translation: [2.3506453, -1.8453996, 0]
-      Rotation: [0, 0, 0.60369253]
-      Scale: [6.7419696, 0.46067816, 1]
+      Translation: [-0.8831757, -1.0944793, 0]
+      Rotation: [0, 0, -0.638996]
+      Scale: [6.7419677, 0.46067813, 1]
     SpriteRendererComponent:
       Color: [0.9498069, 0.4553014, 0.06600974, 1]
+      TilingFactor: 1
     Rigidbody2DComponent:
       BodyType: Static
       FixedRotation: false
@@ -62,11 +63,12 @@ Entities:
     TagComponent:
       Tag: Sprite
     TransformComponent:
-      Translation: [-0.8905647, 1.7818865, 0.02251478]
-      Rotation: [0, 0, -2.210225]
-      Scale: [0.3611583, 0.37556937, 0.84813577]
+      Translation: [3.1411228, 1.6284223, 0.022575814]
+      Rotation: [0, 0, 2.8374472]
+      Scale: [0.36116362, 0.37557438, 0.84813577]
     SpriteRendererComponent:
       Color: [1, 1, 1, 1]
+      TilingFactor: 1
     Rigidbody2DComponent:
       BodyType: Dynamic
       FixedRotation: false
@@ -77,15 +79,16 @@ Entities:
       Friction: 0.1
       Restitution: 0.82
       RestitutionThreshold: 0.5
-  - Entity: 16672940118998907085
+  - Entity: 5134011587522944740
     TagComponent:
       Tag: Floor
     TransformComponent:
-      Translation: [-0.8831757, -1.0944793, 0]
-      Rotation: [0, 0, -0.638996]
-      Scale: [6.7419677, 0.46067813, 1]
+      Translation: [2.3506453, -1.8453996, 0]
+      Rotation: [0, 0, 0.60369253]
+      Scale: [6.7419696, 0.46067816, 1]
     SpriteRendererComponent:
       Color: [0.9498069, 0.4553014, 0.06600974, 1]
+      TilingFactor: 1
     Rigidbody2DComponent:
       BodyType: Static
       FixedRotation: false
