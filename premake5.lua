@@ -21,9 +21,22 @@ IncludeDir["ImGui"] = "Beetle/vendor/imgui"
 IncludeDir["glm"] = "Beetle/vendor/glm"
 IncludeDir["stb_image"] = "Beetle/vendor/stb_image"
 IncludeDir["entt"] = "Beetle/vendor/entt/include"
+IncludeDir["mono"] = "Beetle/vendor/mono/include"
 IncludeDir["yaml_cpp"] = "Beetle/vendor/yaml-cpp/include"
 IncludeDir["ImGuizmo"] = "Beetle/vendor/ImGuizmo"
 IncludeDir["VulkanSDK"] = "Beetle/vendor/VulkanSDK"
+
+LibraryDir = {}
+
+LibraryDir["mono"] = "%{wks.location}/Beetle/vendor/mono/lib/%{cfg.buildcfg}"
+
+Library = {}
+Library["mono"] = "%{LibraryDir.mono}/libmono-static-sgen.lib"
+
+Library["WinSock"] = "Ws2_32.lib"
+Library["WinMM"] = "Winmm.lib"
+Library["WinVersion"] = "Version.lib"
+Library["WinBcrypt"] = "Bcrypt.lib"
 
 group "Dependencies"
 	include "Beetle/vendor/Box2D"
@@ -37,6 +50,7 @@ group ""
 include "Beetle/vendor/GLFW"
 include "Beetle/vendor/Glad"
 include "Beetle/vendor/imgui"
+include "Beetle-ScriptCore"
 
 project "Beetle"
 	location "Beetle"
@@ -78,6 +92,7 @@ project "Beetle"
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb_image}",
 		"%{IncludeDir.entt}",
+		"%{IncludeDir.mono}",
 		"%{IncludeDir.yaml_cpp}",
 		"%{IncludeDir.ImGuizmo}",
 		"%{IncludeDir.VulkanSDK}",
@@ -89,7 +104,8 @@ project "Beetle"
 		"Glad",
 		"ImGui",
 		"yaml-cpp",
-		"opengl32.lib"
+		"opengl32.lib", 
+		"%{Library.mono}"
 	}
 
 	filter "files:Beetle/vendor/ImGuizmo/**.cpp"
@@ -98,6 +114,18 @@ project "Beetle"
 
 	filter "system:windows"
 		systemversion "latest"
+
+		defines
+		{
+		}
+
+		links
+		{
+			"%{Library.WinSock}",
+			"%{Library.WinMM}",
+			"%{Library.WinVersion}",
+			"%{Library.WinBcrypt}"
+		}
 
 		buildoptions { "/utf-8" }
 

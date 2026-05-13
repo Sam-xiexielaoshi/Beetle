@@ -28,6 +28,9 @@
     <Filter Include="src\Beetle\Scene">
       <UniqueIdentifier>{4AABDB86-36A4-FAD8-5FD6-DF5D4B2EDAE4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Beetle\Scripting">
+      <UniqueIdentifier>{AF010876-9B90-913F-44AF-A53A301DA2E5}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Beetle\Utils">
       <UniqueIdentifier>{8D3F0987-7938-28D9-A26A-0D5E8EC207E5}</UniqueIdentifier>
     </Filter>
@@ -91,6 +94,9 @@
       <Filter>src\Beetle\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Beetle\Core\Timer.h">
+      <Filter>src\Beetle\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Beetle\Core\UUID.h">
       <Filter>src\Beetle\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Beetle\Core\Window.h">
@@ -180,6 +186,9 @@
     <ClInclude Include="src\Beetle\Scene\ScriptableEntity.h">
       <Filter>src\Beetle\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="src\Beetle\Scripting\ScriptEngine.h">
+      <Filter>src\Beetle\Scripting</Filter>
+    </ClInclude>
     <ClInclude Include="src\Beetle\Utils\PlatformUtils.h">
       <Filter>src\Beetle\Utils</Filter>
     </ClInclude>
@@ -219,7 +228,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Beetle\Core\UUID.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Beetle\Core\Application.cpp">
@@ -232,6 +240,9 @@
       <Filter>src\Beetle\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Beetle\Core\Log.cpp">
+      <Filter>src\Beetle\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Beetle\Core\UUID.cpp">
       <Filter>src\Beetle\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Beetle\ImGui\ImGuiBuild.cpp">
@@ -297,6 +308,9 @@
     <ClCompile Include="src\Beetle\Scene\SceneSerializer.cpp">
       <Filter>src\Beetle\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="src\Beetle\Scripting\ScriptEngine.cpp">
+      <Filter>src\Beetle\Scripting</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
@@ -339,6 +353,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Beetle\Core\UUID.cpp" />
   </ItemGroup>
 </Project>

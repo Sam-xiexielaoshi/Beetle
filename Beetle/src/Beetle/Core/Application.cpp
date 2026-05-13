@@ -4,6 +4,7 @@
 #include "Beetle/Core/Log.h"
 
 #include "Beetle/Renderer/Renderer.h"
+#include "Beetle/Scripting/ScriptEngine.h"
 
 #include "Beetle/Core/Input.h"
 
@@ -26,6 +27,7 @@ namespace Beetle {
 		m_Window->SetEventCallback(BEETLE_BIND_EVENT_FN(Application::OnEvent));
 
 		Renderer::Init();
+		ScriptEngine::Init();
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
@@ -35,6 +37,7 @@ namespace Beetle {
 	{
 		BT_PROFILE_FUNCTION();
 
+		ScriptEngine::Shutdown();
 		Renderer::Shutdown();
 	}
 

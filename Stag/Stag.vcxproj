@@ -179,10 +179,6 @@ IF EXIST "C:\VulkanSDK\1.3.280.0\Bin\shaderc_shared.dll"\ (xcopy /Q /E /Y /I "C:
       <Project>{368730A9-2229-5B7F-0BE4-6ED3F724E2CF}</Project>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="assets\shaders\Renderer2D_Circle.glsl" />
-    <None Include="assets\shaders\Renderer2D_Line.glsl" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
