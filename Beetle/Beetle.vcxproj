@@ -197,6 +197,7 @@
     <ClInclude Include="src\Beetle\Scene\SceneSerializer.h" />
     <ClInclude Include="src\Beetle\Scene\ScriptableEntity.h" />
     <ClInclude Include="src\Beetle\Scripting\ScriptEngine.h" />
+    <ClInclude Include="src\Beetle\Scripting\ScriptGlue.h" />
     <ClInclude Include="src\Beetle\Utils\PlatformUtils.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
@@ -239,6 +240,7 @@
     <ClCompile Include="src\Beetle\Scene\SceneCamera.cpp" />
     <ClCompile Include="src\Beetle\Scene\SceneSerializer.cpp" />
     <ClCompile Include="src\Beetle\Scripting\ScriptEngine.cpp" />
+    <ClCompile Include="src\Beetle\Scripting\ScriptGlue.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLFrameBuffer.cpp" />
