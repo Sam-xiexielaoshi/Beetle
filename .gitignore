@@ -2,9 +2,17 @@
 .vs/
 bin/
 bin-int/
+Intermediates/
 
 #files
 *.user
+*.log
+
+# vs files and folders
+**.vcxproj
+**.vcxproj.filters
+**.vcxproj.user
+**.csproj
 
 # profiling output
 Sandbox/BeetleProfile-*.json
