@@ -5,7 +5,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Stag", "Stag\Stag.vcxproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Beetle", "Beetle\Beetle.vcxproj", "{368730A9-2229-5B7F-0BE4-6ED3F724E2CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beetle-ScriptCore", "Beetle-ScriptCore\Beetle-ScriptCore\Beetle-ScriptCore.csproj", "{E1B32BD7-4DCA-296D-9641-B58E0297FAF4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beetle-ScriptCore", "Beetle-ScriptCore\Beetle-ScriptCore.csproj", "{E1B32BD7-4DCA-296D-9641-B58E0297FAF4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencies", "{53E47842-3FC8-3998-A828-34EB942B241A}"
 EndProject
