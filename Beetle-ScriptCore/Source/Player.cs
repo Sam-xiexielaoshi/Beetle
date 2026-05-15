@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Beetle;
+
 namespace Sandbox
 {
-    public class Player
+    public class Player : Entity
     {
         void OnCreate()
         {
@@ -18,9 +20,5 @@ namespace Sandbox
             Console.WriteLine("OnUpdate: " + ts);
         }
 
-        void OnDestroy()
-        {
-            Console.WriteLine("OnDestroy");
-        }
     }
 }

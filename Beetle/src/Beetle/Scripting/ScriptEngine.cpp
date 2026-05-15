@@ -71,7 +71,7 @@ namespace Beetle
 
 				const char* nameSpace = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAMESPACE]);
 				const char* name = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAME]);
-
+				
 				BT_CORE_TRACE("{}.{}", nameSpace, name);
 			}
 		}
@@ -87,6 +87,8 @@ namespace Beetle
 		MonoImage* CoreAssemblyImage = nullptr;
 
 		ScriptClass EntityClass;
+
+		std::unordered_map<std::string, Ref<ScriptClass>> EntityClasses;
 	};
 
 	static ScriptEngineData* s_Data = nullptr;
@@ -97,6 +99,7 @@ namespace Beetle
 
 		InitMono();
 		LoadAssembly("Resources/Scripts/Beetle-ScriptCore.dll");
+		LoadAssemblyClasses(s_Data->CoreAssembly);
 
 		ScriptGlue::RegisterFunctions();
 
@@ -166,6 +169,34 @@ namespace Beetle
 		s_Data->CoreAssembly = Utils::LoadMonoAssembly(filepath);
 		s_Data->CoreAssemblyImage = mono_assembly_get_image(s_Data->CoreAssembly);
 		// Utils::PrintAssemblyTypes(s_Data->CoreAssembly);
+	}
+
+	void ScriptEngine::LoadAssemblyClasses(MonoAssembly* assembly)
+	{
+		s_Data->EntityClasses.clear();
+		MonoImage* image = mono_assembly_get_image(assembly);
+		const MonoTableInfo* typeDefinitionsTable = mono_image_get_table_info(image, MONO_TABLE_TYPEDEF);
+		int32_t numTypes = mono_table_info_get_rows(typeDefinitionsTable);
+		MonoClass* entityClass = mono_class_from_name(image, "Beetle", "Entity");
+
+
+		for (int32_t i = 0; i < numTypes; i++)
+		{
+			uint32_t cols[MONO_TYPEDEF_SIZE];
+			mono_metadata_decode_row(typeDefinitionsTable, i, cols, MONO_TYPEDEF_SIZE);
+
+			const char* nameSpace = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAMESPACE]);
+			const char* name = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAME]);
+			std::string fullname;
+			if (strlen(nameSpace) != 0)
+				fullname = fmt::format("{}.{}", nameSpace, name);
+			else fullname = name;
+
+			MonoClass* monoClass = mono_class_from_name(image, nameSpace, name);
+
+			bool isEntity = mono_class_is_subclass_of(monoClass, entityClass, false);
+			if (isEntity) s_Data->EntityClasses[fullname] = CreateRef<ScriptClass>(nameSpace, name);
+		}
 	}
 
 	MonoObject* ScriptEngine::InstantiateClass(MonoClass* monoClass)
