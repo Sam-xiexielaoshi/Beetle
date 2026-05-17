@@ -36,7 +36,7 @@ namespace Beetle {
 	class ScriptInstance
 	{
 	public:
-		ScriptInstance(Ref<ScriptClass> scriptClass);
+		ScriptInstance(Ref<ScriptClass> scriptClass, Entity entity);
 
 		void InvokeOnCreate();
 		void InvokeOnUpdate(float deltaTime);
@@ -44,6 +44,7 @@ namespace Beetle {
 		Ref<ScriptClass> m_ScriptClass;
 
 		MonoObject* m_Instance = nullptr;
+		MonoMethod* m_Constructor = nullptr;
 		MonoMethod* m_OnCreateMethod = nullptr;
 		MonoMethod* m_OnUpdateMethod = nullptr;
 	};

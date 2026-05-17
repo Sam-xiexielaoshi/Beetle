@@ -35,6 +35,8 @@ namespace Beetle
 		void OnUpdateEditor(TimeStamp ts, EditorCamera& camera);
 		void OnViewportResize(uint32_t width, uint32_t height);
 
+		Entity GetEntityByUUID(UUID uuid);
+
 		Entity GetPrimaryCameraEntity();
 
 		template<typename... Components>
@@ -56,6 +58,8 @@ namespace Beetle
 		uint32_t m_ViewportWidth = 0, m_ViewportHeight = 0;
 
 		b2World* m_PhysicsWorld = nullptr;
+
+		std::unordered_map<UUID, entt::entity> m_EntityMap;
 
 		friend class Entity;
 		friend class SceneSerializer;

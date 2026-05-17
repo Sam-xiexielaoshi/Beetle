@@ -45,16 +45,25 @@ namespace Beetle {
 		return glm::dot(*paramter, *paramter);
 	}
 
-	static void Entity_GetTranslation(glm::vec3* outTranslation)
-	{
-		return glm::dot(*outTranslation, *outTranslation);
-	}
-
-	static void Entity_SetTranslation(UUID entity, glm::vec3* translation)
+	static void Entity_GetTranslation(UUID entityID, glm::vec3* outTranslation)
 	{
 		Scene* scene = ScriptEngine::GetSceneContext();
 
-		scene
+		Entity entity = scene->GetEntityByUUID(entityID);
+		*outTranslation = entity.GetComponent<TransformComponent>().Translation ;
+
+	}
+
+	static void Entity_SetTranslation(UUID entityID, glm::vec3* translation)
+	{
+		Scene* scene = ScriptEngine::GetSceneContext();
+		Entity entity = scene->GetEntityByUUID(entityID);
+		entity.GetComponent<TransformComponent>().Translation = *translation;
+	}
+
+	static bool Input_IsKeyDown(int keycode)
+	{
+		return Input::IsKeyPressed(keycode);
 	}
 
 	void ScriptGlue::RegisterFunctions()
@@ -65,6 +74,8 @@ namespace Beetle {
 
 		BT_ADD_INTERNAL_CALL(Entity_GetTranslation);
 		BT_ADD_INTERNAL_CALL(Entity_SetTranslation);
+
+		BT_ADD_INTERNAL_CALL(Input_IsKeyDown);
 	}
 
 }

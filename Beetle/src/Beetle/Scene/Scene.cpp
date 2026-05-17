@@ -117,12 +117,15 @@ namespace Beetle {
 		entity.AddComponent<TransformComponent>();
 		auto& tag = entity.AddComponent<TagComponent>();
 		tag.Tag = name.empty() ? "Entity" : name;
+
+		m_EntityMap[uuid] = entity;
 		return entity;
 	}
 
 	void Scene::DestroyEntity(Entity entity)
 	{
 		m_Registry.destroy(entity);
+		m_EntityMap.erase(entity.GetUUID());
 	}
 
 	void Scene::OnRuntimeStart()
@@ -291,6 +294,14 @@ namespace Beetle {
 				cameraComponent.Camera.SetViewportSize(width, height);
 		}
 
+	}
+
+	Entity Scene::GetEntityByUUID(UUID uuid)
+	{
+		//assert it 
+		if (m_EntityMap.find(uuid) != m_EntityMap.end())
+			return { m_EntityMap.at(uuid), this };
+		return {};
 	}
 
 	Entity Scene::GetPrimaryCameraEntity()

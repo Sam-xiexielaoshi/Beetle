@@ -103,13 +103,13 @@ namespace Beetle
 
 		InitMono();
 		LoadAssembly("Resources/Scripts/Beetle-ScriptCore.dll");
+		s_Data->EntityClass = ScriptClass("Beetle", "Entity");
 		LoadAssemblyClasses(s_Data->CoreAssembly);
 
 		ScriptGlue::RegisterFunctions();
 
 #if 0
 		// Retrieve and instantiate class (with constructor)
-		s_Data->EntityClass = ScriptClass("Beetle", "Entity");
 
 		MonoObject* instance = s_Data->EntityClass.Instantiate();
 
@@ -192,7 +192,7 @@ namespace Beetle
 		const auto& sc = entity.GetComponent<ScriptComponent>();
 		if(ScriptEngine::EntityClassExists(sc.ClassName))
 		{
-			Ref<ScriptInstance> instance = CreateRef<ScriptInstance>(s_Data->EntityClasses[sc.ClassName]);
+			Ref<ScriptInstance> instance = CreateRef<ScriptInstance>(s_Data->EntityClasses[sc.ClassName], entity);
 			s_Data->EntityInstances[entity.GetUUID()] = instance;
 
 			instance->InvokeOnCreate();
@@ -283,15 +283,21 @@ namespace Beetle
 		return mono_runtime_invoke(method, instance, params, nullptr);
 	}
 
-	ScriptInstance::ScriptInstance(Ref<ScriptClass> scriptClass)
+	ScriptInstance::ScriptInstance(Ref<ScriptClass> scriptClass, Entity entity)
 		: m_ScriptClass(scriptClass)
 	{
 		m_Instance = scriptClass->Instantiate();
 
+		m_Constructor = s_Data->EntityClass.GetMethod(".ctor", 1);
 		m_OnCreateMethod = scriptClass->GetMethod("OnCreate", 0);
 		BT_CORE_ASSERT(m_OnCreateMethod, "Could not find OnCreate!");
 		m_OnUpdateMethod = scriptClass->GetMethod("OnUpdate", 1);
 		BT_CORE_ASSERT(m_OnUpdateMethod, "Could not find OnUpdate!");
+
+		//call entity constructor
+		UUID entityID = entity.GetUUID();
+		void* param = &entityID;
+		m_ScriptClass->InvokeMethod(m_Instance, m_Constructor, &param);
 	}
 
 	void ScriptInstance::InvokeOnCreate()
