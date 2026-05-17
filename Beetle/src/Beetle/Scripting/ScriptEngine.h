@@ -1,5 +1,8 @@
 #pragma once
 
+#include "Beetle/Scene/Scene.h"
+#include "Beetle/Scene/Entity.h"
+
 #include <filesystem>
 #include <string>
 
@@ -8,26 +11,10 @@ extern "C" {
 	typedef struct _MonoObject MonoObject;
 	typedef struct _MonoMethod MonoMethod;
 	typedef struct _MonoAssembly MonoAssembly;
+	typedef struct _MonoImage MonoImage;
 }
 
 namespace Beetle {
-
-	class ScriptEngine
-	{
-	public:
-		static void Init();
-		static void Shutdown();
-
-		static void LoadAssembly(const std::filesystem::path& filepath);
-	private:
-		static void InitMono();
-		static void ShutdownMono();
-
-		static MonoObject* InstantiateClass(MonoClass* monoClass);
-		static void LoadAssemblyClasses(MonoAssembly* assembly);
-
-		friend class ScriptClass;
-	};
 
 	class ScriptClass
 	{
@@ -44,5 +31,47 @@ namespace Beetle {
 		std::string m_ClassName;
 
 		MonoClass* m_MonoClass = nullptr;
+	};
+
+	class ScriptInstance
+	{
+	public:
+		ScriptInstance(Ref<ScriptClass> scriptClass);
+
+		void InvokeOnCreate();
+		void InvokeOnUpdate(float deltaTime);
+	private:
+		Ref<ScriptClass> m_ScriptClass;
+
+		MonoObject* m_Instance = nullptr;
+		MonoMethod* m_OnCreateMethod = nullptr;
+		MonoMethod* m_OnUpdateMethod = nullptr;
+	};
+
+	class ScriptEngine
+	{
+	public:
+		static void Init();
+		static void Shutdown();
+
+		static void LoadAssembly(const std::filesystem::path& filepath);
+
+		static void OnRuntimeStart(Scene* scene);
+		static void OnRuntimeStop();
+
+		static bool EntityClassExists(const std::string& fullClassName);
+		static void OnCreateEntity(Entity entity);
+		static void OnUpdateEntity(Entity entity, TimeStamp ts);
+
+		static Scene* GetSceneContext();
+		static std::unordered_map<std::string, Ref<ScriptClass>>GetEntityClasses();
+	private:
+		static void InitMono();
+		static void ShutdownMono();
+
+		static MonoObject* InstantiateClass(MonoClass* monoClass);
+		static void LoadAssemblyClasses(MonoAssembly* assembly);
+
+		friend class ScriptClass;
 	};
 }

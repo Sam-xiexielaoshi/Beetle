@@ -63,9 +63,11 @@ Entities:
     TagComponent:
       Tag: Sprite
     TransformComponent:
-      Translation: [3.1411228, 1.6284223, 0.022575814]
+      Translation: [0.5125106, 1.3695263, 0.02251478]
       Rotation: [0, 0, 2.8374472]
-      Scale: [0.36116362, 0.37557438, 0.84813577]
+      Scale: [0.36117637, 0.37558702, 0.84813577]
+    ScriptComponent:
+      ClassName: Sandbox.Player
     SpriteRendererComponent:
       Color: [1, 1, 1, 1]
       TilingFactor: 1

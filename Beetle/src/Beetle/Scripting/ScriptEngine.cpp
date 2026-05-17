@@ -2,6 +2,7 @@
 #include "ScriptEngine.h"
 
 #include "ScriptGlue.h"
+#include "Beetle/Scene/Scene.h"
 
 #include "mono/jit/jit.h"
 #include "mono/metadata/assembly.h"
@@ -89,6 +90,9 @@ namespace Beetle
 		ScriptClass EntityClass;
 
 		std::unordered_map<std::string, Ref<ScriptClass>> EntityClasses;
+		std::unordered_map<UUID, Ref<ScriptInstance>> EntityInstances;
+
+		Scene* SceneContext = nullptr;
 	};
 
 	static ScriptEngineData* s_Data = nullptr;
@@ -103,6 +107,7 @@ namespace Beetle
 
 		ScriptGlue::RegisterFunctions();
 
+#if 0
 		// Retrieve and instantiate class (with constructor)
 		s_Data->EntityClass = ScriptClass("Beetle", "Entity");
 
@@ -135,6 +140,7 @@ namespace Beetle
 		s_Data->EntityClass.InvokeMethod(instance, printCustomMessageFunc, &stringParam);
 
 		//BT_CORE_ASSERT(false);
+#endif 
 	}
 
 	void ScriptEngine::Shutdown()
@@ -171,6 +177,54 @@ namespace Beetle
 		// Utils::PrintAssemblyTypes(s_Data->CoreAssembly);
 	}
 
+	void ScriptEngine::OnRuntimeStart(Scene* scene)
+	{
+		s_Data->SceneContext = scene;
+	}
+
+	bool ScriptEngine::EntityClassExists(const std::string& fullClassName)
+	{
+		return s_Data->EntityClasses.find(fullClassName) != s_Data->EntityClasses.end();
+	}
+
+	void ScriptEngine::OnCreateEntity(Entity entity)
+	{
+		const auto& sc = entity.GetComponent<ScriptComponent>();
+		if(ScriptEngine::EntityClassExists(sc.ClassName))
+		{
+			Ref<ScriptInstance> instance = CreateRef<ScriptInstance>(s_Data->EntityClasses[sc.ClassName]);
+			s_Data->EntityInstances[entity.GetUUID()] = instance;
+
+			instance->InvokeOnCreate();
+		}
+	}
+
+	void ScriptEngine::OnUpdateEntity(Entity entity, TimeStamp ts)
+	{
+		UUID entityUUID = entity.GetUUID();
+		BT_CORE_ASSERT(s_Data->EntityInstances.find(entityUUID) != s_Data->EntityInstances.end());
+		Ref<ScriptInstance> instance = s_Data->EntityInstances[entityUUID];
+		instance->InvokeOnUpdate((float)ts);
+	}
+
+	void ScriptEngine::OnRuntimeStop()
+	{
+		s_Data->SceneContext = nullptr;
+
+		s_Data->EntityInstances.clear();
+	}
+
+
+	Scene* ScriptEngine::GetSceneContext()
+	{
+		return s_Data->SceneContext;
+	}
+
+	std::unordered_map<std::string, Ref<ScriptClass>> ScriptEngine::GetEntityClasses()
+	{
+		return s_Data->EntityClasses;
+	}
+
 	void ScriptEngine::LoadAssemblyClasses(MonoAssembly* assembly)
 	{
 		s_Data->EntityClasses.clear();
@@ -193,6 +247,8 @@ namespace Beetle
 			else fullname = name;
 
 			MonoClass* monoClass = mono_class_from_name(image, nameSpace, name);
+
+			if (monoClass == entityClass) continue;
 
 			bool isEntity = mono_class_is_subclass_of(monoClass, entityClass, false);
 			if (isEntity) s_Data->EntityClasses[fullname] = CreateRef<ScriptClass>(nameSpace, name);
@@ -225,5 +281,27 @@ namespace Beetle
 	MonoObject* ScriptClass::InvokeMethod(MonoObject* instance, MonoMethod* method, void** params)
 	{
 		return mono_runtime_invoke(method, instance, params, nullptr);
+	}
+
+	ScriptInstance::ScriptInstance(Ref<ScriptClass> scriptClass)
+		: m_ScriptClass(scriptClass)
+	{
+		m_Instance = scriptClass->Instantiate();
+
+		m_OnCreateMethod = scriptClass->GetMethod("OnCreate", 0);
+		BT_CORE_ASSERT(m_OnCreateMethod, "Could not find OnCreate!");
+		m_OnUpdateMethod = scriptClass->GetMethod("OnUpdate", 1);
+		BT_CORE_ASSERT(m_OnUpdateMethod, "Could not find OnUpdate!");
+	}
+
+	void ScriptInstance::InvokeOnCreate()
+	{
+		m_ScriptClass->InvokeMethod(m_Instance, m_OnCreateMethod);
+	}
+
+	void ScriptInstance::InvokeOnUpdate(float ts)
+	{
+		void* param = &ts;
+		m_ScriptClass->InvokeMethod(m_Instance, m_OnUpdateMethod, &param);
 	}
 }

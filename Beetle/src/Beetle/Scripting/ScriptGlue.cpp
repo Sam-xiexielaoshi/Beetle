@@ -1,10 +1,22 @@
 #include "btpch.h"
 #include "ScriptGlue.h"
+#include "ScriptEngine.h"
+
+#include "Beetle/Core/UUID.h"
+#include "Beetle/Core/Input.h"
+#include "Beetle/Core/KeyCodes.h"
+
+#include "Beetle/Scene/Scene.h"
+#include "Beetle/Scene/Entity.h"
 
 #include "mono/metadata/object.h"
+#include "mono/metadata/reflection.h"
+
+#include "box2d/b2_body.h"
 
 
 namespace Beetle {
+	static std::unordered_map<MonoType*, std::function<bool(Entity)>> s_EntityHasComponentFuncs;
 
 #define BT_ADD_INTERNAL_CALL(Name) mono_add_internal_call("Beetle.InternalCalls::" #Name, Name)
 
@@ -33,11 +45,26 @@ namespace Beetle {
 		return glm::dot(*paramter, *paramter);
 	}
 
+	static void Entity_GetTranslation(glm::vec3* outTranslation)
+	{
+		return glm::dot(*outTranslation, *outTranslation);
+	}
+
+	static void Entity_SetTranslation(UUID entity, glm::vec3* translation)
+	{
+		Scene* scene = ScriptEngine::GetSceneContext();
+
+		scene
+	}
+
 	void ScriptGlue::RegisterFunctions()
 	{
 		BT_ADD_INTERNAL_CALL(NativeLog);
 		BT_ADD_INTERNAL_CALL(NativeLog_Vector);
 		BT_ADD_INTERNAL_CALL(NativeLog_VectorDot);
+
+		BT_ADD_INTERNAL_CALL(Entity_GetTranslation);
+		BT_ADD_INTERNAL_CALL(Entity_SetTranslation);
 	}
 
 }
