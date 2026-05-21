@@ -45,6 +45,16 @@ namespace Beetle {
 		return glm::dot(*paramter, *paramter);
 	}
 
+	static bool Entity_HasComponent(UUID entityID, MonoReflectionType* componentType)
+	{
+		Scene* scene = ScriptEngine::GetSceneContext();
+		Entity entity = scene->GetEntityByUUID(entityID);
+
+		entity.HasComponent<>();
+
+		MonoType* monoComponentType = mono_reflection_type_get_type(componentType);
+	}
+
 	static void Entity_GetTranslation(UUID entityID, glm::vec3* outTranslation)
 	{
 		Scene* scene = ScriptEngine::GetSceneContext();
@@ -66,12 +76,20 @@ namespace Beetle {
 		return Input::IsKeyPressed(keycode);
 	}
 
+	void ScriptGlue::RegisterComponents()
+	{
+		MonoType* managedType = mono_reflection_type_from_name("Beetle.TransformComponent", ScriptEngine::GetCoreAssemblyImage());
+		
+
+	}
+
 	void ScriptGlue::RegisterFunctions()
 	{
 		BT_ADD_INTERNAL_CALL(NativeLog);
 		BT_ADD_INTERNAL_CALL(NativeLog_Vector);
 		BT_ADD_INTERNAL_CALL(NativeLog_VectorDot);
 
+		BT_ADD_INTERNAL_CALL(Entity_HasComponent);
 		BT_ADD_INTERNAL_CALL(Entity_GetTranslation);
 		BT_ADD_INTERNAL_CALL(Entity_SetTranslation);
 

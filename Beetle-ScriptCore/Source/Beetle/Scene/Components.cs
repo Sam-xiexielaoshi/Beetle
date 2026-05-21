@@ -14,7 +14,6 @@ namespace Beetle
 
 	public class TransformComponent : Component
 	{
-		public static readonly int ID = 1;
 		public Vector3 Translation
 		{
 			get

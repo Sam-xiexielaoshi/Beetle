@@ -15,7 +15,8 @@ namespace Sandbox
 		{
 			Console.WriteLine($"Player.OnCreate - {ID}");
 
-			m_Transform = GetComponent(TransformComponent.ID);
+			m_Transform = GetComponent<TransformComponent>();
+			m_Transform.Translation = new Vector3(0.0f);
 		}
 
 		void OnUpdate(float ts)

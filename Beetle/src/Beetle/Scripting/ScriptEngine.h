@@ -73,6 +73,9 @@ namespace Beetle {
 		static MonoObject* InstantiateClass(MonoClass* monoClass);
 		static void LoadAssemblyClasses(MonoAssembly* assembly);
 
+		static MonoImage* GetCoreAssemblyImage();
+
 		friend class ScriptClass;
+		friend class ScriptGlue;
 	};
 }

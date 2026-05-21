@@ -1,4 +1,5 @@
 ﻿using Beetle;
+using System;
 using System.Runtime.CompilerServices;
 
 
@@ -6,6 +7,9 @@ namespace Beetle
 {
 	public class InternalCalls
 	{
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static bool Entity_HasComponent(ulong entityID, Type componentType);
+
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void TransformComponent_GetTranslation(ulong entityID, out Vector3 translation);
 
