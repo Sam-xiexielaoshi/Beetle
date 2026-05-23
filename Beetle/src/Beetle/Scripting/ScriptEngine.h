@@ -66,14 +66,13 @@ namespace Beetle {
 
 		static Scene* GetSceneContext();
 		static std::unordered_map<std::string, Ref<ScriptClass>>GetEntityClasses();
+		static MonoImage* GetCoreAssemblyImage();
 	private:
 		static void InitMono();
 		static void ShutdownMono();
 
 		static MonoObject* InstantiateClass(MonoClass* monoClass);
 		static void LoadAssemblyClasses(MonoAssembly* assembly);
-
-		static MonoImage* GetCoreAssemblyImage();
 
 		friend class ScriptClass;
 		friend class ScriptGlue;

@@ -106,6 +106,7 @@ namespace Beetle
 		s_Data->EntityClass = ScriptClass("Beetle", "Entity");
 		LoadAssemblyClasses(s_Data->CoreAssembly);
 
+		ScriptGlue::RegisterComponents();
 		ScriptGlue::RegisterFunctions();
 
 #if 0

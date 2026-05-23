@@ -48,11 +48,13 @@ namespace Beetle {
 	static bool Entity_HasComponent(UUID entityID, MonoReflectionType* componentType)
 	{
 		Scene* scene = ScriptEngine::GetSceneContext();
+		BT_CORE_ASSERT(scene);
 		Entity entity = scene->GetEntityByUUID(entityID);
+		BT_CORE_ASSERT(entity);
 
-		entity.HasComponent<>();
-
-		MonoType* monoComponentType = mono_reflection_type_get_type(componentType);
+		MonoType* managedType = mono_reflection_type_get_type(componentType);
+		BT_CORE_ASSERT(s_EntityHasComponentFuncs.find(managedType) != s_EntityHasComponentFuncs.end());
+		return s_EntityHasComponentFuncs.at(managedType)(entity);
 	}
 
 	static void Entity_GetTranslation(UUID entityID, glm::vec3* outTranslation)
@@ -76,11 +78,31 @@ namespace Beetle {
 		return Input::IsKeyPressed(keycode);
 	}
 
+	template<typename... Component>
+	static void RegisterComponent()
+	{
+		([]()
+			{
+				std::string_view typeName = typeid(Component).name();
+				size_t pos = typeName.find_last_of(":");
+				std::string_view structName = typeName.substr(pos + 1);
+				std::string managedTypename = fmt::format("Beetle.{}", structName);
+
+				MonoType* managedType = mono_reflection_type_from_name(managedTypename.data(), ScriptEngine::GetCoreAssemblyImage());
+				BT_CORE_ASSERT(managedType);
+				s_EntityHasComponentFuncs[managedType] = [](Entity entity) {return entity.HasComponent<TransformComponent>(); };
+			}(), ...);
+	}
+
+	template<typename... Component>
+	static void RegisterComponent(ComponentGroup<Component...>)
+	{
+		RegisterComponent<Component...>();
+	}
+
 	void ScriptGlue::RegisterComponents()
 	{
-		MonoType* managedType = mono_reflection_type_from_name("Beetle.TransformComponent", ScriptEngine::GetCoreAssemblyImage());
-		
-
+		RegisterComponent(AllComponents{});
 	}
 
 	void ScriptGlue::RegisterFunctions()
