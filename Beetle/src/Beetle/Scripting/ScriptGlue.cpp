@@ -57,20 +57,47 @@ namespace Beetle {
 		return s_EntityHasComponentFuncs.at(managedType)(entity);
 	}
 
-	static void Entity_GetTranslation(UUID entityID, glm::vec3* outTranslation)
+	static void TransformComponent_GetTranslation(UUID entityID, glm::vec3* outTranslation)
 	{
 		Scene* scene = ScriptEngine::GetSceneContext();
-
+		BT_CORE_ASSERT(scene);
 		Entity entity = scene->GetEntityByUUID(entityID);
+		BT_CORE_ASSERT(entity);
 		*outTranslation = entity.GetComponent<TransformComponent>().Translation ;
 
 	}
 
-	static void Entity_SetTranslation(UUID entityID, glm::vec3* translation)
+	static void TransformComponent_SetTranslation(UUID entityID, glm::vec3* translation)
 	{
 		Scene* scene = ScriptEngine::GetSceneContext();
+		BT_CORE_ASSERT(scene);
 		Entity entity = scene->GetEntityByUUID(entityID);
+		BT_CORE_ASSERT(entity);
 		entity.GetComponent<TransformComponent>().Translation = *translation;
+	}
+
+	static void Rigidbody2DComponent_ApplyLinearImpulse(UUID entityID, glm::vec2* impulse, glm::vec2* point, bool wake)
+	{
+		Scene* scene = ScriptEngine::GetSceneContext();
+		BT_CORE_ASSERT(scene);
+		Entity entity = scene->GetEntityByUUID(entityID);
+		BT_CORE_ASSERT(entity);
+
+		auto& rb2d = entity.GetComponent<Rigidbody2DComponent>();
+		b2Body* body = (b2Body*)rb2d.RuntimeBody;
+		body->ApplyLinearImpulse(b2Vec2(impulse->x, impulse->y), b2Vec2(point->x, point->y), wake);
+	}
+
+	static void Rigidbody2DComponent_ApplyLinearImpulseToCenter(UUID entityID, glm::vec2* impulse, bool wake)
+	{
+		Scene* scene = ScriptEngine::GetSceneContext();
+		BT_CORE_ASSERT(scene);
+		Entity entity = scene->GetEntityByUUID(entityID);
+		BT_CORE_ASSERT(entity);
+
+		auto& rb2d = entity.GetComponent<Rigidbody2DComponent>();
+		b2Body* body = (b2Body*)rb2d.RuntimeBody;
+		body->ApplyLinearImpulseToCenter(b2Vec2(impulse->x, impulse->y), wake);
 	}
 
 	static bool Input_IsKeyDown(int keycode)
@@ -89,8 +116,16 @@ namespace Beetle {
 				std::string managedTypename = fmt::format("Beetle.{}", structName);
 
 				MonoType* managedType = mono_reflection_type_from_name(managedTypename.data(), ScriptEngine::GetCoreAssemblyImage());
-				BT_CORE_ASSERT(managedType);
-				s_EntityHasComponentFuncs[managedType] = [](Entity entity) {return entity.HasComponent<TransformComponent>(); };
+
+				if (!managedType)
+				{
+					BT_CORE_ERROR("Could not find component type: {}", managedTypename);
+					return;
+				}
+
+				s_EntityHasComponentFuncs[managedType] =
+					[](Entity entity) { return entity.HasComponent<Component>(); };
+
 			}(), ...);
 	}
 
@@ -112,8 +147,11 @@ namespace Beetle {
 		BT_ADD_INTERNAL_CALL(NativeLog_VectorDot);
 
 		BT_ADD_INTERNAL_CALL(Entity_HasComponent);
-		BT_ADD_INTERNAL_CALL(Entity_GetTranslation);
-		BT_ADD_INTERNAL_CALL(Entity_SetTranslation);
+		BT_ADD_INTERNAL_CALL(TransformComponent_GetTranslation);
+		BT_ADD_INTERNAL_CALL(TransformComponent_SetTranslation);
+
+		BT_ADD_INTERNAL_CALL(Rigidbody2DComponent_ApplyLinearImpulse);
+		BT_ADD_INTERNAL_CALL(Rigidbody2DComponent_ApplyLinearImpulseToCenter);
 
 		BT_ADD_INTERNAL_CALL(Input_IsKeyDown);
 	}

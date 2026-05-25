@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 
 namespace Beetle
 {
@@ -25,6 +21,16 @@ namespace Beetle
 			Y = y;
 			Z = z;
 		}
+
+		public Vector2 XY
+		{
+			get => new Vector2(X, Y);
+			set
+			{
+				X = value.X;
+				Y = value.Y;
+            }
+        }
 
 		public static Vector3 operator +(Vector3 a, Vector3 b)
 		{
