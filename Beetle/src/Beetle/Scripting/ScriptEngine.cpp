@@ -296,9 +296,9 @@ namespace Beetle
 
 		m_Constructor = s_Data->EntityClass.GetMethod(".ctor", 1);
 		m_OnCreateMethod = scriptClass->GetMethod("OnCreate", 0);
-		BT_CORE_ASSERT(m_OnCreateMethod, "Could not find OnCreate!");
+		//BT_CORE_ASSERT(m_OnCreateMethod, "Could not find OnCreate!");
 		m_OnUpdateMethod = scriptClass->GetMethod("OnUpdate", 1);
-		BT_CORE_ASSERT(m_OnUpdateMethod, "Could not find OnUpdate!");
+		//BT_CORE_ASSERT(m_OnUpdateMethod, "Could not find OnUpdate!");
 
 		//call entity constructor
 		UUID entityID = entity.GetUUID();
