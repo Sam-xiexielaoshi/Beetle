@@ -47,6 +47,8 @@ group "Dependencies"
 
 group ""
 
+BeetleRootdir = "../"
+
 include "Beetle/vendor/GLFW"
 include "Beetle/vendor/Glad"
 include "Beetle/vendor/imgui"

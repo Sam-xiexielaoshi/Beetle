@@ -1,10 +1,12 @@
+local BeetleRootdir = ".."
+
 project "Beetle-ScriptCore"
 	kind "SharedLib"
 	language "C#"
 	dotnetframework "4.7.2"
 
-	targetdir ("%{wks.location}/Stag/Resources/Scripts")
-	objdir ("%{wks.location}/Stag/Resources/Scripts/Intermediates")
+	targetdir (BeetleRootdir .."/Stag/Resources/Scripts")
+	objdir (BeetleRootdir .."/Stag/Resources/Scripts/Intermediates")
 
 	files
 	{
