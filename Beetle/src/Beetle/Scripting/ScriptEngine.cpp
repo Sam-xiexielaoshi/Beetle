@@ -2,10 +2,11 @@
 #include "ScriptEngine.h"
 
 #include "ScriptGlue.h"
-#include "Beetle/Scene/Scene.h"
 
 #include "mono/jit/jit.h"
 #include "mono/metadata/assembly.h"
+#include "mono/metadata/object.h"
+#include "mono/metadata/tabledefs.h"
 
 namespace Beetle
 {
@@ -254,18 +255,35 @@ namespace Beetle
 			mono_metadata_decode_row(typeDefinitionsTable, i, cols, MONO_TYPEDEF_SIZE);
 
 			const char* nameSpace = mono_metadata_string_heap(s_Data->AppAssemblyImage, cols[MONO_TYPEDEF_NAMESPACE]);
-			const char* name = mono_metadata_string_heap(s_Data->AppAssemblyImage, cols[MONO_TYPEDEF_NAME]);
+			const char* className = mono_metadata_string_heap(s_Data->AppAssemblyImage, cols[MONO_TYPEDEF_NAME]);
 			std::string fullname;
 			if (strlen(nameSpace) != 0)
-				fullname = fmt::format("{}.{}", nameSpace, name);
-			else fullname = name;
+				fullname = fmt::format("{}.{}", nameSpace, className);
+			else fullname = className;
 
-			MonoClass* monoClass = mono_class_from_name(s_Data->AppAssemblyImage, nameSpace, name);
+			MonoClass* monoClass = mono_class_from_name(s_Data->AppAssemblyImage, nameSpace, className);
 
 			if (monoClass == entityClass) continue;
 
 			bool isEntity = mono_class_is_subclass_of(monoClass, entityClass, false);
-			if (isEntity) s_Data->EntityClasses[fullname] = CreateRef<ScriptClass>(nameSpace, name);
+			if (!isEntity) continue;
+
+			s_Data->EntityClasses[fullname] = CreateRef<ScriptClass>(nameSpace, className);
+
+
+			int fieldCount = mono_class_num_fields(monoClass);
+			BT_CORE_WARN("{} has {} fields: ", className, fieldCount);
+			void* iterator = nullptr;
+			MonoClassField* field;
+			while (field = mono_class_get_fields(monoClass, &iterator))
+			{
+				const char* fieldName = mono_field_get_name(field);
+				uint32_t flags = mono_field_get_flags(field);
+				if (flags & FIELD_ATTRIBUTE_PUBLIC)
+				{
+					BT_CORE_WARN(" {}", fieldName);
+				}
+			}
 		}
 	}
 

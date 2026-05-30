@@ -1,5 +1,26 @@
 Scene: Untitled
 Entities:
+  - Entity: 8804479042241551551
+    TagComponent:
+      Tag: Circle
+    TransformComponent:
+      Translation: [1.1845797, 1.442726, -0.00012207031]
+      Rotation: [0, 0, 2.375968]
+      Scale: [0.99999946, 0.99999946, 1]
+    CircleRendererComponent:
+      Color: [0.93436295, 0.36234576, 0.057721246, 1]
+      Thickness: 0.1
+      Fade: 0.005
+    Rigidbody2DComponent:
+      BodyType: Dynamic
+      FixedRotation: false
+    CircleCollider2DComponent:
+      Offset: [0, 0]
+      Radius: 0.5
+      Density: 1
+      Friction: 0.5
+      Restitution: 0
+      RestitutionThreshold: 0.5
   - Entity: 4793924497264767156
     TagComponent:
       Tag: Camera
@@ -18,23 +39,22 @@ Entities:
         OrthographicFar: 1
       Primary: true
       FixedAspectRatio: false
-  - Entity: 8804479042241551551
+  - Entity: 17971332117322382552
     TagComponent:
-      Tag: Circle
+      Tag: bigBlock
     TransformComponent:
-      Translation: [1.2145098, -1.7307969, -0.00012207031]
-      Rotation: [0, 0, -3.907217]
-      Scale: [0.99999976, 0.99999976, 1]
-    CircleRendererComponent:
-      Color: [0.93436295, 0.36234576, 0.057721246, 1]
-      Thickness: 0.1
-      Fade: 0.005
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+      TilingFactor: 1
     Rigidbody2DComponent:
       BodyType: Dynamic
-      FixedRotation: false
-    CircleCollider2DComponent:
+      FixedRotation: true
+    BoxCollider2DComponent:
       Offset: [0, 0]
-      Radius: 0.5
+      Size: [0.5, 0.5]
       Density: 1
       Friction: 0.5
       Restitution: 0
@@ -43,13 +63,14 @@ Entities:
     TagComponent:
       Tag: Sprite
     TransformComponent:
-      Translation: [-0.14110345, 1.1151061, 0.02251478]
+      Translation: [-0.5672903, 1.1609223, 0.02251478]
       Rotation: [0, 0, -0.63584137]
       Scale: [0.36117634, 0.37558702, 0.84813577]
     ScriptComponent:
       ClassName: Sandbox.Player
     SpriteRendererComponent:
       Color: [1, 1, 1, 1]
+      TexturePath: assets\textures\manishHania.png
       TilingFactor: 1
     Rigidbody2DComponent:
       BodyType: Dynamic
@@ -85,7 +106,7 @@ Entities:
     TagComponent:
       Tag: Block
     TransformComponent:
-      Translation: [2.8600867, 0.7302177, 0.02251478]
+      Translation: [2.8003714, 1.3276522, 0.02251478]
       Rotation: [0, 0, 2.503603]
       Scale: [0.3611829, 0.3755935, 0.84813577]
     SpriteRendererComponent:

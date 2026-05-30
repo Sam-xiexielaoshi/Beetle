@@ -12,6 +12,8 @@ namespace Sandbox
 	{
 		private TransformComponent m_Transform;
 		private Rigidbody2DComponent m_RigidBody;
+
+		public int speed;
 		void OnCreate()
 		{
 			Console.WriteLine($"Player.OnCreate - {ID}");
